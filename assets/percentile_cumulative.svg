@@ -52,9 +52,9 @@
 <line x1="62" x2="62" y1="30" y2="292" stroke="#3a4150" stroke-width="1.2"/>
 <line x1="62" x2="762" y1="292" y2="292" stroke="#3a4150" stroke-width="1.2"/>
 <text x="14" y="161.0" text-anchor="middle" transform="rotate(-90,14,161.0)" font-family="sans-serif" font-size="11" fill="#9aa0ad">Avg Top %</text>
-<path d="M 62.0,165.1 L 100.9,165.1 L 139.8,165.1 L 178.7,165.1 L 217.6,165.1 L 256.4,165.1 L 295.3,165.1 L 334.2,165.1 L 373.1,165.1 L 412.0,165.1 L 450.9,165.1 L 489.8,165.1 L 528.7,165.1 L 567.6,165.1 L 606.4,165.1 L 645.3,165.1 L 684.2,165.1 L 723.1,165.1 L 762.0,165.1" fill="none" stroke="#f2c14e" stroke-width="1.8" opacity="0.9" stroke-dasharray="8 6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 62.0,121.7 L 100.9,239.6 L 139.8,95.5 L 178.7,216.0 L 217.6,147.9 L 256.4,104.7 L 295.3,87.6 L 334.2,74.5 L 373.1,98.1 L 412.0,102.1 L 450.9,100.7 L 489.8,88.9 L 528.7,117.8 L 567.6,107.3 L 606.4,126.9 L 645.3,103.4 L 684.2,137.4 L 723.1,151.8 L 762.0,164.9" fill="none" stroke="#7aa5ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 62.0,121.7 L 100.9,239.6 L 139.8,95.5 L 178.7,216.0 L 217.6,147.9 L 256.4,104.7 L 295.3,87.6 L 334.2,74.5 L 373.1,98.1 L 412.0,102.1 L 450.9,100.7 L 489.8,88.9 L 528.7,117.8 L 567.6,107.3 L 606.4,126.9 L 645.3,103.4 L 684.2,137.4 L 723.1,151.8 L 762.0,164.9 L 762.0,292.0 L 62.0,292.0 Z" fill="#7aa5ff" opacity="0.08"/>
+<path d="M 62.0,166.5 L 100.9,166.5 L 139.8,166.5 L 178.7,166.5 L 217.6,166.5 L 256.4,166.5 L 295.3,166.5 L 334.2,166.5 L 373.1,166.5 L 412.0,166.5 L 450.9,166.5 L 489.8,166.5 L 528.7,166.5 L 567.6,166.5 L 606.4,166.5 L 645.3,166.5 L 684.2,166.5 L 723.1,166.5 L 762.0,166.5" fill="none" stroke="#f2c14e" stroke-width="1.8" opacity="0.9" stroke-dasharray="8 6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 62.0,121.7 L 100.9,239.6 L 139.8,95.5 L 178.7,216.0 L 217.6,147.9 L 256.4,104.7 L 295.3,87.6 L 334.2,74.5 L 373.1,98.1 L 412.0,102.1 L 450.9,100.7 L 489.8,88.9 L 528.7,117.8 L 567.6,107.3 L 606.4,126.9 L 645.3,103.4 L 684.2,137.4 L 723.1,151.8 L 762.0,166.2" fill="none" stroke="#7aa5ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 62.0,121.7 L 100.9,239.6 L 139.8,95.5 L 178.7,216.0 L 217.6,147.9 L 256.4,104.7 L 295.3,87.6 L 334.2,74.5 L 373.1,98.1 L 412.0,102.1 L 450.9,100.7 L 489.8,88.9 L 528.7,117.8 L 567.6,107.3 L 606.4,126.9 L 645.3,103.4 L 684.2,137.4 L 723.1,151.8 L 762.0,166.2 L 762.0,292.0 L 62.0,292.0 Z" fill="#7aa5ff" opacity="0.08"/>
 <circle cx="62.0" cy="121.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/13: 63.0</title></circle>
 <circle cx="100.9" cy="239.6" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/14: 54.0</title></circle>
 <circle cx="139.8" cy="95.5" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/15: 65.0</title></circle>
@@ -73,7 +73,7 @@
 <circle cx="645.3" cy="103.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/30: 64.4</title></circle>
 <circle cx="684.2" cy="137.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/31: 61.8</title></circle>
 <circle cx="723.1" cy="151.8" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/1: 60.7</title></circle>
-<circle cx="762.0" cy="164.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/2: 59.7</title></circle>
+<circle cx="762.0" cy="166.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/2: 59.6</title></circle>
 <text x="100.9" y="253.6" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">54.0</text>
 <text x="334.2" y="64.5" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">66.6</text>
 </svg>
