@@ -1,6 +1,6 @@
 import os, re, collections
 
-ROOT = r"C:\Users\carte\anthropeum"
+ROOT = os.path.dirname(os.path.abspath(__file__))
 
 def svg_line_chart(labels, values, title="", y_min=None, y_max=None, y_ticks=None, extra_lines=None, height=340, width=780, show_dots=True, y_label="Score"):
     margin = dict(left=62, right=18, top=30, bottom=48)
