@@ -36,3 +36,4 @@ jobs:
           git add README.md assets/
           git commit -m "chore: auto-update README [skip ci]"
           git push
+
