@@ -56,6 +56,19 @@ def svg_line_chart(labels, values, title="", y_min=None, y_max=None, y_ticks=Non
     svg.append('</svg>')
     return "\n".join(svg)
 
+def best_fit_line(values):
+    n = len(values)
+    if n < 2:
+        return values[:]
+    xs = list(range(n))
+    mx = sum(xs) / n
+    my = sum(values) / n
+    num = sum((x - mx) * (y - my) for x, y in zip(xs, values))
+    den = sum((x - mx) ** 2 for x in xs) or 1
+    m = num / den
+    b = my - m * mx
+    return [m * x + b for x in xs]
+
 def svg_bar_histogram(categories, title="Tile Color Distribution (160 tiles total)", width=780, height=300):
     # categories: list of dict {label, emoji, count, pct, color}
     margin = dict(left=90, right=30, top=36, bottom=30)
@@ -157,11 +170,12 @@ for em in color_order:
 y_min, y_max = 35000, 80000
 y_ticks = [35000,45000,55000,65000,75000]
 avg_line = [avg]*len(labels)
+best_scores = best_fit_line(scores)
 svg_scores = svg_line_chart(
     labels, scores,
     title="Anthropeum — Score Over Time",
     y_min=y_min, y_max=y_max, y_ticks=y_ticks,
-    extra_lines=[dict(values=avg_line, color="#f2c14e", dash="8 6", width=1.8, opacity=0.95)],
+    extra_lines=[dict(values=best_scores, color="#f2c14e", dash="8 6", width=1.8, opacity=0.95)],
     y_label="Score"
 )
 cum_min, cum_max = 58000, 67000
@@ -190,11 +204,12 @@ svg_combined = svg_line_chart(
 pct_y_min, pct_y_max = 15, 95
 pct_ticks = [20,40,60,80,90]
 avg_pct_line = [avg_pct]*len(labels)
+best_pct = best_fit_line(pcts)
 svg_pct_daily = svg_line_chart(
     labels, pcts,
     title="Percentile Over Time (lower is better)",
     y_min=pct_y_min, y_max=pct_y_max, y_ticks=pct_ticks,
-    extra_lines=[dict(values=avg_pct_line, color="#f2c14e", dash="8 6", width=1.8)],
+    extra_lines=[dict(values=best_pct, color="#f2c14e", dash="8 6", width=1.8)],
     y_label="Top %"
 )
 svg_pct_cum = svg_line_chart(
