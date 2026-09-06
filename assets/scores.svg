@@ -13,73 +13,76 @@
 <text x="54" y="63.1" text-anchor="end" font-family="sans-serif" font-size="11" fill="#9aa0ad">75,000</text>
 <line x1="62.0" x2="62.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
 <text x="62.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/13</text>
-<line x1="97.0" x2="97.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="97.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/14</text>
-<line x1="132.0" x2="132.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="132.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/15</text>
-<line x1="167.0" x2="167.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="167.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/16</text>
-<line x1="202.0" x2="202.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="202.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/17</text>
-<line x1="237.0" x2="237.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="237.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/18</text>
-<line x1="272.0" x2="272.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="272.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/20</text>
-<line x1="307.0" x2="307.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="307.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/21</text>
-<line x1="342.0" x2="342.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="342.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/22</text>
-<line x1="377.0" x2="377.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="377.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/23</text>
-<line x1="412.0" x2="412.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="412.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/24</text>
-<line x1="447.0" x2="447.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="447.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/25</text>
-<line x1="482.0" x2="482.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="482.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/26</text>
-<line x1="517.0" x2="517.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="517.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/27</text>
-<line x1="552.0" x2="552.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="552.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/29</text>
-<line x1="587.0" x2="587.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="587.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/30</text>
-<line x1="622.0" x2="622.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="622.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/31</text>
-<line x1="657.0" x2="657.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="657.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/1</text>
-<line x1="692.0" x2="692.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="692.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/2</text>
-<line x1="727.0" x2="727.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="727.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/3</text>
+<line x1="95.3" x2="95.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="95.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/14</text>
+<line x1="128.7" x2="128.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="128.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/15</text>
+<line x1="162.0" x2="162.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="162.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/16</text>
+<line x1="195.3" x2="195.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="195.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/17</text>
+<line x1="228.7" x2="228.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="228.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/18</text>
+<line x1="262.0" x2="262.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="262.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/20</text>
+<line x1="295.3" x2="295.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="295.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/21</text>
+<line x1="328.7" x2="328.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="328.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/22</text>
+<line x1="362.0" x2="362.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="362.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/23</text>
+<line x1="395.3" x2="395.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="395.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/24</text>
+<line x1="428.7" x2="428.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="428.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/25</text>
+<line x1="462.0" x2="462.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="462.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/26</text>
+<line x1="495.3" x2="495.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="495.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/27</text>
+<line x1="528.7" x2="528.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="528.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/29</text>
+<line x1="562.0" x2="562.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="562.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/30</text>
+<line x1="595.3" x2="595.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="595.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/31</text>
+<line x1="628.7" x2="628.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="628.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/1</text>
+<line x1="662.0" x2="662.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="662.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/2</text>
+<line x1="695.3" x2="695.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="695.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/3</text>
+<line x1="728.7" x2="728.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="728.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/4</text>
 <line x1="762.0" x2="762.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="762.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/4</text>
+<text x="762.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/5</text>
 <line x1="62" x2="62" y1="30" y2="292" stroke="#3a4150" stroke-width="1.2"/>
 <line x1="62" x2="762" y1="292" y2="292" stroke="#3a4150" stroke-width="1.2"/>
 <text x="14" y="161.0" text-anchor="middle" transform="rotate(-90,14,161.0)" font-family="sans-serif" font-size="11" fill="#9aa0ad">Score</text>
-<path d="M 62.0,154.9 L 97.0,153.4 L 132.0,152.0 L 167.0,150.5 L 202.0,149.0 L 237.0,147.6 L 272.0,146.1 L 307.0,144.7 L 342.0,143.2 L 377.0,141.7 L 412.0,140.3 L 447.0,138.8 L 482.0,137.3 L 517.0,135.9 L 552.0,134.4 L 587.0,132.9 L 622.0,131.5 L 657.0,130.0 L 692.0,128.6 L 727.0,127.1 L 762.0,125.6" fill="none" stroke="#f2c14e" stroke-width="1.8" opacity="0.95" stroke-dasharray="8 6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 62.0,120.3 L 97.0,109.7 L 132.0,213.0 L 167.0,58.7 L 202.0,167.9 L 237.0,204.5 L 272.0,122.1 L 307.0,149.1 L 342.0,158.7 L 377.0,105.3 L 412.0,180.9 L 447.0,208.4 L 482.0,88.9 L 517.0,226.1 L 552.0,85.7 L 587.0,267.3 L 622.0,54.7 L 657.0,111.4 L 692.0,162.6 L 727.0,89.4 L 762.0,60.9" fill="none" stroke="#7aa5ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 62.0,120.3 L 97.0,109.7 L 132.0,213.0 L 167.0,58.7 L 202.0,167.9 L 237.0,204.5 L 272.0,122.1 L 307.0,149.1 L 342.0,158.7 L 377.0,105.3 L 412.0,180.9 L 447.0,208.4 L 482.0,88.9 L 517.0,226.1 L 552.0,85.7 L 587.0,267.3 L 622.0,54.7 L 657.0,111.4 L 692.0,162.6 L 727.0,89.4 L 762.0,60.9 L 762.0,292.0 L 62.0,292.0 Z" fill="#7aa5ff" opacity="0.08"/>
+<path d="M 62.0,160.2 L 95.3,158.0 L 128.7,155.7 L 162.0,153.4 L 195.3,151.2 L 228.7,148.9 L 262.0,146.6 L 295.3,144.4 L 328.7,142.1 L 362.0,139.9 L 395.3,137.6 L 428.7,135.3 L 462.0,133.1 L 495.3,130.8 L 528.7,128.5 L 562.0,126.3 L 595.3,124.0 L 628.7,121.8 L 662.0,119.5 L 695.3,117.2 L 728.7,115.0 L 762.0,112.7" fill="none" stroke="#f2c14e" stroke-width="1.8" opacity="0.95" stroke-dasharray="8 6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 62.0,120.3 L 95.3,109.7 L 128.7,213.0 L 162.0,58.7 L 195.3,167.9 L 228.7,204.5 L 262.0,122.1 L 295.3,149.1 L 328.7,158.7 L 362.0,105.3 L 395.3,180.9 L 428.7,208.4 L 462.0,88.9 L 495.3,226.1 L 528.7,85.7 L 562.0,267.3 L 595.3,54.7 L 628.7,111.4 L 662.0,162.6 L 695.3,89.4 L 728.7,60.9 L 762.0,56.8" fill="none" stroke="#7aa5ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 62.0,120.3 L 95.3,109.7 L 128.7,213.0 L 162.0,58.7 L 195.3,167.9 L 228.7,204.5 L 262.0,122.1 L 295.3,149.1 L 328.7,158.7 L 362.0,105.3 L 395.3,180.9 L 428.7,208.4 L 462.0,88.9 L 495.3,226.1 L 528.7,85.7 L 562.0,267.3 L 595.3,54.7 L 628.7,111.4 L 662.0,162.6 L 695.3,89.4 L 728.7,60.9 L 762.0,56.8 L 762.0,292.0 L 62.0,292.0 Z" fill="#7aa5ff" opacity="0.08"/>
 <circle cx="62.0" cy="120.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/13: 64,497</title></circle>
-<circle cx="97.0" cy="109.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/14: 66,309</title></circle>
-<circle cx="132.0" cy="213.0" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/15: 48,569</title></circle>
-<circle cx="167.0" cy="58.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/16: 75,078</title></circle>
-<circle cx="202.0" cy="167.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/17: 56,316</title></circle>
-<circle cx="237.0" cy="204.5" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/18: 50,037</title></circle>
-<circle cx="272.0" cy="122.1" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/20: 64,181</title></circle>
-<circle cx="307.0" cy="149.1" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/21: 59,541</title></circle>
-<circle cx="342.0" cy="158.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/22: 57,891</title></circle>
-<circle cx="377.0" cy="105.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/23: 67,070</title></circle>
-<circle cx="412.0" cy="180.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/24: 54,082</title></circle>
-<circle cx="447.0" cy="208.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/25: 49,359</title></circle>
-<circle cx="482.0" cy="88.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/26: 69,883</title></circle>
-<circle cx="517.0" cy="226.1" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/27: 46,314</title></circle>
-<circle cx="552.0" cy="85.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/29: 70,427</title></circle>
-<circle cx="587.0" cy="267.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/30: 39,248</title></circle>
-<circle cx="622.0" cy="54.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/31: 75,763</title></circle>
-<circle cx="657.0" cy="111.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/1: 66,013</title></circle>
-<circle cx="692.0" cy="162.6" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/2: 57,221</title></circle>
-<circle cx="727.0" cy="89.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/3: 69,801</title></circle>
-<circle cx="762.0" cy="60.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/4: 74,700</title></circle>
-<text x="587.0" y="281.3" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">39,248</text>
-<text x="622.0" y="44.7" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">75,763</text>
+<circle cx="95.3" cy="109.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/14: 66,309</title></circle>
+<circle cx="128.7" cy="213.0" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/15: 48,569</title></circle>
+<circle cx="162.0" cy="58.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/16: 75,078</title></circle>
+<circle cx="195.3" cy="167.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/17: 56,316</title></circle>
+<circle cx="228.7" cy="204.5" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/18: 50,037</title></circle>
+<circle cx="262.0" cy="122.1" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/20: 64,181</title></circle>
+<circle cx="295.3" cy="149.1" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/21: 59,541</title></circle>
+<circle cx="328.7" cy="158.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/22: 57,891</title></circle>
+<circle cx="362.0" cy="105.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/23: 67,070</title></circle>
+<circle cx="395.3" cy="180.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/24: 54,082</title></circle>
+<circle cx="428.7" cy="208.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/25: 49,359</title></circle>
+<circle cx="462.0" cy="88.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/26: 69,883</title></circle>
+<circle cx="495.3" cy="226.1" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/27: 46,314</title></circle>
+<circle cx="528.7" cy="85.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/29: 70,427</title></circle>
+<circle cx="562.0" cy="267.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/30: 39,248</title></circle>
+<circle cx="595.3" cy="54.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/31: 75,763</title></circle>
+<circle cx="628.7" cy="111.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/1: 66,013</title></circle>
+<circle cx="662.0" cy="162.6" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/2: 57,221</title></circle>
+<circle cx="695.3" cy="89.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/3: 69,801</title></circle>
+<circle cx="728.7" cy="60.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/4: 74,700</title></circle>
+<circle cx="762.0" cy="56.8" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/5: 75,404</title></circle>
+<text x="562.0" y="281.3" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">39,248</text>
+<text x="595.3" y="44.7" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">75,763</text>
 </svg>
