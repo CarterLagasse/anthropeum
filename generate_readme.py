@@ -112,21 +112,45 @@ def svg_bar_histogram(categories, title="Tile Color Distribution (160 tiles tota
     return "\n".join(svg)
 
 # --- parse data ---
+def _parse_file(p, name):
+    with open(p, encoding='utf-8', errors='ignore') as f:
+        lines=[l.rstrip('\n') for l in f.readlines()]
+    third=lines[2] if len(lines)>=3 else ''
+    m=re.match(r'^\s*([\d,]+)', third)
+    score=int(m.group(1).replace(',','')) if m else 0
+    pm=re.search(r'top\s+(\d+)%',third)
+    pct=int(pm.group(1)) if pm else None
+    date_label=lines[0].split('·')[-1].strip() if '·' in lines[0] else name
+    month,day=map(int,name.split('_'))
+    emoji_line=lines[1] if len(lines)>=2 else ''
+    return dict(file=name, month=month, day=day, date_label=date_label, score=score, pct=pct, emoji=emoji_line)
+
 entries=[]
+# month folders lowercase
+_month_names = {1:"january",2:"february",3:"march",4:"april",5:"may",6:"june",7:"july",8:"august",9:"september",10:"october",11:"november",12:"december"}
+for _mnum, _mname in _month_names.items():
+    _folder = os.path.join(ROOT, _mname)
+    if os.path.isdir(_folder):
+        for _fname in os.listdir(_folder):
+            if re.match(r'^\d+_\d+$', _fname):
+                _p = os.path.join(_folder, _fname)
+                if os.path.isfile(_p):
+                    entries.append(_parse_file(_p, _fname))
+        # if folder exists, do not also pull that month's files from root (avoid double count)
+        continue
+
+# fall back to root for months without folder
 for name in os.listdir(ROOT):
     p=os.path.join(ROOT,name)
     if os.path.isfile(p) and re.match(r'^\d+_\d+$', name):
-        with open(p, encoding='utf-8', errors='ignore') as f:
-            lines=[l.rstrip('\n') for l in f.readlines()]
-        third=lines[2] if len(lines)>=3 else ''
-        m=re.match(r'^\s*([\d,]+)', third)
-        score=int(m.group(1).replace(',','')) if m else 0
-        pm=re.search(r'top\s+(\d+)%',third)
-        pct=int(pm.group(1)) if pm else None
-        date_label=lines[0].split('·')[-1].strip() if '·' in lines[0] else name
-        month,day=map(int,name.split('_'))
-        emoji_line=lines[1] if len(lines)>=2 else ''
-        entries.append(dict(file=name, month=month, day=day, date_label=date_label, score=score, pct=pct, emoji=emoji_line))
+        # skip if this month's folder exists (already handled above)
+        try:
+            _mm = int(name.split('_')[0])
+            if _mm in _month_names and os.path.isdir(os.path.join(ROOT, _month_names[_mm])):
+                continue
+        except:
+            pass
+        entries.append(_parse_file(p, name))
 entries.sort(key=lambda e:(e['month'],e['day']))
 
 labels=[f"{e['month']}/{e['day']}" for e in entries]

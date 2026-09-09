@@ -5,6 +5,19 @@ on:
     branches: [main]
     paths:
       - '[0-9]*_[0-9]*'
+      - '**/[0-9]*_[0-9]*'
+      - 'august/**'
+      - 'september/**'
+      - 'january/**'
+      - 'february/**'
+      - 'march/**'
+      - 'april/**'
+      - 'may/**'
+      - 'june/**'
+      - 'july/**'
+      - 'october/**'
+      - 'november/**'
+      - 'december/**'
       - 'generate_readme.py'
       - '.github/workflows/update-readme.yml'
   workflow_dispatch:
