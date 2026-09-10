@@ -4,6 +4,9 @@ Daily scores scraped from the files in this repo. Each file is named `M_D` (e.g.
 
 ## Data Table
 
+<details>
+<summary>Data Table — 25 rows (click to expand)</summary>
+
 | Date | File | Tiles | Score | Percentile | Δ vs Avg | 🟨 Yellow | 🟩 Green | 🟦 Blue | 🟥 Red |
 |------|------|-------|-------|------------|----------|-----------|----------|---------|--------|
 | Aug 13 2026 | `8_13` | 🟨🟨🟩🟩🟨🟩🟨🟦🟨🟩 | **64,497** | top 63% | +2,558 | 5 | 4 | 1 | 0 |
@@ -32,6 +35,8 @@ Daily scores scraped from the files in this repo. Each file is named `M_D` (e.g.
 | Sep 7 2026 | `9_7` | 🟩🟩🟩🟨🟩🟨🟦🟦🟩🟥 | **66,528** | top 39% | +4,589 | 2 | 5 | 2 | 1 |
 | Sep 8 2026 | `9_8` | 🟦🟨🟨🟨🟨🟥🟩🟨🟦🟦 | **61,073** | top 63% | -866 | 5 | 1 | 3 | 1 |
 | Sep 9 2026 | `9_9` | 🟩🟥🟩🟨🟩🟦🟨🟨🟩🟦 | **64,901** | top 63% | +2,962 | 3 | 4 | 2 | 1 |
+
+</details>
 
 ## Scores Over Time
 
