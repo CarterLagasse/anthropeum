@@ -5,7 +5,7 @@ Daily scores scraped from the files in this repo. Each file is named `M_D` (e.g.
 ## Data Table
 
 <details>
-<summary>Data Table — 25 rows (click to expand)</summary>
+<summary>Data Table — 26 rows (click to expand)</summary>
 
 | Date | File | Tiles | Score | Percentile | Δ vs Avg | 🟨 Yellow | 🟩 Green | 🟦 Blue | 🟥 Red |
 |------|------|-------|-------|------------|----------|-----------|----------|---------|--------|
