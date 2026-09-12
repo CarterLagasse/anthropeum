@@ -125,33 +125,36 @@ def _parse_file(p, name):
     emoji_line=lines[1] if len(lines)>=2 else ''
     return dict(file=name, month=month, day=day, date_label=date_label, score=score, pct=pct, emoji=emoji_line)
 
-entries=[]
-# month folders lowercase
 _month_names = {1:"january",2:"february",3:"march",4:"april",5:"may",6:"june",7:"july",8:"august",9:"september",10:"october",11:"november",12:"december"}
-for _mnum, _mname in _month_names.items():
-    _folder = os.path.join(ROOT, _mname)
-    if os.path.isdir(_folder):
-        for _fname in os.listdir(_folder):
-            if re.match(r'^\d+_\d+$', _fname):
-                _p = os.path.join(_folder, _fname)
-                if os.path.isfile(_p):
-                    entries.append(_parse_file(_p, _fname))
-        # if folder exists, do not also pull that month's files from root (avoid double count)
-        continue
 
-# fall back to root for months without folder
-for name in os.listdir(ROOT):
-    p=os.path.join(ROOT,name)
-    if os.path.isfile(p) and re.match(r'^\d+_\d+$', name):
-        # skip if this month's folder exists (already handled above)
-        try:
-            _mm = int(name.split('_')[0])
-            if _mm in _month_names and os.path.isdir(os.path.join(ROOT, _month_names[_mm])):
-                continue
-        except:
-            pass
-        entries.append(_parse_file(p, name))
-entries.sort(key=lambda e:(e['month'],e['day']))
+def load_entries(root):
+    """All M_D files under root: month folders first, then root-level files for months without a folder."""
+    entries=[]
+    for _mnum, _mname in _month_names.items():
+        _folder = os.path.join(root, _mname)
+        if os.path.isdir(_folder):
+            for _fname in os.listdir(_folder):
+                if re.match(r'^\d+_\d+$', _fname):
+                    _p = os.path.join(_folder, _fname)
+                    if os.path.isfile(_p):
+                        entries.append(_parse_file(_p, _fname))
+    for name in os.listdir(root):
+        p=os.path.join(root,name)
+        if os.path.isfile(p) and re.match(r'^\d+_\d+$', name):
+            try:
+                _mm = int(name.split('_')[0])
+                if _mm in _month_names and os.path.isdir(os.path.join(root, _month_names[_mm])):
+                    continue
+            except:
+                pass
+            entries.append(_parse_file(p, name))
+    entries.sort(key=lambda e:(e['month'],e['day']))
+    return entries
+
+entries = load_entries(ROOT)
+
+# other players keep the same file layout in a subfolder named after them
+PLAYERS = [("Carter", ROOT), ("Ryan", os.path.join(ROOT, "ryan"))]
 
 labels=[f"{e['month']}/{e['day']}" for e in entries]
 scores=[e['score'] for e in entries]
@@ -286,9 +289,66 @@ color_rows = "\n".join(
     for c in categories
 )
 
+# --- head to head ---
+def _h2h_section(me_name, me_entries, others):
+    out=[]
+    for name, theirs in others:
+        if not theirs:
+            continue
+        mine_by={(e['month'],e['day']):e for e in me_entries}
+        theirs_by={(e['month'],e['day']):e for e in theirs}
+        shared=sorted(set(mine_by)&set(theirs_by))
+        t_scores=[e['score'] for e in theirs]
+        t_pcts=[e['pct'] for e in theirs if e['pct'] is not None]
+        t_best=max(theirs,key=lambda e:e['score'])
+        t_avg=sum(t_scores)/len(t_scores)
+        t_avg_pct=sum(t_pcts)/len(t_pcts) if t_pcts else 0
+        lines=[f"## Head to Head — {me_name} vs {name}", "",
+               f"{name}'s files live in `{name.lower()}/` with the same `M_D` layout. "
+               f"{name}: **{len(theirs)}** games, avg **{t_avg:,.0f}**, avg percentile **top {t_avg_pct:.1f}%**, best **{t_best['score']:,}** (`{t_best['file']}`).", ""]
+        if not shared:
+            out.append("\n".join(lines)); continue
+        labels=[f"{m}/{d}" for m,d in shared]
+        mine=[mine_by[k]['score'] for k in shared]; other=[theirs_by[k]['score'] for k in shared]
+        wins=sum(a>b for a,b in zip(mine,other)); losses=sum(a<b for a,b in zip(mine,other)); ties=len(shared)-wins-losses
+        margin=[a-b for a,b in zip(mine,other)]
+        m_avg=sum(mine)/len(mine); o_avg=sum(other)/len(other)
+        m_pct=[mine_by[k]['pct'] for k in shared if mine_by[k]['pct'] is not None]
+        o_pct=[theirs_by[k]['pct'] for k in shared if theirs_by[k]['pct'] is not None]
+        big_w=max(range(len(shared)),key=lambda i:margin[i]); big_l=min(range(len(shared)),key=lambda i:margin[i])
+        # streak of current leader
+        streak=0; leader=None
+        for a,b in reversed(list(zip(mine,other))):
+            w = me_name if a>b else name if b>a else None
+            if w is None: break
+            if leader is None: leader=w
+            if w!=leader: break
+            streak+=1
+        svg=svg_line_chart(labels, mine, title=f"{me_name} (blue) vs {name} (green) — days both played",
+                           y_min=35000, y_max=90000, y_ticks=[35000,45000,55000,65000,75000,85000],
+                           extra_lines=[dict(values=other, color="#5ee1a8", width=2.2, opacity=0.95)], y_label="Score")
+        fname=f"h2h_{name.lower()}.svg"
+        open(os.path.join(assets_dir, fname), "w", encoding="utf-8").write(svg)
+        rows="\n".join(
+            f"| {mine_by[k]['date_label']} | **{a:,}** (top {mine_by[k]['pct']}%) | **{b:,}** (top {theirs_by[k]['pct']}%) | {a-b:+,} | {me_name if a>b else name if b>a else 'tie'} |"
+            for k,a,b in zip(shared,mine,other))
+        lines += [f"![{me_name} vs {name}](assets/{fname})", "",
+                  f"- **Record ({me_name}–{name}):** **{wins}–{losses}**" + (f"–{ties}" if ties else "") + f" over {len(shared)} shared days",
+                  f"- **Average on shared days:** {me_name} {m_avg:,.0f} · {name} {o_avg:,.0f} ({m_avg-o_avg:+,.0f})",
+                  f"- **Average percentile on shared days:** {me_name} top {sum(m_pct)/len(m_pct):.1f}% · {name} top {sum(o_pct)/len(o_pct):.1f}%" if m_pct and o_pct else "",
+                  f"- **Biggest {me_name} win:** {margin[big_w]:+,} on {mine_by[shared[big_w]]['date_label']} · **Biggest {name} win:** {-margin[big_l]:+,} on {mine_by[shared[big_l]]['date_label']}",
+                  f"- **Current run:** {leader} has won the last {streak}" if leader and streak>1 else "",
+                  "", "<details>", f"<summary>Day by day — {len(shared)} shared days (click to expand)</summary>", "",
+                  f"| Date | {me_name} | {name} | Δ | Winner |", "|------|------|------|---|--------|", rows, "", "</details>", ""]
+        out.append("\n".join(l for l in lines if l is not None))
+    return "\n".join(out)
+
+_others=[(n, load_entries(pth)) for n,pth in PLAYERS[1:] if os.path.isdir(pth)]
+h2h_section=_h2h_section(PLAYERS[0][0], entries, _others)
+
 readme = f"""# Anthropeum — Score History
 
-Daily scores scraped from the files in this repo. Each file is named `M_D` (e.g. `8_13` → Aug 13) and line 3 holds the score (`64,497 · top 63% ...`). This README is auto-generated by `generate_readme.py` — re-run it after adding a new day.
+Daily scores scraped from the files in this repo. Each file is named `M_D` (e.g. `8_13` → Aug 13) and line 3 holds the score (`64,497 · top 63% ...`). Other players keep the same layout in a subfolder (e.g. `ryan/`). This README is auto-generated by `generate_readme.py` — re-run it after adding a new day.
 
 ## Data Table
 
@@ -324,6 +384,7 @@ Daily scores scraped from the files in this repo. Each file is named `M_D` (e.g.
 ![Cumulative percentile](assets/percentile_cumulative.svg)
 
 
+{h2h_section}
 ## At a Glance
 
 - **Average score:** **{avg:,.2f}**
