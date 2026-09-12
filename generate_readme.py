@@ -2,7 +2,7 @@ import os, re, collections
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
-def svg_line_chart(labels, values, title="", y_min=None, y_max=None, y_ticks=None, extra_lines=None, height=340, width=780, show_dots=True, y_label="Score"):
+def svg_line_chart(labels, values, title="", y_min=None, y_max=None, y_ticks=None, extra_lines=None, height=340, width=780, show_dots=True, y_label="Score", color="#7aa5ff"):
     margin = dict(left=62, right=18, top=30, bottom=48)
     plot_w = width - margin['left'] - margin['right']
     plot_h = height - margin['top'] - margin['bottom']
@@ -28,10 +28,12 @@ def svg_line_chart(labels, values, title="", y_min=None, y_max=None, y_ticks=Non
         svg.append(f'<line x1="{margin["left"]}" x2="{width - margin["right"]}" y1="{y:.1f}" y2="{y:.1f}" stroke="#2a2f3a" stroke-width="1" stroke-dasharray="4 6"/>')
         label = f"{int(yt):,}" if yt >= 1000 else f"{yt:.0f}"
         svg.append(f'<text x="{margin["left"]-8}" y="{y+4:.1f}" text-anchor="end" font-family="sans-serif" font-size="11" fill="#9aa0ad">{label}</text>')
+    label_step = 2 if n > 20 else 1   # thin x labels on long series so they stay legible at half width
     for i, lab in enumerate(labels):
         x = x_pos(i)
         svg.append(f'<line x1="{x:.1f}" x2="{x:.1f}" y1="{margin["top"]+plot_h}" y2="{margin["top"]+plot_h+4}" stroke="#3a4150" stroke-width="1"/>')
-        svg.append(f'<text x="{x:.1f}" y="{height - 14}" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">{lab}</text>')
+        if i % label_step == 0 or i == n - 1:
+            svg.append(f'<text x="{x:.1f}" y="{height - 14}" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">{lab}</text>')
     svg.append(f'<line x1="{margin["left"]}" x2="{margin["left"]}" y1="{margin["top"]}" y2="{margin["top"]+plot_h}" stroke="#3a4150" stroke-width="1.2"/>')
     svg.append(f'<line x1="{margin["left"]}" x2="{width - margin["right"]}" y1="{margin["top"]+plot_h}" y2="{margin["top"]+plot_h}" stroke="#3a4150" stroke-width="1.2"/>')
     svg.append(f'<text x="14" y="{margin["top"]+plot_h/2:.1f}" text-anchor="middle" transform="rotate(-90,14,{margin["top"]+plot_h/2:.1f})" font-family="sans-serif" font-size="11" fill="#9aa0ad">{y_label}</text>')
@@ -42,12 +44,12 @@ def svg_line_chart(labels, values, title="", y_min=None, y_max=None, y_ticks=Non
             d = "M " + " L ".join(f"{x:.1f},{y:.1f}" for x,y in pts)
             dash = f' stroke-dasharray="{el["dash"]}"' if el.get("dash") else ""
             svg.append(f'<path d="{d}" fill="none" stroke="{el.get("color","#888")}" stroke-width="{el.get("width",2)}" opacity="{el.get("opacity",0.9)}"{dash} stroke-linecap="round" stroke-linejoin="round"/>')
-    svg.append(f'<path d="{path_d}" fill="none" stroke="#7aa5ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>')
+    svg.append(f'<path d="{path_d}" fill="none" stroke="{color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>')
     area_d = path_d + f' L {points[-1][0]:.1f},{margin["top"]+plot_h:.1f} L {points[0][0]:.1f},{margin["top"]+plot_h:.1f} Z'
-    svg.append(f'<path d="{area_d}" fill="#7aa5ff" opacity="0.08"/>')
+    svg.append(f'<path d="{area_d}" fill="{color}" opacity="0.08"/>')
     if show_dots:
         for (x,y), v, lab in zip(points, values, labels):
-            svg.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>{lab}: {v:,}</title></circle>')
+            svg.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" fill="{color}" stroke="#0f1115" stroke-width="1.5"><title>{lab}: {v:,}</title></circle>')
     max_v = max(values); min_v = min(values)
     for (x,y), v in zip(points, values):
         if v == max_v or v == min_v:
@@ -84,6 +86,8 @@ def svg_bar_histogram(categories, title="Tile Color Distribution (160 tiles tota
     x_max = 50  # percentages go up to 50
     if max_pct > 50:
         x_max = 60
+    if max_pct > 60:
+        x_max = 100
     svg=[]
     svg.append(f'<svg viewBox="0 0 {width} {height}" width="100%" height="{height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{title}">')
     svg.append(f'<rect width="{width}" height="{height}" fill="#0f1115" rx="12"/>')
@@ -151,269 +155,247 @@ def load_entries(root):
     entries.sort(key=lambda e:(e['month'],e['day']))
     return entries
 
-entries = load_entries(ROOT)
+# Players: (name, folder, asset subfolder, line colour). Carter's files stay at the repo root
+# and his assets at assets/ so old links keep working; other players use a subfolder of each.
+PLAYERS = [
+    ("Carter", ROOT, "", "#7aa5ff"),
+    ("Ryan", os.path.join(ROOT, "ryan"), "ryan", "#5ee1a8"),
+]
+PLAYERS = [pl for pl in PLAYERS if os.path.isdir(pl[1])]
 
-# other players keep the same file layout in a subfolder named after them
-PLAYERS = [("Carter", ROOT), ("Ryan", os.path.join(ROOT, "ryan"))]
-
-labels=[f"{e['month']}/{e['day']}" for e in entries]
-scores=[e['score'] for e in entries]
-avg=sum(scores)/len(scores)
-cum=[sum(scores[:i+1])/(i+1) for i in range(len(scores))]
-
-# percentile handling
-pcts = [e['pct'] for e in entries if e['pct'] is not None]
-avg_pct = sum(pcts)/len(pcts) if pcts else 0
-cum_pct = []
-s=0
-for i, v in enumerate(pcts):
-    s+=v
-    cum_pct.append(s/(i+1))
-
-# tile colors
 emoji_to_info = {
     '🟩': ('green', '#43a047'),
     '🟨': ('yellow', '#fdd835'),
     '🟦': ('blue', '#1e88e5'),
     '🟥': ('red', '#e53935'),
 }
-color_counts = collections.Counter()
-per_file_colors=[]
-for e in entries:
-    c = collections.Counter(ch for ch in e['emoji'] if ch in emoji_to_info)
-    per_file_colors.append(c)
-    color_counts.update(c)
-total_tiles = sum(color_counts.values())
-# order for histogram: green, yellow, blue, red sorted by count desc? keep logical yellow, green, blue, red
 color_order = ['🟨','🟩','🟦','🟥']
-categories=[]
-for em in color_order:
-    label, col = emoji_to_info[em]
-    cnt = color_counts.get(em, 0)
-    pct = cnt/total_tiles*100 if total_tiles else 0
-    categories.append(dict(emoji=em, label=label.capitalize(), count=cnt, pct=pct, color=col))
-
-# --- generate SVGs ---
-y_min, y_max = 35000, 80000
-y_ticks = [35000,45000,55000,65000,75000]
-avg_line = [avg]*len(labels)
-best_scores = best_fit_line(scores)
-svg_scores = svg_line_chart(
-    labels, scores,
-    title="Anthropeum — Score Over Time",
-    y_min=y_min, y_max=y_max, y_ticks=y_ticks,
-    extra_lines=[dict(values=best_scores, color="#f2c14e", dash="8 6", width=1.8, opacity=0.95)],
-    y_label="Score"
-)
-cum_min, cum_max = 58000, 67000
-cum_ticks = [58000,60000,62000,64000,66000]
-svg_cum = svg_line_chart(
-    labels, [round(c) for c in cum],
-    title="Cumulative Average Score Over Time",
-    y_min=cum_min, y_max=cum_max, y_ticks=cum_ticks,
-    extra_lines=[dict(values=avg_line, color="#f2c14e", dash="8 6", width=1.8)],
-    y_label="Avg Score"
-)
-svg_combined = svg_line_chart(
-    labels, scores,
-    title="Scores vs. Cumulative Average (overall avg dashed)",
-    y_min=y_min, y_max=y_max, y_ticks=y_ticks,
-    extra_lines=[
-        dict(values=[round(c) for c in cum], color="#5ee1a8", dash="", width=2.2),
-        dict(values=avg_line, color="#f2c14e", dash="8 6", width=1.6),
-    ],
-    y_label="Score"
-)
-
-# percentile chart: daily percentile (inverted y? lower is better so maybe invert, but keep normal with note)
-# For percentile, 19 is best (top). We'll keep y 0(best) at top? Instead conventional y increases upward, so lower % at top is better. Let's invert: y_min 0, y_max 100, but display with 0 at top by setting y_min 100? Simpler: keep normal 0 bottom, but note gold avg line.
-# We'll create a chart where y 20-95
-pct_y_min, pct_y_max = 15, 95
-pct_ticks = [20,40,60,80,90]
-avg_pct_line = [avg_pct]*len(labels)
-best_pct = best_fit_line(pcts)
-svg_pct_daily = svg_line_chart(
-    labels, pcts,
-    title="Percentile Over Time (lower is better)",
-    y_min=pct_y_min, y_max=pct_y_max, y_ticks=pct_ticks,
-    extra_lines=[dict(values=best_pct, color="#f2c14e", dash="8 6", width=1.8)],
-    y_label="Top %"
-)
-svg_pct_cum = svg_line_chart(
-    labels, [round(v,1) for v in cum_pct],
-    title="Cumulative Average Percentile Over Time",
-    y_min=50, y_max=70, y_ticks=[50,55,60,65,70],
-    extra_lines=[dict(values=avg_pct_line, color="#f2c14e", dash="8 6", width=1.8)],
-    y_label="Avg Top %"
-)
-
-svg_colors = svg_bar_histogram(categories, title=f"Tile Color Distribution — {total_tiles} tiles total")
-
-# write assets (only those used in README)
 assets_dir = os.path.join(ROOT, "assets")
 os.makedirs(assets_dir, exist_ok=True)
-open(os.path.join(assets_dir, "scores.svg"), "w", encoding="utf-8").write(svg_scores)
-open(os.path.join(assets_dir, "percentile.svg"), "w", encoding="utf-8").write(svg_pct_daily)
-open(os.path.join(assets_dir, "percentile_cumulative.svg"), "w", encoding="utf-8").write(svg_pct_cum)
-open(os.path.join(assets_dir, "colors.svg"), "w", encoding="utf-8").write(svg_colors)
-# remove orphan cumulative score assets if they exist
-for _orphan in ["cumulative.svg", "combined.svg"]:
-    _p = os.path.join(assets_dir, _orphan)
-    if os.path.exists(_p):
-        try:
-            os.remove(_p)
-        except:
-            pass
 
-# --- build README ---
-min_e = min(entries, key=lambda x:x['score'])
-max_e = max(entries, key=lambda x:x['score'])
-best_pct_e = min((e for e in entries if e['pct'] is not None), key=lambda x:x['pct'])
-worst_pct_e = max((e for e in entries if e['pct'] is not None), key=lambda x:x['pct'])
+def nice_range(values, step, pad=0.0):
+    lo = min(values) - pad; hi = max(values) + pad
+    lo = int(lo // step) * step
+    hi = int(-(-hi // step)) * step
+    if hi == lo: hi = lo + step
+    ticks = list(range(lo, hi + 1, step))
+    while len(ticks) > 7:            # keep the axis readable
+        ticks = ticks[::2]
+        if ticks[-1] != hi: ticks.append(hi)
+    return lo, hi, ticks
 
-table_rows = "\n".join(
-    f"| {e['date_label']} | `{e['file']}` | {e['emoji']} | **{e['score']:,}** | top {e['pct']}% | {e['score']-avg:+,.0f} | "
-    + " | ".join(str(per_file_colors[i].get(em, 0)) for em in color_order) + " |"
-    for i, e in enumerate(entries)
-)
+def build_player(name, entries, sub, color, ranges):
+    """Compute every stat and write every chart for one player. Returns a dict for the README."""
+    P = {}
+    P['name']=name; P['entries']=entries; P['color']=color
+    P['labels']=[f"{e['month']}/{e['day']}" for e in entries]
+    scores=[e['score'] for e in entries]; P['scores']=scores
+    P['avg']=sum(scores)/len(scores)
+    P['cum']=[sum(scores[:i+1])/(i+1) for i in range(len(scores))]
+    pcts=[e['pct'] for e in entries if e['pct'] is not None]; P['pcts']=pcts
+    P['avg_pct']=sum(pcts)/len(pcts) if pcts else 0
+    cum_pct=[]; s=0
+    for i,v in enumerate(pcts):
+        s+=v; cum_pct.append(s/(i+1))
+    P['cum_pct']=cum_pct
+    counts=collections.Counter(); per_file=[]
+    for e in entries:
+        c=collections.Counter(ch for ch in e['emoji'] if ch in emoji_to_info)
+        per_file.append(c); counts.update(c)
+    total=sum(counts.values()); P['total_tiles']=total; P['per_file_colors']=per_file
+    P['categories']=[dict(emoji=em, label=emoji_to_info[em][0].capitalize(), count=counts.get(em,0),
+                          pct=(counts.get(em,0)/total*100 if total else 0), color=emoji_to_info[em][1]) for em in color_order]
+    P['min_e']=min(entries,key=lambda x:x['score']); P['max_e']=max(entries,key=lambda x:x['score'])
+    with_pct=[e for e in entries if e['pct'] is not None]
+    P['best_pct_e']=min(with_pct,key=lambda x:x['pct']); P['worst_pct_e']=max(with_pct,key=lambda x:x['pct'])
+    P['median']=sorted(scores)[len(scores)//2]
 
-# percentile table rows
-pct_rows = "\n".join(
-    f"| {e['date_label']} | top {e['pct']}% | {cum_pct[i]:.1f}% | {e['pct']-avg_pct:+.1f} |"
-    for i, e in enumerate(entries)
-)
+    d = os.path.join(assets_dir, sub) if sub else assets_dir
+    os.makedirs(d, exist_ok=True)
+    rel = f"assets/{sub}/" if sub else "assets/"
+    P['asset']=lambda f: rel + f
 
-# color distribution table rows
-color_rows = "\n".join(
-    f"| {c['emoji']} {c['label']} | {c['count']} | {c['pct']:.1f}% | `{c['color']}` |"
-    for c in categories
-)
+    y0,y1,yt = ranges['score']
+    open(os.path.join(d,"scores.svg"),"w",encoding="utf-8").write(svg_line_chart(
+        P['labels'], scores, title=f"{name} — Score Over Time", y_min=y0, y_max=y1, y_ticks=yt,
+        extra_lines=[dict(values=best_fit_line(scores), color="#f2c14e", dash="8 6", width=1.8, opacity=0.95)], y_label="Score", color=color))
+    p0,p1,pt = ranges['pct']
+    open(os.path.join(d,"percentile.svg"),"w",encoding="utf-8").write(svg_line_chart(
+        P['labels'], pcts, title=f"{name} — Percentile Over Time (lower is better)", y_min=p0, y_max=p1, y_ticks=pt,
+        extra_lines=[dict(values=best_fit_line(pcts), color="#f2c14e", dash="8 6", width=1.8)], y_label="Top %", color=color))
+    c0,c1,ct = ranges['cum_pct']
+    open(os.path.join(d,"percentile_cumulative.svg"),"w",encoding="utf-8").write(svg_line_chart(
+        P['labels'], [round(v,1) for v in cum_pct], title=f"{name} — Cumulative Average Percentile", y_min=c0, y_max=c1, y_ticks=ct,
+        extra_lines=[dict(values=[P['avg_pct']]*len(pcts), color="#f2c14e", dash="8 6", width=1.8)], y_label="Avg Top %", color=color))
+    open(os.path.join(d,"colors.svg"),"w",encoding="utf-8").write(svg_bar_histogram(
+        P['categories'], title=f"{name} — Tile Color Distribution — {total} tiles total"))
+    for _orphan in ["cumulative.svg", "combined.svg"]:
+        _p=os.path.join(d,_orphan)
+        if os.path.exists(_p):
+            try: os.remove(_p)
+            except: pass
+
+    P['table_rows']="\n".join(
+        f"| {e['date_label']} | `{e['file']}` | {e['emoji']} | **{e['score']:,}** | top {e['pct']}% | {e['score']-P['avg']:+,.0f} | "
+        + " | ".join(str(per_file[i].get(em,0)) for em in color_order) + " |" for i,e in enumerate(entries))
+    P['raw']=f"""Count: {len(entries)}
+Scores: {', '.join(f'{v:,}' for v in scores)}
+Min: {P['min_e']['score']:,} ({P['min_e']['file']})  Max: {P['max_e']['score']:,} ({P['max_e']['file']})
+Overall avg score: {P['avg']:.2f}
+Overall avg percentile: top {P['avg_pct']:.2f}%
+Cumulative avgs: {', '.join(f'{c:,.0f}' for c in P['cum'])}
+Cumulative avg percentiles: {', '.join(f'{c:.1f}%' for c in cum_pct)}
+Tiles: {', '.join(f"{c['emoji']} {c['label']} {c['count']} ({c['pct']:.1f}%)" for c in P['categories'])} — {total} total"""
+    return P
+
+# shared axis ranges so side-by-side charts are directly comparable
+_all=[(n, load_entries(pth), sub, col) for n,pth,sub,col in PLAYERS]
+_all_scores=[e['score'] for _,es,_,_ in _all for e in es]
+_all_pcts=[e['pct'] for _,es,_,_ in _all for e in es if e['pct'] is not None]
+_all_cum=[]
+for _,es,_,_ in _all:
+    ps=[e['pct'] for e in es if e['pct'] is not None]; s=0
+    for i,v in enumerate(ps):
+        s+=v; _all_cum.append(s/(i+1))
+ranges = dict(score=nice_range(_all_scores, 10000, pad=2000), pct=nice_range(_all_pcts, 10, pad=3), cum_pct=nice_range(_all_cum, 5, pad=1))
+players=[build_player(n, es, sub, col, ranges) for n,es,sub,col in _all]
+me=players[0]
 
 # --- head to head ---
-def _h2h_section(me_name, me_entries, others):
+def _h2h_section(me, others):
     out=[]
-    for name, theirs in others:
-        if not theirs:
-            continue
-        mine_by={(e['month'],e['day']):e for e in me_entries}
-        theirs_by={(e['month'],e['day']):e for e in theirs}
+    for other in others:
+        mine_by={(e['month'],e['day']):e for e in me['entries']}
+        theirs_by={(e['month'],e['day']):e for e in other['entries']}
         shared=sorted(set(mine_by)&set(theirs_by))
-        t_scores=[e['score'] for e in theirs]
-        t_pcts=[e['pct'] for e in theirs if e['pct'] is not None]
-        t_best=max(theirs,key=lambda e:e['score'])
-        t_avg=sum(t_scores)/len(t_scores)
-        t_avg_pct=sum(t_pcts)/len(t_pcts) if t_pcts else 0
-        lines=[f"## Head to Head — {me_name} vs {name}", "",
-               f"{name}'s files live in `{name.lower()}/` with the same `M_D` layout. "
-               f"{name}: **{len(theirs)}** games, avg **{t_avg:,.0f}**, avg percentile **top {t_avg_pct:.1f}%**, best **{t_best['score']:,}** (`{t_best['file']}`).", ""]
         if not shared:
-            out.append("\n".join(lines)); continue
+            continue
+        A,B=me['name'],other['name']
         labels=[f"{m}/{d}" for m,d in shared]
-        mine=[mine_by[k]['score'] for k in shared]; other=[theirs_by[k]['score'] for k in shared]
-        wins=sum(a>b for a,b in zip(mine,other)); losses=sum(a<b for a,b in zip(mine,other)); ties=len(shared)-wins-losses
-        margin=[a-b for a,b in zip(mine,other)]
-        m_avg=sum(mine)/len(mine); o_avg=sum(other)/len(other)
-        m_pct=[mine_by[k]['pct'] for k in shared if mine_by[k]['pct'] is not None]
-        o_pct=[theirs_by[k]['pct'] for k in shared if theirs_by[k]['pct'] is not None]
+        a_s=[mine_by[k]['score'] for k in shared]; b_s=[theirs_by[k]['score'] for k in shared]
+        wins=sum(a>b for a,b in zip(a_s,b_s)); losses=sum(a<b for a,b in zip(a_s,b_s)); ties=len(shared)-wins-losses
+        margin=[a-b for a,b in zip(a_s,b_s)]
+        a_avg=sum(a_s)/len(a_s); b_avg=sum(b_s)/len(b_s)
+        a_p=[mine_by[k]['pct'] for k in shared if mine_by[k]['pct'] is not None]
+        b_p=[theirs_by[k]['pct'] for k in shared if theirs_by[k]['pct'] is not None]
         big_w=max(range(len(shared)),key=lambda i:margin[i]); big_l=min(range(len(shared)),key=lambda i:margin[i])
-        # streak of current leader
         streak=0; leader=None
-        for a,b in reversed(list(zip(mine,other))):
-            w = me_name if a>b else name if b>a else None
+        for a,b in reversed(list(zip(a_s,b_s))):
+            w = A if a>b else B if b>a else None
             if w is None: break
             if leader is None: leader=w
             if w!=leader: break
             streak+=1
-        svg=svg_line_chart(labels, mine, title=f"{me_name} (blue) vs {name} (green) — days both played",
-                           y_min=35000, y_max=90000, y_ticks=[35000,45000,55000,65000,75000,85000],
-                           extra_lines=[dict(values=other, color="#5ee1a8", width=2.2, opacity=0.95)], y_label="Score")
-        fname=f"h2h_{name.lower()}.svg"
-        open(os.path.join(assets_dir, fname), "w", encoding="utf-8").write(svg)
+        y0,y1,yt=ranges['score']
+        fname=f"h2h_{B.lower()}.svg"
+        open(os.path.join(assets_dir,fname),"w",encoding="utf-8").write(svg_line_chart(
+            labels, a_s, title=f"{A} (blue) vs {B} (green) — days both played", y_min=y0, y_max=y1, y_ticks=yt,
+            extra_lines=[dict(values=b_s, color=other['color'], width=2.2, opacity=0.95)], y_label="Score", color=me['color']))
         rows="\n".join(
-            f"| {mine_by[k]['date_label']} | **{a:,}** (top {mine_by[k]['pct']}%) | **{b:,}** (top {theirs_by[k]['pct']}%) | {a-b:+,} | {me_name if a>b else name if b>a else 'tie'} |"
-            for k,a,b in zip(shared,mine,other))
-        lines += [f"![{me_name} vs {name}](assets/{fname})", "",
-                  f"- **Record ({me_name}–{name}):** **{wins}–{losses}**" + (f"–{ties}" if ties else "") + f" over {len(shared)} shared days",
-                  f"- **Average on shared days:** {me_name} {m_avg:,.0f} · {name} {o_avg:,.0f} ({m_avg-o_avg:+,.0f})",
-                  f"- **Average percentile on shared days:** {me_name} top {sum(m_pct)/len(m_pct):.1f}% · {name} top {sum(o_pct)/len(o_pct):.1f}%" if m_pct and o_pct else "",
-                  f"- **Biggest {me_name} win:** {margin[big_w]:+,} on {mine_by[shared[big_w]]['date_label']} · **Biggest {name} win:** {-margin[big_l]:+,} on {mine_by[shared[big_l]]['date_label']}",
-                  f"- **Current run:** {leader} has won the last {streak}" if leader and streak>1 else "",
-                  "", "<details>", f"<summary>Day by day — {len(shared)} shared days (click to expand)</summary>", "",
-                  f"| Date | {me_name} | {name} | Δ | Winner |", "|------|------|------|---|--------|", rows, "", "</details>", ""]
-        out.append("\n".join(l for l in lines if l is not None))
+            f"| {mine_by[k]['date_label']} | **{a:,}** (top {mine_by[k]['pct']}%) | **{b:,}** (top {theirs_by[k]['pct']}%) | {a-b:+,} | {A if a>b else B if b>a else 'tie'} |"
+            for k,a,b in zip(shared,a_s,b_s))
+        lines=[f"## Head to Head — {A} vs {B}", "",
+               f"![{A} vs {B}](assets/{fname})", "",
+               f"- **Record ({A}–{B}):** **{wins}–{losses}**" + (f"–{ties}" if ties else "") + f" over {len(shared)} shared days",
+               f"- **Average on shared days:** {A} {a_avg:,.0f} · {B} {b_avg:,.0f} ({a_avg-b_avg:+,.0f})"]
+        if a_p and b_p:
+            lines.append(f"- **Average percentile on shared days:** {A} top {sum(a_p)/len(a_p):.1f}% · {B} top {sum(b_p)/len(b_p):.1f}%")
+        lines.append(f"- **Biggest {A} win:** {margin[big_w]:+,} on {mine_by[shared[big_w]]['date_label']} · **Biggest {B} win:** {-margin[big_l]:+,} on {mine_by[shared[big_l]]['date_label']}")
+        if leader and streak>1:
+            lines.append(f"- **Current run:** {leader} has won the last {streak}")
+        lines += ["", "<details>", f"<summary>Day by day — {len(shared)} shared days (click to expand)</summary>", "",
+                  f"| Date | {A} | {B} | Δ | Winner |", "|------|------|------|---|--------|", rows, "", "</details>", ""]
+        out.append("\n".join(lines))
     return "\n".join(out)
 
-_others=[(n, load_entries(pth)) for n,pth in PLAYERS[1:] if os.path.isdir(pth)]
-h2h_section=_h2h_section(PLAYERS[0][0], entries, _others)
+h2h_section=_h2h_section(me, players[1:]) if len(players)>1 else ""
 
-readme = f"""# Anthropeum — Score History
+# --- side-by-side helpers ---
+def side_by_side(asset_name):
+    cells="".join(f'<td width="{100//len(players)}%" valign="top"><img src="{P["asset"](asset_name)}" alt="{P["name"]} {asset_name}" width="100%"></td>' for P in players)
+    heads="".join(f'<th align="center">{P["name"]}</th>' for P in players)
+    return f'<table width="100%"><tr>{heads}</tr><tr>{cells}</tr></table>'
 
-Daily scores scraped from the files in this repo. Each file is named `M_D` (e.g. `8_13` → Aug 13) and line 3 holds the score (`64,497 · top 63% ...`). Other players keep the same layout in a subfolder (e.g. `ryan/`). This README is auto-generated by `generate_readme.py` — re-run it after adding a new day.
+def glance_table():
+    cols=" | ".join(P['name'] for P in players)
+    rows=[f"| Metric | {cols} |", "|---|" + "---|"*len(players)]
+    def row(label, fn): rows.append(f"| **{label}** | " + " | ".join(fn(P) for P in players) + " |")
+    row("Games", lambda P: f"{len(P['entries'])}")
+    row("Average score", lambda P: f"**{P['avg']:,.0f}**")
+    row("Median score", lambda P: f"{P['median']:,}")
+    row("Average percentile", lambda P: f"**top {P['avg_pct']:.1f}%**")
+    row("Best score", lambda P: f"**{P['max_e']['score']:,}** (`{P['max_e']['file']}`, top {P['max_e']['pct']}%)")
+    row("Worst score", lambda P: f"{P['min_e']['score']:,} (`{P['min_e']['file']}`, top {P['min_e']['pct']}%)")
+    row("Best percentile", lambda P: f"top {P['best_pct_e']['pct']}% (`{P['best_pct_e']['file']}`, {P['best_pct_e']['score']:,})")
+    row("Worst percentile", lambda P: f"top {P['worst_pct_e']['pct']}% (`{P['worst_pct_e']['file']}`, {P['worst_pct_e']['score']:,})")
+    row("Range", lambda P: f"{P['max_e']['score']-P['min_e']['score']:,}")
+    for em in color_order:
+        lab=emoji_to_info[em][0].capitalize()
+        row(f"{em} {lab} tiles", lambda P, em=em: next(f"{c['count']} ({c['pct']:.1f}%)" for c in P['categories'] if c['emoji']==em))
+    return "\n".join(rows)
 
-## Data Table
-
-<details>
-<summary>Data Table — {len(entries)} rows (click to expand)</summary>
+def data_tables():
+    out=[]
+    for P in players:
+        out.append(f"""<details>
+<summary>{P['name']} — {len(P['entries'])} rows (click to expand)</summary>
 
 | Date | File | Tiles | Score | Percentile | Δ vs Avg | 🟨 Yellow | 🟩 Green | 🟦 Blue | 🟥 Red |
 |------|------|-------|-------|------------|----------|-----------|----------|---------|--------|
-{table_rows}
+{P['table_rows']}
 
 </details>
+""")
+    return "\n".join(out)
 
-## Scores Over Time
+def raw_dumps():
+    return "\n".join(f"""<details>
+<summary>{P['name']}</summary>
 
-![Scores over time](assets/scores.svg)
+```
+{P['raw']}
+```
 
+</details>
+""" for P in players)
 
-## Percentile Over Time
+player_note = " · ".join(f"**{P['name']}** — `{'./' if i==0 else PLAYERS[i][2]+'/'}`" for i,P in enumerate(players))
+n_files = sum(len(P['entries']) for P in players)
 
+readme = f"""# Anthropeum — Score History
 
-![Percentile over time](assets/percentile.svg)
-
-
-## Tile Color Distribution
-
-![Tile colors](assets/colors.svg)
-
-
-
-
-## Cumulative Average Percentile
-
-![Cumulative percentile](assets/percentile_cumulative.svg)
-
+Daily scores scraped from the files in this repo. Each file is named `M_D` (e.g. `8_13` → Aug 13) and line 3 holds the score (`64,497 · top 63% ...`). Players: {player_note}. This README is auto-generated by `generate_readme.py` — re-run it after adding a new day.
 
 {h2h_section}
 ## At a Glance
 
-- **Average score:** **{avg:,.2f}**
-- **Average percentile:** **top {avg_pct:.1f}%**
-- **Best score:** **{max_e['score']:,}** (`{max_e['file']}`) — top {max_e['pct']}% 
-- **Worst score:** **{min_e['score']:,}** (`{min_e['file']}`) — top {min_e['pct']}%
-- **Best percentile:** top {best_pct_e['pct']}% (`{best_pct_e['file']}`) — {best_pct_e['score']:,}
-- **Worst percentile:** top {worst_pct_e['pct']}% (`{worst_pct_e['file']}`) — {worst_pct_e['score']:,}
-- **Median score:** {sorted(scores)[len(scores)//2]:,}
-- **Range:** {max_e['score']-min_e['score']:,} ( {min_e['score']:,} → {max_e['score']:,})
+{glance_table()}
 
+## Scores Over Time
 
+{side_by_side("scores.svg")}
+
+## Percentile Over Time
+
+{side_by_side("percentile.svg")}
+
+## Tile Color Distribution
+
+{side_by_side("colors.svg")}
+
+## Cumulative Average Percentile
+
+{side_by_side("percentile_cumulative.svg")}
+
+## Data Tables
+
+{data_tables()}
 ## Raw Stats Dump
 
-```
-Count: {len(entries)}
-Scores: {', '.join(f'{s:,}' for s in scores)}
-Min: {min_e['score']:,} ({min_e['file']})  Max: {max_e['score']:,} ({max_e['file']})
-Overall avg score: {avg:.2f}
-Overall avg percentile: top {avg_pct:.2f}%
-Cumulative avgs: {', '.join(f'{c:,.0f}' for c in cum)}
-Cumulative avg percentiles: {', '.join(f'{c:.1f}%' for c in cum_pct)}
-Tiles: {', '.join(f"{c['emoji']} {c['label']} {c['count']} ({c['pct']:.1f}%)" for c in categories)} — {total_tiles} total
-```
-
+{raw_dumps()}
 ---
-*Generated from {len(entries)} files on disk. See `generate_readme.py` for logic.*
+*Generated from {n_files} files on disk. See `generate_readme.py` for logic.*
 """
 
 with open(os.path.join(ROOT, "README.md"), "w", encoding="utf-8", newline="\n") as f:
     f.write(readme)
-

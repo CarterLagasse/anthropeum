@@ -1,6 +1,6 @@
-<svg viewBox="0 0 780 300" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Carter — Tile Color Distribution — 280 tiles total">
+<svg viewBox="0 0 780 300" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ryan — Tile Color Distribution — 320 tiles total">
 <rect width="780" height="300" fill="#0f1115" rx="12"/>
-<text x="390.0" y="22" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#e6e6e6">Carter — Tile Color Distribution — 280 tiles total</text>
+<text x="390.0" y="22" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#e6e6e6">Ryan — Tile Color Distribution — 320 tiles total</text>
 <line x1="90.0" x2="90.0" y1="36" y2="270" stroke="#2a2f3a" stroke-width="1" stroke-dasharray="4 6"/>
 <text x="90.0" y="284" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">0%</text>
 <line x1="222.0" x2="222.0" y1="36" y2="270" stroke="#2a2f3a" stroke-width="1" stroke-dasharray="4 6"/>
@@ -15,18 +15,18 @@
 <text x="750.0" y="284" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">50%</text>
 <text x="78" y="83.0" text-anchor="end" font-family="sans-serif" font-size="13" fill="#e6e6e6">🟨 Yellow</text>
 <rect x="90" y="61.0" width="660" height="36" rx="6" fill="#1a1d24"/>
-<rect x="90" y="61.0" width="504.4" height="36" rx="6" fill="#fdd835" />
-<text x="586.4" y="83.0" text-anchor="end" font-family="sans-serif" font-size="12" font-weight="600" fill="#0f1115">107 tiles · 38.2%</text>
+<rect x="90" y="61.0" width="457.9" height="36" rx="6" fill="#fdd835" />
+<text x="539.9" y="83.0" text-anchor="end" font-family="sans-serif" font-size="12" font-weight="600" fill="#0f1115">111 tiles · 34.7%</text>
 <text x="78" y="133.0" text-anchor="end" font-family="sans-serif" font-size="13" fill="#e6e6e6">🟩 Green</text>
 <rect x="90" y="111.0" width="660" height="36" rx="6" fill="#1a1d24"/>
-<rect x="90" y="111.0" width="466.7" height="36" rx="6" fill="#43a047" />
-<text x="548.7" y="133.0" text-anchor="end" font-family="sans-serif" font-size="12" font-weight="600" fill="#0f1115">99 tiles · 35.4%</text>
+<rect x="90" y="111.0" width="486.8" height="36" rx="6" fill="#43a047" />
+<text x="568.8" y="133.0" text-anchor="end" font-family="sans-serif" font-size="12" font-weight="600" fill="#0f1115">118 tiles · 36.9%</text>
 <text x="78" y="183.0" text-anchor="end" font-family="sans-serif" font-size="13" fill="#e6e6e6">🟦 Blue</text>
 <rect x="90" y="161.0" width="660" height="36" rx="6" fill="#1a1d24"/>
-<rect x="90" y="161.0" width="216.9" height="36" rx="6" fill="#1e88e5" />
-<text x="298.9" y="183.0" text-anchor="end" font-family="sans-serif" font-size="12" font-weight="600" fill="#0f1115">46 tiles · 16.4%</text>
+<rect x="90" y="161.0" width="251.6" height="36" rx="6" fill="#1e88e5" />
+<text x="333.6" y="183.0" text-anchor="end" font-family="sans-serif" font-size="12" font-weight="600" fill="#0f1115">61 tiles · 19.1%</text>
 <text x="78" y="233.0" text-anchor="end" font-family="sans-serif" font-size="13" fill="#e6e6e6">🟥 Red</text>
 <rect x="90" y="211.0" width="660" height="36" rx="6" fill="#1a1d24"/>
-<rect x="90" y="211.0" width="132.0" height="36" rx="6" fill="#e53935" />
-<text x="230.0" y="233.0" text-anchor="start" font-family="sans-serif" font-size="12" font-weight="600" fill="#e6e6e6">28 tiles · 10.0%</text>
+<rect x="90" y="211.0" width="123.8" height="36" rx="6" fill="#e53935" />
+<text x="221.8" y="233.0" text-anchor="start" font-family="sans-serif" font-size="12" font-weight="600" fill="#e6e6e6">30 tiles · 9.4%</text>
 </svg>
