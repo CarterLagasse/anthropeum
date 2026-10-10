@@ -13,178 +13,181 @@
 <text x="54" y="34.0" text-anchor="end" font-family="sans-serif" font-size="11" fill="#9aa0ad">70</text>
 <line x1="62.0" x2="62.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
 <text x="62.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/13</text>
-<line x1="75.0" x2="75.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="75.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/14</text>
-<line x1="87.9" x2="87.9" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="87.9" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/15</text>
-<line x1="100.9" x2="100.9" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="100.9" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/16</text>
-<line x1="113.9" x2="113.9" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="113.9" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/17</text>
-<line x1="126.8" x2="126.8" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="126.8" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/18</text>
-<line x1="139.8" x2="139.8" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="139.8" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/20</text>
-<line x1="152.7" x2="152.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="152.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/21</text>
-<line x1="165.7" x2="165.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="165.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/22</text>
-<line x1="178.7" x2="178.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="178.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/23</text>
-<line x1="191.6" x2="191.6" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="191.6" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/24</text>
-<line x1="204.6" x2="204.6" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="204.6" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/25</text>
-<line x1="217.6" x2="217.6" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="217.6" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/26</text>
-<line x1="230.5" x2="230.5" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="230.5" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/27</text>
-<line x1="243.5" x2="243.5" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="243.5" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/29</text>
-<line x1="256.4" x2="256.4" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="256.4" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/30</text>
-<line x1="269.4" x2="269.4" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="269.4" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/31</text>
-<line x1="282.4" x2="282.4" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="282.4" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/1</text>
-<line x1="295.3" x2="295.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="295.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/2</text>
-<line x1="308.3" x2="308.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="308.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/3</text>
-<line x1="321.3" x2="321.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="321.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/4</text>
-<line x1="334.2" x2="334.2" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="334.2" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/5</text>
-<line x1="347.2" x2="347.2" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="347.2" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/6</text>
-<line x1="360.1" x2="360.1" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="360.1" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/7</text>
-<line x1="373.1" x2="373.1" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="373.1" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/8</text>
-<line x1="386.1" x2="386.1" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="386.1" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/9</text>
-<line x1="399.0" x2="399.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="399.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/10</text>
-<line x1="412.0" x2="412.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="412.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/11</text>
-<line x1="425.0" x2="425.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="425.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/12</text>
-<line x1="437.9" x2="437.9" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="437.9" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/13</text>
-<line x1="450.9" x2="450.9" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="450.9" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/14</text>
-<line x1="463.9" x2="463.9" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="463.9" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/15</text>
-<line x1="476.8" x2="476.8" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="476.8" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/16</text>
-<line x1="489.8" x2="489.8" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="489.8" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/17</text>
-<line x1="502.7" x2="502.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="502.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/18</text>
-<line x1="515.7" x2="515.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="515.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/19</text>
-<line x1="528.7" x2="528.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="528.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/20</text>
-<line x1="541.6" x2="541.6" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="541.6" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/21</text>
-<line x1="554.6" x2="554.6" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="554.6" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/22</text>
-<line x1="567.6" x2="567.6" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="567.6" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/23</text>
-<line x1="580.5" x2="580.5" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="580.5" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/24</text>
-<line x1="593.5" x2="593.5" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="593.5" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/25</text>
-<line x1="606.4" x2="606.4" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="606.4" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/26</text>
-<line x1="619.4" x2="619.4" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="619.4" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/27</text>
-<line x1="632.4" x2="632.4" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="632.4" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/28</text>
-<line x1="645.3" x2="645.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="645.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/29</text>
-<line x1="658.3" x2="658.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="658.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/30</text>
-<line x1="671.3" x2="671.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="671.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/1</text>
-<line x1="684.2" x2="684.2" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="684.2" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/2</text>
-<line x1="697.2" x2="697.2" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="697.2" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/3</text>
-<line x1="710.1" x2="710.1" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="710.1" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/4</text>
-<line x1="723.1" x2="723.1" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="723.1" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/5</text>
-<line x1="736.1" x2="736.1" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="736.1" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/6</text>
-<line x1="749.0" x2="749.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="749.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/7</text>
+<line x1="74.7" x2="74.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="74.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/14</text>
+<line x1="87.5" x2="87.5" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="87.5" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/15</text>
+<line x1="100.2" x2="100.2" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="100.2" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/16</text>
+<line x1="112.9" x2="112.9" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="112.9" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/17</text>
+<line x1="125.6" x2="125.6" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="125.6" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/18</text>
+<line x1="138.4" x2="138.4" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="138.4" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/20</text>
+<line x1="151.1" x2="151.1" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="151.1" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/21</text>
+<line x1="163.8" x2="163.8" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="163.8" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/22</text>
+<line x1="176.5" x2="176.5" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="176.5" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/23</text>
+<line x1="189.3" x2="189.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="189.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/24</text>
+<line x1="202.0" x2="202.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="202.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/25</text>
+<line x1="214.7" x2="214.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="214.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/26</text>
+<line x1="227.5" x2="227.5" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="227.5" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/27</text>
+<line x1="240.2" x2="240.2" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="240.2" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/29</text>
+<line x1="252.9" x2="252.9" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="252.9" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/30</text>
+<line x1="265.6" x2="265.6" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="265.6" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">8/31</text>
+<line x1="278.4" x2="278.4" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="278.4" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/1</text>
+<line x1="291.1" x2="291.1" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="291.1" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/2</text>
+<line x1="303.8" x2="303.8" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="303.8" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/3</text>
+<line x1="316.5" x2="316.5" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="316.5" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/4</text>
+<line x1="329.3" x2="329.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="329.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/5</text>
+<line x1="342.0" x2="342.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="342.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/6</text>
+<line x1="354.7" x2="354.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="354.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/7</text>
+<line x1="367.5" x2="367.5" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="367.5" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/8</text>
+<line x1="380.2" x2="380.2" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="380.2" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/9</text>
+<line x1="392.9" x2="392.9" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="392.9" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/10</text>
+<line x1="405.6" x2="405.6" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="405.6" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/11</text>
+<line x1="418.4" x2="418.4" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="418.4" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/12</text>
+<line x1="431.1" x2="431.1" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="431.1" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/13</text>
+<line x1="443.8" x2="443.8" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="443.8" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/14</text>
+<line x1="456.5" x2="456.5" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="456.5" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/15</text>
+<line x1="469.3" x2="469.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="469.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/16</text>
+<line x1="482.0" x2="482.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="482.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/17</text>
+<line x1="494.7" x2="494.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="494.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/18</text>
+<line x1="507.5" x2="507.5" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="507.5" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/19</text>
+<line x1="520.2" x2="520.2" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="520.2" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/20</text>
+<line x1="532.9" x2="532.9" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="532.9" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/21</text>
+<line x1="545.6" x2="545.6" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="545.6" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/22</text>
+<line x1="558.4" x2="558.4" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="558.4" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/23</text>
+<line x1="571.1" x2="571.1" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="571.1" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/24</text>
+<line x1="583.8" x2="583.8" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="583.8" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/25</text>
+<line x1="596.5" x2="596.5" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="596.5" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/26</text>
+<line x1="609.3" x2="609.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="609.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/27</text>
+<line x1="622.0" x2="622.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="622.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/28</text>
+<line x1="634.7" x2="634.7" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="634.7" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/29</text>
+<line x1="647.5" x2="647.5" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="647.5" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">9/30</text>
+<line x1="660.2" x2="660.2" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="660.2" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/1</text>
+<line x1="672.9" x2="672.9" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="672.9" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/2</text>
+<line x1="685.6" x2="685.6" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="685.6" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/3</text>
+<line x1="698.4" x2="698.4" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="698.4" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/4</text>
+<line x1="711.1" x2="711.1" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="711.1" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/5</text>
+<line x1="723.8" x2="723.8" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="723.8" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/6</text>
+<line x1="736.5" x2="736.5" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="736.5" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/7</text>
+<line x1="749.3" x2="749.3" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
+<text x="749.3" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/8</text>
 <line x1="762.0" x2="762.0" y1="292" y2="296" stroke="#3a4150" stroke-width="1"/>
-<text x="762.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/8</text>
+<text x="762.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">10/9</text>
 <line x1="62" x2="62" y1="30" y2="292" stroke="#3a4150" stroke-width="1.2"/>
 <line x1="62" x2="762" y1="292" y2="292" stroke="#3a4150" stroke-width="1.2"/>
 <text x="14" y="161.0" text-anchor="middle" transform="rotate(-90,14,161.0)" font-family="sans-serif" font-size="11" fill="#9aa0ad">Avg Top %</text>
-<path d="M 62.0,245.8 L 75.0,245.8 L 87.9,245.8 L 100.9,245.8 L 113.9,245.8 L 126.8,245.8 L 139.8,245.8 L 152.7,245.8 L 165.7,245.8 L 178.7,245.8 L 191.6,245.8 L 204.6,245.8 L 217.6,245.8 L 230.5,245.8 L 243.5,245.8 L 256.4,245.8 L 269.4,245.8 L 282.4,245.8 L 295.3,245.8 L 308.3,245.8 L 321.3,245.8 L 334.2,245.8 L 347.2,245.8 L 360.1,245.8 L 373.1,245.8 L 386.1,245.8 L 399.0,245.8 L 412.0,245.8 L 425.0,245.8 L 437.9,245.8 L 450.9,245.8 L 463.9,245.8 L 476.8,245.8 L 489.8,245.8 L 502.7,245.8 L 515.7,245.8 L 528.7,245.8 L 541.6,245.8 L 554.6,245.8 L 567.6,245.8 L 580.5,245.8 L 593.5,245.8 L 606.4,245.8 L 619.4,245.8 L 632.4,245.8 L 645.3,245.8 L 658.3,245.8 L 671.3,245.8 L 684.2,245.8 L 697.2,245.8 L 710.1,245.8 L 723.1,245.8 L 736.1,245.8 L 749.0,245.8 L 762.0,245.8" fill="none" stroke="#f2c14e" stroke-width="1.8" opacity="0.9" stroke-dasharray="8 6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 62.0,121.7 L 75.0,239.6 L 87.9,95.5 L 100.9,216.0 L 113.9,147.9 L 126.8,104.7 L 139.8,87.6 L 152.7,74.5 L 165.7,98.1 L 178.7,102.1 L 191.6,100.7 L 204.6,88.9 L 217.6,117.8 L 230.5,107.3 L 243.5,126.9 L 256.4,103.4 L 269.4,137.4 L 282.4,151.8 L 295.3,145.3 L 308.3,150.5 L 321.3,159.7 L 334.2,180.7 L 347.2,175.4 L 360.1,185.9 L 373.1,183.3 L 386.1,180.7 L 399.0,187.2 L 412.0,202.9 L 425.0,206.8 L 437.9,223.9 L 450.9,221.3 L 463.9,217.3 L 476.8,216.0 L 489.8,217.3 L 502.7,208.2 L 515.7,201.6 L 528.7,210.8 L 541.6,214.7 L 554.6,218.6 L 567.6,219.9 L 580.5,226.5 L 593.5,223.9 L 606.4,233.1 L 619.4,235.7 L 632.4,227.8 L 645.3,230.4 L 658.3,235.7 L 671.3,239.6 L 684.2,246.2 L 697.2,246.2 L 710.1,246.2 L 723.1,238.3 L 736.1,243.5 L 749.0,242.2 L 762.0,246.2" fill="none" stroke="#7aa5ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 62.0,121.7 L 75.0,239.6 L 87.9,95.5 L 100.9,216.0 L 113.9,147.9 L 126.8,104.7 L 139.8,87.6 L 152.7,74.5 L 165.7,98.1 L 178.7,102.1 L 191.6,100.7 L 204.6,88.9 L 217.6,117.8 L 230.5,107.3 L 243.5,126.9 L 256.4,103.4 L 269.4,137.4 L 282.4,151.8 L 295.3,145.3 L 308.3,150.5 L 321.3,159.7 L 334.2,180.7 L 347.2,175.4 L 360.1,185.9 L 373.1,183.3 L 386.1,180.7 L 399.0,187.2 L 412.0,202.9 L 425.0,206.8 L 437.9,223.9 L 450.9,221.3 L 463.9,217.3 L 476.8,216.0 L 489.8,217.3 L 502.7,208.2 L 515.7,201.6 L 528.7,210.8 L 541.6,214.7 L 554.6,218.6 L 567.6,219.9 L 580.5,226.5 L 593.5,223.9 L 606.4,233.1 L 619.4,235.7 L 632.4,227.8 L 645.3,230.4 L 658.3,235.7 L 671.3,239.6 L 684.2,246.2 L 697.2,246.2 L 710.1,246.2 L 723.1,238.3 L 736.1,243.5 L 749.0,242.2 L 762.0,246.2 L 762.0,292.0 L 62.0,292.0 Z" fill="#7aa5ff" opacity="0.08"/>
+<path d="M 62.0,238.2 L 74.7,238.2 L 87.5,238.2 L 100.2,238.2 L 112.9,238.2 L 125.6,238.2 L 138.4,238.2 L 151.1,238.2 L 163.8,238.2 L 176.5,238.2 L 189.3,238.2 L 202.0,238.2 L 214.7,238.2 L 227.5,238.2 L 240.2,238.2 L 252.9,238.2 L 265.6,238.2 L 278.4,238.2 L 291.1,238.2 L 303.8,238.2 L 316.5,238.2 L 329.3,238.2 L 342.0,238.2 L 354.7,238.2 L 367.5,238.2 L 380.2,238.2 L 392.9,238.2 L 405.6,238.2 L 418.4,238.2 L 431.1,238.2 L 443.8,238.2 L 456.5,238.2 L 469.3,238.2 L 482.0,238.2 L 494.7,238.2 L 507.5,238.2 L 520.2,238.2 L 532.9,238.2 L 545.6,238.2 L 558.4,238.2 L 571.1,238.2 L 583.8,238.2 L 596.5,238.2 L 609.3,238.2 L 622.0,238.2 L 634.7,238.2 L 647.5,238.2 L 660.2,238.2 L 672.9,238.2 L 685.6,238.2 L 698.4,238.2 L 711.1,238.2 L 723.8,238.2 L 736.5,238.2 L 749.3,238.2 L 762.0,238.2" fill="none" stroke="#f2c14e" stroke-width="1.8" opacity="0.9" stroke-dasharray="8 6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 62.0,121.7 L 74.7,239.6 L 87.5,95.5 L 100.2,216.0 L 112.9,147.9 L 125.6,104.7 L 138.4,87.6 L 151.1,74.5 L 163.8,98.1 L 176.5,102.1 L 189.3,100.7 L 202.0,88.9 L 214.7,117.8 L 227.5,107.3 L 240.2,126.9 L 252.9,103.4 L 265.6,137.4 L 278.4,151.8 L 291.1,145.3 L 303.8,150.5 L 316.5,159.7 L 329.3,180.7 L 342.0,175.4 L 354.7,185.9 L 367.5,183.3 L 380.2,180.7 L 392.9,187.2 L 405.6,202.9 L 418.4,206.8 L 431.1,223.9 L 443.8,221.3 L 456.5,217.3 L 469.3,216.0 L 482.0,217.3 L 494.7,208.2 L 507.5,201.6 L 520.2,210.8 L 532.9,214.7 L 545.6,218.6 L 558.4,219.9 L 571.1,226.5 L 583.8,223.9 L 596.5,233.1 L 609.3,235.7 L 622.0,227.8 L 634.7,230.4 L 647.5,235.7 L 660.2,239.6 L 672.9,246.2 L 685.6,246.2 L 698.4,246.2 L 711.1,238.3 L 723.8,243.5 L 736.5,242.2 L 749.3,246.2 L 762.0,238.3" fill="none" stroke="#7aa5ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 62.0,121.7 L 74.7,239.6 L 87.5,95.5 L 100.2,216.0 L 112.9,147.9 L 125.6,104.7 L 138.4,87.6 L 151.1,74.5 L 163.8,98.1 L 176.5,102.1 L 189.3,100.7 L 202.0,88.9 L 214.7,117.8 L 227.5,107.3 L 240.2,126.9 L 252.9,103.4 L 265.6,137.4 L 278.4,151.8 L 291.1,145.3 L 303.8,150.5 L 316.5,159.7 L 329.3,180.7 L 342.0,175.4 L 354.7,185.9 L 367.5,183.3 L 380.2,180.7 L 392.9,187.2 L 405.6,202.9 L 418.4,206.8 L 431.1,223.9 L 443.8,221.3 L 456.5,217.3 L 469.3,216.0 L 482.0,217.3 L 494.7,208.2 L 507.5,201.6 L 520.2,210.8 L 532.9,214.7 L 545.6,218.6 L 558.4,219.9 L 571.1,226.5 L 583.8,223.9 L 596.5,233.1 L 609.3,235.7 L 622.0,227.8 L 634.7,230.4 L 647.5,235.7 L 660.2,239.6 L 672.9,246.2 L 685.6,246.2 L 698.4,246.2 L 711.1,238.3 L 723.8,243.5 L 736.5,242.2 L 749.3,246.2 L 762.0,238.3 L 762.0,292.0 L 62.0,292.0 Z" fill="#7aa5ff" opacity="0.08"/>
 <circle cx="62.0" cy="121.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/13: 63.0</title></circle>
-<circle cx="75.0" cy="239.6" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/14: 54.0</title></circle>
-<circle cx="87.9" cy="95.5" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/15: 65.0</title></circle>
-<circle cx="100.9" cy="216.0" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/16: 55.8</title></circle>
-<circle cx="113.9" cy="147.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/17: 61.0</title></circle>
-<circle cx="126.8" cy="104.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/18: 64.3</title></circle>
-<circle cx="139.8" cy="87.6" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/20: 65.6</title></circle>
-<circle cx="152.7" cy="74.5" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/21: 66.6</title></circle>
-<circle cx="165.7" cy="98.1" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/22: 64.8</title></circle>
-<circle cx="178.7" cy="102.1" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/23: 64.5</title></circle>
-<circle cx="191.6" cy="100.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/24: 64.6</title></circle>
-<circle cx="204.6" cy="88.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/25: 65.5</title></circle>
-<circle cx="217.6" cy="117.8" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/26: 63.3</title></circle>
-<circle cx="230.5" cy="107.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/27: 64.1</title></circle>
-<circle cx="243.5" cy="126.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/29: 62.6</title></circle>
-<circle cx="256.4" cy="103.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/30: 64.4</title></circle>
-<circle cx="269.4" cy="137.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/31: 61.8</title></circle>
-<circle cx="282.4" cy="151.8" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/1: 60.7</title></circle>
-<circle cx="295.3" cy="145.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/2: 61.2</title></circle>
-<circle cx="308.3" cy="150.5" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/3: 60.8</title></circle>
-<circle cx="321.3" cy="159.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/4: 60.1</title></circle>
-<circle cx="334.2" cy="180.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/5: 58.5</title></circle>
-<circle cx="347.2" cy="175.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/6: 58.9</title></circle>
-<circle cx="360.1" cy="185.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/7: 58.1</title></circle>
-<circle cx="373.1" cy="183.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/8: 58.3</title></circle>
-<circle cx="386.1" cy="180.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/9: 58.5</title></circle>
-<circle cx="399.0" cy="187.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/10: 58.0</title></circle>
-<circle cx="412.0" cy="202.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/11: 56.8</title></circle>
-<circle cx="425.0" cy="206.8" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/12: 56.5</title></circle>
-<circle cx="437.9" cy="223.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/13: 55.2</title></circle>
-<circle cx="450.9" cy="221.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/14: 55.4</title></circle>
-<circle cx="463.9" cy="217.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/15: 55.7</title></circle>
-<circle cx="476.8" cy="216.0" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/16: 55.8</title></circle>
-<circle cx="489.8" cy="217.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/17: 55.7</title></circle>
-<circle cx="502.7" cy="208.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/18: 56.4</title></circle>
-<circle cx="515.7" cy="201.6" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/19: 56.9</title></circle>
-<circle cx="528.7" cy="210.8" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/20: 56.2</title></circle>
-<circle cx="541.6" cy="214.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/21: 55.9</title></circle>
-<circle cx="554.6" cy="218.6" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/22: 55.6</title></circle>
-<circle cx="567.6" cy="219.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/23: 55.5</title></circle>
-<circle cx="580.5" cy="226.5" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/24: 55.0</title></circle>
-<circle cx="593.5" cy="223.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/25: 55.2</title></circle>
-<circle cx="606.4" cy="233.1" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/26: 54.5</title></circle>
-<circle cx="619.4" cy="235.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/27: 54.3</title></circle>
-<circle cx="632.4" cy="227.8" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/28: 54.9</title></circle>
-<circle cx="645.3" cy="230.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/29: 54.7</title></circle>
-<circle cx="658.3" cy="235.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/30: 54.3</title></circle>
-<circle cx="671.3" cy="239.6" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/1: 54.0</title></circle>
-<circle cx="684.2" cy="246.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/2: 53.5</title></circle>
-<circle cx="697.2" cy="246.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/3: 53.5</title></circle>
-<circle cx="710.1" cy="246.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/4: 53.5</title></circle>
-<circle cx="723.1" cy="238.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/5: 54.1</title></circle>
-<circle cx="736.1" cy="243.5" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/6: 53.7</title></circle>
-<circle cx="749.0" cy="242.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/7: 53.8</title></circle>
-<circle cx="762.0" cy="246.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/8: 53.5</title></circle>
-<text x="152.7" y="64.5" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">66.6</text>
-<text x="684.2" y="260.1" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">53.5</text>
-<text x="697.2" y="260.1" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">53.5</text>
-<text x="710.1" y="260.1" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">53.5</text>
-<text x="762.0" y="260.1" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">53.5</text>
+<circle cx="74.7" cy="239.6" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/14: 54.0</title></circle>
+<circle cx="87.5" cy="95.5" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/15: 65.0</title></circle>
+<circle cx="100.2" cy="216.0" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/16: 55.8</title></circle>
+<circle cx="112.9" cy="147.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/17: 61.0</title></circle>
+<circle cx="125.6" cy="104.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/18: 64.3</title></circle>
+<circle cx="138.4" cy="87.6" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/20: 65.6</title></circle>
+<circle cx="151.1" cy="74.5" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/21: 66.6</title></circle>
+<circle cx="163.8" cy="98.1" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/22: 64.8</title></circle>
+<circle cx="176.5" cy="102.1" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/23: 64.5</title></circle>
+<circle cx="189.3" cy="100.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/24: 64.6</title></circle>
+<circle cx="202.0" cy="88.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/25: 65.5</title></circle>
+<circle cx="214.7" cy="117.8" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/26: 63.3</title></circle>
+<circle cx="227.5" cy="107.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/27: 64.1</title></circle>
+<circle cx="240.2" cy="126.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/29: 62.6</title></circle>
+<circle cx="252.9" cy="103.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/30: 64.4</title></circle>
+<circle cx="265.6" cy="137.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>8/31: 61.8</title></circle>
+<circle cx="278.4" cy="151.8" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/1: 60.7</title></circle>
+<circle cx="291.1" cy="145.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/2: 61.2</title></circle>
+<circle cx="303.8" cy="150.5" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/3: 60.8</title></circle>
+<circle cx="316.5" cy="159.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/4: 60.1</title></circle>
+<circle cx="329.3" cy="180.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/5: 58.5</title></circle>
+<circle cx="342.0" cy="175.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/6: 58.9</title></circle>
+<circle cx="354.7" cy="185.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/7: 58.1</title></circle>
+<circle cx="367.5" cy="183.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/8: 58.3</title></circle>
+<circle cx="380.2" cy="180.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/9: 58.5</title></circle>
+<circle cx="392.9" cy="187.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/10: 58.0</title></circle>
+<circle cx="405.6" cy="202.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/11: 56.8</title></circle>
+<circle cx="418.4" cy="206.8" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/12: 56.5</title></circle>
+<circle cx="431.1" cy="223.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/13: 55.2</title></circle>
+<circle cx="443.8" cy="221.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/14: 55.4</title></circle>
+<circle cx="456.5" cy="217.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/15: 55.7</title></circle>
+<circle cx="469.3" cy="216.0" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/16: 55.8</title></circle>
+<circle cx="482.0" cy="217.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/17: 55.7</title></circle>
+<circle cx="494.7" cy="208.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/18: 56.4</title></circle>
+<circle cx="507.5" cy="201.6" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/19: 56.9</title></circle>
+<circle cx="520.2" cy="210.8" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/20: 56.2</title></circle>
+<circle cx="532.9" cy="214.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/21: 55.9</title></circle>
+<circle cx="545.6" cy="218.6" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/22: 55.6</title></circle>
+<circle cx="558.4" cy="219.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/23: 55.5</title></circle>
+<circle cx="571.1" cy="226.5" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/24: 55.0</title></circle>
+<circle cx="583.8" cy="223.9" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/25: 55.2</title></circle>
+<circle cx="596.5" cy="233.1" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/26: 54.5</title></circle>
+<circle cx="609.3" cy="235.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/27: 54.3</title></circle>
+<circle cx="622.0" cy="227.8" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/28: 54.9</title></circle>
+<circle cx="634.7" cy="230.4" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/29: 54.7</title></circle>
+<circle cx="647.5" cy="235.7" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>9/30: 54.3</title></circle>
+<circle cx="660.2" cy="239.6" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/1: 54.0</title></circle>
+<circle cx="672.9" cy="246.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/2: 53.5</title></circle>
+<circle cx="685.6" cy="246.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/3: 53.5</title></circle>
+<circle cx="698.4" cy="246.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/4: 53.5</title></circle>
+<circle cx="711.1" cy="238.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/5: 54.1</title></circle>
+<circle cx="723.8" cy="243.5" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/6: 53.7</title></circle>
+<circle cx="736.5" cy="242.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/7: 53.8</title></circle>
+<circle cx="749.3" cy="246.2" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/8: 53.5</title></circle>
+<circle cx="762.0" cy="238.3" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>10/9: 54.1</title></circle>
+<text x="151.1" y="64.5" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">66.6</text>
+<text x="672.9" y="260.1" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">53.5</text>
+<text x="685.6" y="260.1" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">53.5</text>
+<text x="698.4" y="260.1" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">53.5</text>
+<text x="749.3" y="260.1" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">53.5</text>
 </svg>
