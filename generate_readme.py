@@ -2,6 +2,10 @@ import os, re, collections
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
+# Year used for the stat-file archive folders (data/M_YY). Change it once per year;
+# the Archive daily stats workflow reads this value — stats.year file no longer needed.
+YEAR = 2026
+
 def svg_line_chart(labels, values, title="", y_min=None, y_max=None, y_ticks=None, extra_lines=None, height=340, width=780, show_dots=True, y_label="Score"):
     margin = dict(left=62, right=18, top=30, bottom=48)
     plot_w = width - margin['left'] - margin['right']
@@ -138,6 +142,19 @@ for _mnum, _mname in _month_names.items():
                     entries.append(_parse_file(_p, _fname))
         # if folder exists, do not also pull that month's files from root (avoid double count)
         continue
+
+# data/ archive subfolders (e.g. data/8_26/, data/9_26/)
+_data_dir = os.path.join(ROOT, "data")
+if os.path.isdir(_data_dir):
+    for _sub in os.listdir(_data_dir):
+        _subdir = os.path.join(_data_dir, _sub)
+        if not os.path.isdir(_subdir):
+            continue
+        for _fname in os.listdir(_subdir):
+            if re.match(r'^\d+_\d+$', _fname):
+                _p = os.path.join(_subdir, _fname)
+                if os.path.isfile(_p):
+                    entries.append(_parse_file(_p, _fname))
 
 # fall back to root for months without folder
 for name in os.listdir(ROOT):
@@ -353,6 +370,6 @@ Tiles: {', '.join(f"{c['emoji']} {c['label']} {c['count']} ({c['pct']:.1f}%)" fo
 *Generated from {len(entries)} files on disk. See `generate_readme.py` for logic.*
 """
 
-with open(os.path.join(ROOT, "README.md"), "w", encoding="utf-8", newline="\n") as f:
+with open(os.path.join(ROOT, "README_old.md"), "w", encoding="utf-8", newline="\n") as f:
     f.write(readme)
 
