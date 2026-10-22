@@ -1,4 +1,4 @@
-### **68** Games · **65,042** Avg · **83,429** Best · **top 5%** Best percentile
+### Avg score: **65,042** · Best score: **83,429** · Best percentile: **top 5%**
 
 ## Personal bests
 

@@ -101,9 +101,36 @@ def header(x, y, w, h, title):
     ]
 
 
+def _nice_step(x):
+    exp = math.floor(math.log10(x))
+    f = x / 10 ** exp
+    for m, s in ((1, 1), (2, 2), (5, 5), (10, 10)):
+        if f <= m + 1e-12:
+            return s * 10 ** exp
+    return 10 ** (exp + 1)
+
+
+def dynamic_axis(vals, pad_frac=0.08, target=6):
+    """Fit an axis to the data: pad it, then snap to nice round tick steps."""
+    lo, hi = float(min(vals)), float(max(vals))
+    if hi <= lo:
+        hi = lo + max(abs(lo) * 0.02, 1)
+    span = hi - lo
+    pad = span * pad_frac
+    step = _nice_step(span / max(target - 1, 1))
+    lo_b = math.floor((lo - pad) / step) * step
+    hi_b = math.ceil((hi + pad) / step) * step
+    ticks = []
+    t = lo_b
+    while t <= hi_b + step * 0.5:
+        ticks.append(t)
+        t += step
+    return lo_b, hi_b, ticks
+
+
 # ------------------------------------------------ chart 1: score trend
 svg = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" aria-label="Score trend">']
-y_min, y_max = 38000, 86000
+y_min, y_max, y_ticks = dynamic_axis(scores)
 
 
 def y_s(v):
@@ -114,10 +141,10 @@ svg += header(0, 0, W, H, "score trend")
 svg.append(f'<defs>'
            f'<filter id="glow1" x="-40%" y="-40%" width="180%" height="180%">'
            f'<feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>')
-for t in [40000, 50000, 60000, 70000, 80000]:
+for t in y_ticks:
     yy = y_s(t)
     svg.append(f'<line x1="{ML}" x2="{W - MR}" y1="{yy:.1f}" y2="{yy:.1f}" stroke="#1c2431" stroke-width="1"/>')
-    svg.append(f'<text x="{ML - 10}" y="{yy + 4:.1f}" text-anchor="end" font-family="Segoe UI, sans-serif" font-size="11" fill="#64748b">{t//1000}k</text>')
+    svg.append(f'<text x="{ML - 10}" y="{yy + 4:.1f}" text-anchor="end" font-family="Segoe UI, sans-serif" font-size="11" fill="#64748b">{int(t)//1000}k</text>')
 pts = [(x_pos(i, n), y_s(v)) for i, v in enumerate(scores)]
 d = "M " + " L ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
 area = d + f" L {pts[-1][0]:.1f},{MT + PH:.1f} L {pts[0][0]:.1f},{MT + PH:.1f} Z"
@@ -210,7 +237,7 @@ _s = 0
 for i, v in enumerate(pcts):
     _s += v
     cum_pct.append(_s / (i + 1))
-c_min, c_max = 45, 70
+c_min, c_max, c_ticks = dynamic_axis(cum_pct, pad_frac=0.10, target=4)
 
 
 def y_c(v):
@@ -218,13 +245,16 @@ def y_c(v):
 
 
 svg = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W2b}" height="{H2b}" viewBox="0 0 {W2b} {H2b}" role="img" aria-label="Average percentile over time">']
-svg += header(0, 0, W2b, H2b, "average percentile over time (lower is better)")
+svg += header(0, 0, W2b, H2b, "average percentile over time")
 svg.append(f'<defs><filter id="glow3" x="-40%" y="-40%" width="180%" height="180%">'
            f'<feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>')
-for t in [50, 55, 60, 65, 70]:
+for t in c_ticks:
     yy = y_c(t)
     svg.append(f'<line x1="{ML2b}" x2="{W2b - MR}" y1="{yy:.1f}" y2="{yy:.1f}" stroke="#1c2431" stroke-width="1"/>')
-    svg.append(f'<text x="{ML2b - 10}" y="{yy + 4:.1f}" text-anchor="end" font-family="Segoe UI, sans-serif" font-size="11" fill="#64748b">top {t}%</text>')
+    svg.append(f'<text x="{ML2b - 10}" y="{yy + 4:.1f}" text-anchor="end" font-family="Segoe UI, sans-serif" font-size="11" fill="#64748b">top {t:.0f}%</text>')
+# straight reference line through the lowest point of the running average
+_y_low = min(cum_pct)
+svg.append(f'<line x1="{ML2b}" x2="{W2b - MR}" y1="{y_c(_y_low):.1f}" y2="{y_c(_y_low):.1f}" stroke="#475569" stroke-width="1.4" stroke-dasharray="6 6"/>')
 pts3 = [(x_pos(i, n), y_c(v)) for i, v in enumerate(cum_pct)]
 d3 = "M " + " L ".join(f"{x:.1f},{y:.1f}" for x, y in pts3)
 area3 = d3 + f" L {pts3[-1][0]:.1f},{MT2b + PH2b:.1f} L {pts3[0][0]:.1f},{MT2b + PH2b:.1f} Z"
@@ -249,12 +279,13 @@ PW3, PH3 = W3 - ML3 - MR, H3 - MT3 - MB3
 svg = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W3}" height="{H3}" viewBox="0 0 {W3} {H3}" role="img" aria-label="Scores from last 14 games">']
 svg += header(0, 0, W3, H3, "scores from last 14 games")
 recent = entries[-14:]
+r_min, r_max, _ = dynamic_axis([e['score'] for e in recent], pad_frac=0.10)
 slot = PW3 / 14
 bar_w = 34
 for i, e in enumerate(recent):
     xx = ML3 + i * slot + (slot - bar_w) / 2
     v = e['score']
-    bh = (v - 38000) / (86000 - 38000) * PH3
+    bh = (v - r_min) / (r_max - r_min) * PH3
     yy = MT3 + PH3 - bh
     svg.append(f'<rect x="{xx:.1f}" y="{yy:.1f}" width="{bar_w}" height="{bh:.1f}" rx="7" fill="#22d3ee" opacity="0.92"/>')
     svg.append(f'<text x="{xx + bar_w/2:.1f}" y="{yy - 8:.1f}" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="11" font-weight="600" fill="#e5e7eb">{v//1000}k</text>')
