@@ -1,3 +1,5 @@
+## This repo tracks my [`Anthropeum`](https://anthropeum.com) scores
+
 ### Avg score: **65,042** · Best score: **83,429** · Best percentile: **top 5%**
 
 ## Personal bests
