@@ -1,7 +1,7 @@
 import os, re, collections, math
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(ROOT, "assets", "cool")
+OUT = os.path.join(ROOT, "assets", "charts")
 os.makedirs(OUT, exist_ok=True)
 
 

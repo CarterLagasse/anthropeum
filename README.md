@@ -14,11 +14,11 @@
 
 ## The trail
 
-![Score trend](assets/cool/score_trend.svg)
+![Score trend](assets/charts/score_trend.svg)
 
 *Best: 83,429 on Oct 18 (top 5%) · Worst: 39,248 on Aug 30 · Average: 65,042 · Range: 44,181.*
 
-![Average percentile over time](assets/cool/percentile_cumulative.svg)
+![Average percentile over time](assets/charts/percentile_cumulative.svg)
 
 *Avg percentile: top 52% · Peak: top 66% in late August.*
 
@@ -26,7 +26,7 @@
 
 ## Recent form
 
-![Recent form](assets/cool/recent_bars.svg)
+![Recent form](assets/charts/recent_bars.svg)
 
 *All-time average: 65,042 · Median: 66,013.*
 
@@ -44,7 +44,7 @@
 
 ## Artifact breakdown
 
-![Artifact breakdown](assets/cool/tiles_donut.svg)
+![Artifact breakdown](assets/charts/tiles_donut.svg)
 
 ---
 
@@ -125,7 +125,3 @@
 | Oct 21 | 🟦🟦🟦🟩🟦🟩🟩🟩🟥🟩 | 76,391 | top 23% |
 
 </details>
-
----
-
-*Charts: `generate_charts.py` → `assets/cool/`. The auto-generated stats dump lives in `README_old.md`.*
