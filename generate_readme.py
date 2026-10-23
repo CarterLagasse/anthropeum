@@ -75,15 +75,10 @@ median = srt[n // 2]
 best_e = max(entries, key=lambda e: e['score'])
 worst_e = min(entries, key=lambda e: e['score'])
 
-# percentiles: all-time average, best, and peak of the running average
+# percentiles: the running average ends at its lowest point (lower is better)
 pct_entries = [e for e in entries if e['pct'] is not None]
 avg_pct = sum(e['pct'] for e in pct_entries) / len(pct_entries)
-cum_best, peak_e, _run = None, None, 0
-for i, e in enumerate(pct_entries):
-    _run += e['pct']
-    cur = _run / (i + 1)
-    if cum_best is None or cur > cum_best:
-        cum_best, peak_e = cur, e
+first_pct_e = pct_entries[0] if pct_entries else None
 best_pct_e = min(pct_entries, key=lambda e: e['pct'])
 
 
@@ -141,7 +136,7 @@ readme = f"""## This repo tracks my [`Anthropeum`](https://anthropeum.com) score
 
 ![Average percentile over time](assets/charts/percentile_cumulative.svg)
 
-*Avg percentile: top {int(avg_pct)}% · Peak: top {int(cum_best)}% on {dmon(peak_e)}.*
+*Avg percentile: top {first_pct_e['pct']}% on {dmon(first_pct_e)} → top {round(avg_pct)}% now.*
 
 ---
 

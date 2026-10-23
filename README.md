@@ -22,7 +22,7 @@
 
 ![Average percentile over time](assets/charts/percentile_cumulative.svg)
 
-*Avg percentile: top 51% · Peak: top 66% on Aug 21.*
+*Avg percentile: top 63% on Aug 13 → top 51% now.*
 
 ---
 
