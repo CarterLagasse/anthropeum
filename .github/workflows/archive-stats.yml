@@ -29,12 +29,13 @@ jobs:
       - name: Archive root stat files into data/
         run: |
           YEAR=${{ steps.year.outputs.year }}
+          YY="${YEAR: -2}"
           MOVED=0
           for f in *; do
             # only loose files in root matching M_D (e.g. 10_21, 8_1)
             if [[ -f "$f" && "$f" =~ ^[0-9]+_[0-9]+$ ]]; then
               month="${f%%_*}"
-              folder="data/${month}_${YEAR}"
+              folder="data/${month}_${YY}"
               mkdir -p "$folder"
               git mv "$f" "$folder/"
               MOVED=1
@@ -43,7 +44,7 @@ jobs:
           if [ "$MOVED" -eq 1 ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "Auto-archive stat files into data/${YEAR}"
+            git commit -m "Auto-archive stat files into data/${YY}"
             git push
           else
             echo "No root stat files to archive"

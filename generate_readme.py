@@ -2,374 +2,183 @@ import os, re, collections
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
-# Year used for the stat-file archive folders (data/M_YY). Change it once per year;
-# the Archive daily stats workflow reads this value — stats.year file no longer needed.
+# Full year used for the stat-file archive folders. The Archive daily stats
+# workflow strips this to two digits when naming folders (data/M_YY).
 YEAR = 2026
 
-def svg_line_chart(labels, values, title="", y_min=None, y_max=None, y_ticks=None, extra_lines=None, height=340, width=780, show_dots=True, y_label="Score"):
-    margin = dict(left=62, right=18, top=30, bottom=48)
-    plot_w = width - margin['left'] - margin['right']
-    plot_h = height - margin['top'] - margin['bottom']
-    n = len(labels)
-    if y_min is None: y_min = min(values) * 0.9
-    if y_max is None: y_max = max(values) * 1.1
-    if y_ticks is None:
-        y_ticks = [y_min + i*(y_max - y_min)/4 for i in range(5)]
-    def x_pos(i):
-        if n == 1: return margin['left'] + plot_w/2
-        return margin['left'] + i * plot_w / (n-1)
-    def y_pos(v):
-        return margin['top'] + plot_h - (v - y_min) / (y_max - y_min) * plot_h
-    points = [(x_pos(i), y_pos(v)) for i,v in enumerate(values)]
-    path_d = "M " + " L ".join(f"{x:.1f},{y:.1f}" for x,y in points)
-    svg = []
-    svg.append(f'<svg viewBox="0 0 {width} {height}" width="100%" height="{height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{title}">')
-    svg.append(f'<rect width="{width}" height="{height}" fill="#0f1115" rx="12"/>')
-    if title:
-        svg.append(f'<text x="{width/2:.1f}" y="20" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#e6e6e6">{title}</text>')
-    for yt in y_ticks:
-        y = y_pos(yt)
-        svg.append(f'<line x1="{margin["left"]}" x2="{width - margin["right"]}" y1="{y:.1f}" y2="{y:.1f}" stroke="#2a2f3a" stroke-width="1" stroke-dasharray="4 6"/>')
-        label = f"{int(yt):,}" if yt >= 1000 else f"{yt:.0f}"
-        svg.append(f'<text x="{margin["left"]-8}" y="{y+4:.1f}" text-anchor="end" font-family="sans-serif" font-size="11" fill="#9aa0ad">{label}</text>')
-    for i, lab in enumerate(labels):
-        x = x_pos(i)
-        svg.append(f'<line x1="{x:.1f}" x2="{x:.1f}" y1="{margin["top"]+plot_h}" y2="{margin["top"]+plot_h+4}" stroke="#3a4150" stroke-width="1"/>')
-        svg.append(f'<text x="{x:.1f}" y="{height - 14}" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">{lab}</text>')
-    svg.append(f'<line x1="{margin["left"]}" x2="{margin["left"]}" y1="{margin["top"]}" y2="{margin["top"]+plot_h}" stroke="#3a4150" stroke-width="1.2"/>')
-    svg.append(f'<line x1="{margin["left"]}" x2="{width - margin["right"]}" y1="{margin["top"]+plot_h}" y2="{margin["top"]+plot_h}" stroke="#3a4150" stroke-width="1.2"/>')
-    svg.append(f'<text x="14" y="{margin["top"]+plot_h/2:.1f}" text-anchor="middle" transform="rotate(-90,14,{margin["top"]+plot_h/2:.1f})" font-family="sans-serif" font-size="11" fill="#9aa0ad">{y_label}</text>')
-    if extra_lines:
-        for el in extra_lines:
-            ev = el["values"]
-            pts = [(x_pos(i), y_pos(v)) for i,v in enumerate(ev)]
-            d = "M " + " L ".join(f"{x:.1f},{y:.1f}" for x,y in pts)
-            dash = f' stroke-dasharray="{el["dash"]}"' if el.get("dash") else ""
-            svg.append(f'<path d="{d}" fill="none" stroke="{el.get("color","#888")}" stroke-width="{el.get("width",2)}" opacity="{el.get("opacity",0.9)}"{dash} stroke-linecap="round" stroke-linejoin="round"/>')
-    svg.append(f'<path d="{path_d}" fill="none" stroke="#7aa5ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>')
-    area_d = path_d + f' L {points[-1][0]:.1f},{margin["top"]+plot_h:.1f} L {points[0][0]:.1f},{margin["top"]+plot_h:.1f} Z'
-    svg.append(f'<path d="{area_d}" fill="#7aa5ff" opacity="0.08"/>')
-    if show_dots:
-        for (x,y), v, lab in zip(points, values, labels):
-            svg.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" fill="#7aa5ff" stroke="#0f1115" stroke-width="1.5"><title>{lab}: {v:,}</title></circle>')
-    max_v = max(values); min_v = min(values)
-    for (x,y), v in zip(points, values):
-        if v == max_v or v == min_v:
-            dy = -10 if v==max_v else 14
-            svg.append(f'<text x="{x:.1f}" y="{y+dy:.1f}" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#e6e6e6">{v:,}</text>')
-    svg.append('</svg>')
-    return "\n".join(svg)
+_MONTH_NAMES = {1: "january", 2: "february", 3: "march", 4: "april", 5: "may",
+                6: "june", 7: "july", 8: "august", 9: "september", 10: "october",
+                11: "november", 12: "december"}
+_ABBR = {1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun",
+         7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec"}
 
-def best_fit_line(values):
-    n = len(values)
-    if n < 2:
-        return values[:]
-    xs = list(range(n))
-    mx = sum(xs) / n
-    my = sum(values) / n
-    num = sum((x - mx) * (y - my) for x, y in zip(xs, values))
-    den = sum((x - mx) ** 2 for x in xs) or 1
-    m = num / den
-    b = my - m * mx
-    return [m * x + b for x in xs]
 
-def svg_bar_histogram(categories, title="Tile Color Distribution (160 tiles total)", width=780, height=300):
-    # categories: list of dict {label, emoji, count, pct, color}
-    margin = dict(left=90, right=30, top=36, bottom=30)
-    plot_w = width - margin['left'] - margin['right']
-    plot_h = height - margin['top'] - margin['bottom']
-    bar_h = 36
-    gap = 14
-    total_h = len(categories)*(bar_h+gap)
-    # centered vertically
-    start_y = margin['top'] + (plot_h - total_h)/2 + 8
-    max_pct = max(c['pct'] for c in categories) if categories else 100
-    # round max to nice 50
-    x_max = 50  # percentages go up to 50
-    if max_pct > 50:
-        x_max = 60
-    svg=[]
-    svg.append(f'<svg viewBox="0 0 {width} {height}" width="100%" height="{height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{title}">')
-    svg.append(f'<rect width="{width}" height="{height}" fill="#0f1115" rx="12"/>')
-    svg.append(f'<text x="{width/2:.1f}" y="22" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#e6e6e6">{title}</text>')
-    # x axis grid
-    for pct in [0,10,20,30,40,50]:
-        x = margin['left'] + pct/x_max * plot_w
-        svg.append(f'<line x1="{x:.1f}" x2="{x:.1f}" y1="{margin["top"]}" y2="{margin["top"]+plot_h}" stroke="#2a2f3a" stroke-width="1" stroke-dasharray="4 6"/>')
-        svg.append(f'<text x="{x:.1f}" y="{margin["top"]+plot_h+14}" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9aa0ad">{pct}%</text>')
-    for i, cat in enumerate(categories):
-        y = start_y + i*(bar_h+gap)
-        bar_w = cat['pct']/x_max * plot_w
-        # label left
-        svg.append(f'<text x="{margin["left"]-12}" y="{y+bar_h/2+4:.1f}" text-anchor="end" font-family="sans-serif" font-size="13" fill="#e6e6e6">{cat["emoji"]} {cat["label"]}</text>')
-        # bar background
-        svg.append(f'<rect x="{margin["left"]}" y="{y}" width="{plot_w}" height="{bar_h}" rx="6" fill="#1a1d24"/>')
-        # bar foreground
-        svg.append(f'<rect x="{margin["left"]}" y="{y}" width="{bar_w:.1f}" height="{bar_h}" rx="6" fill="{cat["color"]}" />')
-        # text inside/outside
-        label = f"{cat['count']} tiles · {cat['pct']:.1f}%"
-        if bar_w > 140:
-            svg.append(f'<text x="{margin["left"]+bar_w-8:.1f}" y="{y+bar_h/2+4:.1f}" text-anchor="end" font-family="sans-serif" font-size="12" font-weight="600" fill="#0f1115">{label}</text>')
-        else:
-            svg.append(f'<text x="{margin["left"]+bar_w+8:.1f}" y="{y+bar_h/2+4:.1f}" text-anchor="start" font-family="sans-serif" font-size="12" font-weight="600" fill="#e6e6e6">{label}</text>')
-    svg.append('</svg>')
-    return "\n".join(svg)
+def parse_file(path, name):
+    with open(path, encoding='utf-8', errors='ignore') as f:
+        lines = [l.rstrip('\n') for l in f.readlines()]
+    third = lines[2] if len(lines) >= 3 else ''
+    m = re.match(r'^\s*([\d,]+)', third)
+    score = int(m.group(1).replace(',', '')) if m else 0
+    pm = re.search(r'top\s+(\d+)%', third)
+    pct = int(pm.group(1)) if pm else None
+    date_label = lines[0].split('·')[-1].strip() if '·' in lines[0] else name
+    ym = re.search(r'\b(20\d{2})\b', date_label)
+    year = int(ym.group(1)) if ym else YEAR
+    month, day = map(int, name.split('_'))
+    emoji_line = lines[1] if len(lines) >= 2 else ''
+    return dict(file=name, month=month, day=day, year=year, date_label=date_label,
+                score=score, pct=pct, emoji=emoji_line)
 
-# --- parse data ---
-def _parse_file(p, name):
-    with open(p, encoding='utf-8', errors='ignore') as f:
-        lines=[l.rstrip('\n') for l in f.readlines()]
-    third=lines[2] if len(lines)>=3 else ''
-    m=re.match(r'^\s*([\d,]+)', third)
-    score=int(m.group(1).replace(',','')) if m else 0
-    pm=re.search(r'top\s+(\d+)%',third)
-    pct=int(pm.group(1)) if pm else None
-    date_label=lines[0].split('·')[-1].strip() if '·' in lines[0] else name
-    month,day=map(int,name.split('_'))
-    emoji_line=lines[1] if len(lines)>=2 else ''
-    return dict(file=name, month=month, day=day, date_label=date_label, score=score, pct=pct, emoji=emoji_line)
 
-entries=[]
-# month folders lowercase
-_month_names = {1:"january",2:"february",3:"march",4:"april",5:"may",6:"june",7:"july",8:"august",9:"september",10:"october",11:"november",12:"december"}
-for _mnum, _mname in _month_names.items():
+def scan(folder):
+    out = []
+    for fname in os.listdir(folder):
+        if re.match(r'^\d+_\d+$', fname):
+            p = os.path.join(folder, fname)
+            if os.path.isfile(p):
+                out.append(parse_file(p, fname))
+    return out
+
+
+entries, _seen = [], set()
+# legacy month-name folders (august/, september/, ...)
+for _mnum, _mname in _MONTH_NAMES.items():
     _folder = os.path.join(ROOT, _mname)
     if os.path.isdir(_folder):
-        for _fname in os.listdir(_folder):
-            if re.match(r'^\d+_\d+$', _fname):
-                _p = os.path.join(_folder, _fname)
-                if os.path.isfile(_p):
-                    entries.append(_parse_file(_p, _fname))
-        # if folder exists, do not also pull that month's files from root (avoid double count)
-        continue
-
-# data/ archive subfolders (e.g. data/8_26/, data/9_26/)
+        for e in scan(_folder):
+            if e['file'] not in _seen:
+                _seen.add(e['file'])
+                entries.append(e)
+# data/ archive subfolders (e.g. data/8_26/, data/10_26/)
 _data_dir = os.path.join(ROOT, "data")
 if os.path.isdir(_data_dir):
-    for _sub in os.listdir(_data_dir):
+    for _sub in sorted(os.listdir(_data_dir)):
         _subdir = os.path.join(_data_dir, _sub)
-        if not os.path.isdir(_subdir):
-            continue
-        for _fname in os.listdir(_subdir):
-            if re.match(r'^\d+_\d+$', _fname):
-                _p = os.path.join(_subdir, _fname)
-                if os.path.isfile(_p):
-                    entries.append(_parse_file(_p, _fname))
+        if os.path.isdir(_subdir):
+            for e in scan(_subdir):
+                if e['file'] not in _seen:
+                    _seen.add(e['file'])
+                    entries.append(e)
+# loose files in root
+for e in scan(ROOT):
+    if e['file'] not in _seen:
+        _seen.add(e['file'])
+        entries.append(e)
+entries.sort(key=lambda e: (e['year'], e['month'], e['day']))
 
-# fall back to root for months without folder
-for name in os.listdir(ROOT):
-    p=os.path.join(ROOT,name)
-    if os.path.isfile(p) and re.match(r'^\d+_\d+$', name):
-        # skip if this month's folder exists (already handled above)
-        try:
-            _mm = int(name.split('_')[0])
-            if _mm in _month_names and os.path.isdir(os.path.join(ROOT, _month_names[_mm])):
-                continue
-        except:
-            pass
-        entries.append(_parse_file(p, name))
-entries.sort(key=lambda e:(e['month'],e['day']))
+n = len(entries)
+scores = [e['score'] for e in entries]
+avg = sum(scores) / n
+srt = sorted(scores)
+median = srt[n // 2]
 
-labels=[f"{e['month']}/{e['day']}" for e in entries]
-scores=[e['score'] for e in entries]
-avg=sum(scores)/len(scores)
-cum=[sum(scores[:i+1])/(i+1) for i in range(len(scores))]
+best_e = max(entries, key=lambda e: e['score'])
+worst_e = min(entries, key=lambda e: e['score'])
 
-# percentile handling
-pcts = [e['pct'] for e in entries if e['pct'] is not None]
-avg_pct = sum(pcts)/len(pcts) if pcts else 0
-cum_pct = []
-s=0
-for i, v in enumerate(pcts):
-    s+=v
-    cum_pct.append(s/(i+1))
+# percentiles: all-time average, best, and peak of the running average
+pct_entries = [e for e in entries if e['pct'] is not None]
+avg_pct = sum(e['pct'] for e in pct_entries) / len(pct_entries)
+cum_best, peak_e, _run = None, None, 0
+for i, e in enumerate(pct_entries):
+    _run += e['pct']
+    cur = _run / (i + 1)
+    if cum_best is None or cur > cum_best:
+        cum_best, peak_e = cur, e
+best_pct_e = min(pct_entries, key=lambda e: e['pct'])
 
-# tile colors
-emoji_to_info = {
-    '🟩': ('green', '#43a047'),
-    '🟨': ('yellow', '#fdd835'),
-    '🟦': ('blue', '#1e88e5'),
-    '🟥': ('red', '#e53935'),
-}
-color_counts = collections.Counter()
-per_file_colors=[]
+
+def dmon(e):
+    """'Aug 13' style short date."""
+    return f"{_ABBR[e['month']]} {e['day']}"
+
+
+# --- personal bests (top 5 scores) ---
+best_rows = "\n".join(
+    f"| {i + 1} | {dmon(e)} | {e['emoji']} | **{e['score']:,}** | top {e['pct']}% |"
+    for i, e in enumerate(sorted(entries, key=lambda e: e['score'], reverse=True)[:5])
+)
+
+# --- month by month table ---
+month_rows = []
+_groups = collections.OrderedDict()
 for e in entries:
-    c = collections.Counter(ch for ch in e['emoji'] if ch in emoji_to_info)
-    per_file_colors.append(c)
-    color_counts.update(c)
-total_tiles = sum(color_counts.values())
-# order for histogram: green, yellow, blue, red sorted by count desc? keep logical yellow, green, blue, red
-color_order = ['🟨','🟩','🟦','🟥']
-categories=[]
-for em in color_order:
-    label, col = emoji_to_info[em]
-    cnt = color_counts.get(em, 0)
-    pct = cnt/total_tiles*100 if total_tiles else 0
-    categories.append(dict(emoji=em, label=label.capitalize(), count=cnt, pct=pct, color=col))
+    _groups.setdefault((e['year'], e['month']), []).append(e)
+for (yr, mo), es in _groups.items():
+    mscores = [e['score'] for e in es]
+    mpcts = [e['pct'] for e in es if e['pct'] is not None]
+    m_best = max(es, key=lambda e: e['score'])
+    m_worst = min(es, key=lambda e: e['score'])
+    m_avgpct = f"top {round(sum(mpcts) / len(mpcts))}%" if mpcts else "—"
+    month_rows.append(
+        f"| {_ABBR[mo]} {yr} | {len(es)} | {round(sum(mscores) / len(es)):,} "
+        f"| {m_best['score']:,} (`{m_best['file']}`) "
+        f"| {m_worst['score']:,} (`{m_worst['file']}`) | {m_avgpct} |"
+    )
+month_rows = "\n".join(month_rows)
 
-# --- generate SVGs ---
-y_min, y_max = 35000, 80000
-y_ticks = [35000,45000,55000,65000,75000]
-avg_line = [avg]*len(labels)
-best_scores = best_fit_line(scores)
-svg_scores = svg_line_chart(
-    labels, scores,
-    title="Anthropeum — Score Over Time",
-    y_min=y_min, y_max=y_max, y_ticks=y_ticks,
-    extra_lines=[dict(values=best_scores, color="#f2c14e", dash="8 6", width=1.8, opacity=0.95)],
-    y_label="Score"
-)
-cum_min, cum_max = 58000, 67000
-cum_ticks = [58000,60000,62000,64000,66000]
-svg_cum = svg_line_chart(
-    labels, [round(c) for c in cum],
-    title="Cumulative Average Score Over Time",
-    y_min=cum_min, y_max=cum_max, y_ticks=cum_ticks,
-    extra_lines=[dict(values=avg_line, color="#f2c14e", dash="8 6", width=1.8)],
-    y_label="Avg Score"
-)
-svg_combined = svg_line_chart(
-    labels, scores,
-    title="Scores vs. Cumulative Average (overall avg dashed)",
-    y_min=y_min, y_max=y_max, y_ticks=y_ticks,
-    extra_lines=[
-        dict(values=[round(c) for c in cum], color="#5ee1a8", dash="", width=2.2),
-        dict(values=avg_line, color="#f2c14e", dash="8 6", width=1.6),
-    ],
-    y_label="Score"
+# --- game log ---
+log_rows = "\n".join(
+    f"| {dmon(e)} | {e['emoji']} | {e['score']:,} | top {e['pct']}% |" for e in entries
 )
 
-# percentile chart: daily percentile (inverted y? lower is better so maybe invert, but keep normal with note)
-# For percentile, 19 is best (top). We'll keep y 0(best) at top? Instead conventional y increases upward, so lower % at top is better. Let's invert: y_min 0, y_max 100, but display with 0 at top by setting y_min 100? Simpler: keep normal 0 bottom, but note gold avg line.
-# We'll create a chart where y 20-95
-pct_y_min, pct_y_max = 15, 95
-pct_ticks = [20,40,60,80,90]
-avg_pct_line = [avg_pct]*len(labels)
-best_pct = best_fit_line(pcts)
-svg_pct_daily = svg_line_chart(
-    labels, pcts,
-    title="Percentile Over Time (lower is better)",
-    y_min=pct_y_min, y_max=pct_y_max, y_ticks=pct_ticks,
-    extra_lines=[dict(values=best_pct, color="#f2c14e", dash="8 6", width=1.8)],
-    y_label="Top %"
-)
-svg_pct_cum = svg_line_chart(
-    labels, [round(v,1) for v in cum_pct],
-    title="Cumulative Average Percentile Over Time",
-    y_min=50, y_max=70, y_ticks=[50,55,60,65,70],
-    extra_lines=[dict(values=avg_pct_line, color="#f2c14e", dash="8 6", width=1.8)],
-    y_label="Avg Top %"
-)
+readme = f"""## This repo tracks my [`Anthropeum`](https://anthropeum.com) scores
 
-svg_colors = svg_bar_histogram(categories, title=f"Tile Color Distribution — {total_tiles} tiles total")
+### Avg score: **{avg:,.0f}** · Best score: **{best_e['score']:,}** · Best percentile: **top {best_pct_e['pct']}%**
 
-# write assets (only those used in README)
-assets_dir = os.path.join(ROOT, "assets")
-os.makedirs(assets_dir, exist_ok=True)
-open(os.path.join(assets_dir, "scores.svg"), "w", encoding="utf-8").write(svg_scores)
-open(os.path.join(assets_dir, "percentile.svg"), "w", encoding="utf-8").write(svg_pct_daily)
-open(os.path.join(assets_dir, "percentile_cumulative.svg"), "w", encoding="utf-8").write(svg_pct_cum)
-open(os.path.join(assets_dir, "colors.svg"), "w", encoding="utf-8").write(svg_colors)
-# remove orphan cumulative score assets if they exist
-for _orphan in ["cumulative.svg", "combined.svg"]:
-    _p = os.path.join(assets_dir, _orphan)
-    if os.path.exists(_p):
-        try:
-            os.remove(_p)
-        except:
-            pass
+## Personal bests
 
-# --- build README ---
-min_e = min(entries, key=lambda x:x['score'])
-max_e = max(entries, key=lambda x:x['score'])
-best_pct_e = min((e for e in entries if e['pct'] is not None), key=lambda x:x['pct'])
-worst_pct_e = max((e for e in entries if e['pct'] is not None), key=lambda x:x['pct'])
-
-table_rows = "\n".join(
-    f"| {e['date_label']} | `{e['file']}` | {e['emoji']} | **{e['score']:,}** | top {e['pct']}% | {e['score']-avg:+,.0f} | "
-    + " | ".join(str(per_file_colors[i].get(em, 0)) for em in color_order) + " |"
-    for i, e in enumerate(entries)
-)
-
-# percentile table rows
-pct_rows = "\n".join(
-    f"| {e['date_label']} | top {e['pct']}% | {cum_pct[i]:.1f}% | {e['pct']-avg_pct:+.1f} |"
-    for i, e in enumerate(entries)
-)
-
-# color distribution table rows
-color_rows = "\n".join(
-    f"| {c['emoji']} {c['label']} | {c['count']} | {c['pct']:.1f}% | `{c['color']}` |"
-    for c in categories
-)
-
-readme = f"""# Anthropeum — Score History
-
-Daily scores scraped from the files in this repo. Each file is named `M_D` (e.g. `8_13` → Aug 13) and line 3 holds the score (`64,497 · top 63% ...`). This README is auto-generated by `generate_readme.py` — re-run it after adding a new day.
-
-## Data Table
-
-<details>
-<summary>Data Table — {len(entries)} rows (click to expand)</summary>
-
-| Date | File | Tiles | Score | Percentile | Δ vs Avg | 🟨 Yellow | 🟩 Green | 🟦 Blue | 🟥 Red |
-|------|------|-------|-------|------------|----------|-----------|----------|---------|--------|
-{table_rows}
-
-</details>
-
-## Scores Over Time
-
-![Scores over time](assets/scores.svg)
-
-
-## Percentile Over Time
-
-
-![Percentile over time](assets/percentile.svg)
-
-
-## Tile Color Distribution
-
-![Tile colors](assets/colors.svg)
-
-
-
-
-## Cumulative Average Percentile
-
-![Cumulative percentile](assets/percentile_cumulative.svg)
-
-
-## At a Glance
-
-- **Average score:** **{avg:,.2f}**
-- **Average percentile:** **top {avg_pct:.1f}%**
-- **Best score:** **{max_e['score']:,}** (`{max_e['file']}`) — top {max_e['pct']}% 
-- **Worst score:** **{min_e['score']:,}** (`{min_e['file']}`) — top {min_e['pct']}%
-- **Best percentile:** top {best_pct_e['pct']}% (`{best_pct_e['file']}`) — {best_pct_e['score']:,}
-- **Worst percentile:** top {worst_pct_e['pct']}% (`{worst_pct_e['file']}`) — {worst_pct_e['score']:,}
-- **Median score:** {sorted(scores)[len(scores)//2]:,}
-- **Range:** {max_e['score']-min_e['score']:,} ( {min_e['score']:,} → {max_e['score']:,})
-
-
-## Raw Stats Dump
-
-```
-Count: {len(entries)}
-Scores: {', '.join(f'{s:,}' for s in scores)}
-Min: {min_e['score']:,} ({min_e['file']})  Max: {max_e['score']:,} ({max_e['file']})
-Overall avg score: {avg:.2f}
-Overall avg percentile: top {avg_pct:.2f}%
-Cumulative avgs: {', '.join(f'{c:,.0f}' for c in cum)}
-Cumulative avg percentiles: {', '.join(f'{c:.1f}%' for c in cum_pct)}
-Tiles: {', '.join(f"{c['emoji']} {c['label']} {c['count']} ({c['pct']:.1f}%)" for c in categories)} — {total_tiles} total
-```
+| # | Date | Tiles | Score | Percentile |
+|:-:|:-----|:------|------:|:----------:|
+{best_rows}
 
 ---
-*Generated from {len(entries)} files on disk. See `generate_readme.py` for logic.*
+
+## The trail
+
+![Score trend](assets/charts/score_trend.svg)
+
+*Best: {best_e['score']:,} on {dmon(best_e)} (top {best_e['pct']}%) · Worst: {worst_e['score']:,} on {dmon(worst_e)} · Average: {avg:,.0f} · Range: {best_e['score'] - worst_e['score']:,}.*
+
+![Average percentile over time](assets/charts/percentile_cumulative.svg)
+
+*Avg percentile: top {int(avg_pct)}% · Peak: top {int(cum_best)}% on {dmon(peak_e)}.*
+
+---
+
+## Recent form
+
+![Recent form](assets/charts/recent_bars.svg)
+
+*All-time average: {avg:,.0f} · Median: {median:,}.*
+
+---
+
+## Month by month
+
+| Month | Games | Avg Score | Best | Worst | Avg Percentile |
+|:------|:-----:|----------:|------|-------|---------------:|
+{month_rows}
+
+---
+
+## Artifact breakdown
+
+![Artifact breakdown](assets/charts/tiles_donut.svg)
+
+---
+
+## Game log
+
+<details>
+<summary>All {n} games</summary>
+
+| Date | Tiles | Score | Percentile |
+|:-----|:------|------:|:----------:|
+{log_rows}
+
+</details>
 """
 
-with open(os.path.join(ROOT, "README_old.md"), "w", encoding="utf-8", newline="\n") as f:
+with open(os.path.join(ROOT, "README.md"), "w", encoding="utf-8", newline="\n") as f:
     f.write(readme)
-
+print(f"README.md written from {n} games")
