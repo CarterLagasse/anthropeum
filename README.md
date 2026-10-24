@@ -1,6 +1,6 @@
 ## This repo tracks my [`Anthropeum`](https://anthropeum.com) scores
 
-### Avg score: **65,231** · Best score: **83,429** · Best percentile: **top 5%**
+### Avg score: **65,418** · Best score: **83,429** · Best percentile: **top 5%**
 
 ## Personal bests
 
@@ -8,9 +8,9 @@
 |:-:|:-----|:------|------:|:----------:|
 | 1 | Oct 18 | 🟩🟦🟦🟩🟦🟦🟦🟨🟩🟨 | **83,429** | top 5% |
 | 2 | Oct 16 | 🟨🟨🟨🟦🟦🟦🟩🟦🟦🟦 | **82,268** | top 19% |
-| 3 | Oct 22 | 🟦🟩🟦🟨🟦🟩🟩🟩🟩🟩 | **78,092** | top 27% |
-| 4 | Sep 13 | 🟦🟦🟥🟩🟦🟦🟩🟩🟩🟦 | **78,080** | top 18% |
-| 5 | Oct 14 | 🟩🟦🟩🟩🟨🟨🟦🟩🟩🟦 | **77,522** | top 18% |
+| 3 | Oct 23 | 🟦🟩🟨🟨🟩🟦🟩🟦🟩🟩 | **78,296** | top 22% |
+| 4 | Oct 22 | 🟦🟩🟦🟨🟦🟩🟩🟩🟩🟩 | **78,092** | top 27% |
+| 5 | Sep 13 | 🟦🟦🟥🟩🟦🟦🟩🟩🟩🟦 | **78,080** | top 18% |
 
 ---
 
@@ -18,7 +18,7 @@
 
 ![Score trend](assets/charts/score_trend.svg)
 
-*Best: 83,429 on Oct 18 (top 5%) · Worst: 39,248 on Aug 30 · Average: 65,231 · Range: 44,181.*
+*Best: 83,429 on Oct 18 (top 5%) · Worst: 39,248 on Aug 30 · Average: 65,418 · Range: 44,181.*
 
 ![Average percentile over time](assets/charts/percentile_cumulative.svg)
 
@@ -30,7 +30,7 @@
 
 ![Recent form](assets/charts/recent_bars.svg)
 
-*All-time average: 65,231 · Median: 66,013.*
+*All-time average: 65,418 · Median: 66,024.*
 
 ---
 
@@ -40,7 +40,7 @@
 |:------|:-----:|----------:|------|-------|---------------:|
 | Aug 2026 | 17 | 59,680 | 75,763 (`8_31`) | 39,248 (`8_30`) | top 62% |
 | Sep 2026 | 30 | 66,050 | 78,080 (`9_13`) | 55,950 (`9_19`) | top 50% |
-| Oct 2026 | 22 | 68,403 | 83,429 (`10_18`) | 52,961 (`10_9`) | top 45% |
+| Oct 2026 | 23 | 68,833 | 83,429 (`10_18`) | 52,961 (`10_9`) | top 44% |
 
 ---
 
@@ -53,7 +53,7 @@
 ## Game log
 
 <details>
-<summary>All 69 games</summary>
+<summary>All 70 games</summary>
 
 | Date | Tiles | Score | Percentile |
 |:-----|:------|------:|:----------:|
@@ -126,5 +126,6 @@
 | Oct 20 | 🟨🟩🟨🟦🟨🟦🟦🟨🟨🟦 | 71,104 | top 28% |
 | Oct 21 | 🟦🟦🟦🟩🟦🟩🟩🟩🟥🟩 | 76,391 | top 23% |
 | Oct 22 | 🟦🟩🟦🟨🟦🟩🟩🟩🟩🟩 | 78,092 | top 27% |
+| Oct 23 | 🟦🟩🟨🟨🟩🟦🟩🟦🟩🟩 | 78,296 | top 22% |
 
 </details>
