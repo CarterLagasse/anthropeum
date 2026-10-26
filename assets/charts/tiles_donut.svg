@@ -1,22 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="860" height="300" viewBox="0 0 860 300" role="img" aria-label="Tile percentages">
 <rect x="0" y="0" width="860" height="300" rx="16" fill="#0d1117" stroke="#1f2937" stroke-width="1"/>
 <text x="430.0" y="34" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="15" font-weight="600" fill="#e5e7eb" letter-spacing="2">TILE PERCENTAGES</text>
-<circle cx="190" cy="170" r="92" fill="none" stroke="#22c55e" stroke-width="30" stroke-dasharray="215.82 362.23" stroke-dashoffset="0.00" transform="rotate(-90 190 170)"/>
-<circle cx="190" cy="170" r="92" fill="none" stroke="#eab308" stroke-width="30" stroke-dasharray="193.03 385.03" stroke-dashoffset="-219.82" transform="rotate(-90 190 170)"/>
-<circle cx="190" cy="170" r="92" fill="none" stroke="#3b82f6" stroke-width="30" stroke-dasharray="109.98 468.07" stroke-dashoffset="-416.85" transform="rotate(-90 190 170)"/>
-<circle cx="190" cy="170" r="92" fill="none" stroke="#ef4444" stroke-width="30" stroke-dasharray="43.22 534.83" stroke-dashoffset="-530.83" transform="rotate(-90 190 170)"/>
-<text x="190" y="164" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="30" font-weight="700" fill="#e5e7eb">710</text>
+<circle cx="190" cy="170" r="92" fill="none" stroke="#22c55e" stroke-width="30" stroke-dasharray="214.38 363.68" stroke-dashoffset="0.00" transform="rotate(-90 190 170)"/>
+<circle cx="190" cy="170" r="92" fill="none" stroke="#eab308" stroke-width="30" stroke-dasharray="193.50 384.55" stroke-dashoffset="-218.38" transform="rotate(-90 190 170)"/>
+<circle cx="190" cy="170" r="92" fill="none" stroke="#3b82f6" stroke-width="30" stroke-dasharray="111.61 466.44" stroke-dashoffset="-415.88" transform="rotate(-90 190 170)"/>
+<circle cx="190" cy="170" r="92" fill="none" stroke="#ef4444" stroke-width="30" stroke-dasharray="42.57 535.49" stroke-dashoffset="-531.49" transform="rotate(-90 190 170)"/>
+<text x="190" y="164" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="30" font-weight="700" fill="#e5e7eb">720</text>
 <text x="190" y="192" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#64748b">TILES</text>
 <rect x="400" y="85" width="14" height="14" rx="4" fill="#22c55e"/>
-<text x="424" y="98" font-family="Segoe UI, sans-serif" font-size="14" fill="#e5e7eb">🟩 Green <tspan fill="#64748b">— 270 tiles</tspan></text>
-<text x="700" y="98" text-anchor="end" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#e5e7eb">38.0%</text>
+<text x="424" y="98" font-family="Segoe UI, sans-serif" font-size="14" fill="#e5e7eb">🟩 Green <tspan fill="#64748b">— 272 tiles</tspan></text>
+<text x="700" y="98" text-anchor="end" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#e5e7eb">37.8%</text>
 <rect x="400" y="125" width="14" height="14" rx="4" fill="#eab308"/>
-<text x="424" y="138" font-family="Segoe UI, sans-serif" font-size="14" fill="#e5e7eb">🟨 Yellow <tspan fill="#64748b">— 242 tiles</tspan></text>
-<text x="700" y="138" text-anchor="end" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#e5e7eb">34.1%</text>
+<text x="424" y="138" font-family="Segoe UI, sans-serif" font-size="14" fill="#e5e7eb">🟨 Yellow <tspan fill="#64748b">— 246 tiles</tspan></text>
+<text x="700" y="138" text-anchor="end" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#e5e7eb">34.2%</text>
 <rect x="400" y="165" width="14" height="14" rx="4" fill="#3b82f6"/>
-<text x="424" y="178" font-family="Segoe UI, sans-serif" font-size="14" fill="#e5e7eb">🟦 Blue <tspan fill="#64748b">— 140 tiles</tspan></text>
-<text x="700" y="178" text-anchor="end" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#e5e7eb">19.7%</text>
+<text x="424" y="178" font-family="Segoe UI, sans-serif" font-size="14" fill="#e5e7eb">🟦 Blue <tspan fill="#64748b">— 144 tiles</tspan></text>
+<text x="700" y="178" text-anchor="end" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#e5e7eb">20.0%</text>
 <rect x="400" y="205" width="14" height="14" rx="4" fill="#ef4444"/>
 <text x="424" y="218" font-family="Segoe UI, sans-serif" font-size="14" fill="#e5e7eb">🟥 Red <tspan fill="#64748b">— 58 tiles</tspan></text>
-<text x="700" y="218" text-anchor="end" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#e5e7eb">8.2%</text>
+<text x="700" y="218" text-anchor="end" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#e5e7eb">8.1%</text>
 </svg>
