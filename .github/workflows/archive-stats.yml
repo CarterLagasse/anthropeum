@@ -45,6 +45,8 @@ jobs:
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git commit -m "Auto-archive stat files into data/${YY}"
+            # the Update README workflow may have pushed a commit while we ran — rebase on it
+            git pull --rebase origin main
             git push
           else
             echo "No root stat files to archive"
