@@ -1,0 +1,110 @@
+name: Daily stats
+
+# One pipeline instead of two racing bots: archive root stat files, regenerate
+# the README and all charts, then commit and push with retry. Runs are
+# serialized so uploads seconds apart can never race each other.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '[0-9]*_[0-9]*'
+      - '**/[0-9]*_[0-9]*'
+      - 'august/**'
+      - 'september/**'
+      - 'january/**'
+      - 'february/**'
+      - 'march/**'
+      - 'april/**'
+      - 'may/**'
+      - 'june/**'
+      - 'july/**'
+      - 'october/**'
+      - 'november/**'
+      - 'december/**'
+      - 'generate_readme.py'
+      - 'generate_charts.py'
+      - '.github/workflows/daily-stats.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Queue runs instead of letting two instances interleave pushes
+concurrency:
+  group: daily-stats
+  cancel-in-progress: false
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Read year from generate_readme.py
+        id: year
+        run: |
+          YEAR=$(python -c 'import re; m=re.search(r"^YEAR\s*=\s*(\d+)", open("generate_readme.py").read(), re.M); print(m.group(1))' 2>/dev/null) || true
+          if [ -z "$YEAR" ]; then YEAR=2026; fi
+          echo "year=$YEAR" >> $GITHUB_OUTPUT
+
+      - name: Archive root stat files into data/
+        id: archive
+        run: |
+          YEAR=${{ steps.year.outputs.year }}
+          YY="${YEAR: -2}"
+          MOVED=0
+          for f in *; do
+            if [[ -f "$f" && "$f" =~ ^[0-9]+_[0-9]+$ ]]; then
+              month="${f%%_*}"
+              folder="data/${month}_${YY}"
+              mkdir -p "$folder"
+              git mv "$f" "$folder/"
+              MOVED=1
+            fi
+          done
+          echo "moved=$MOVED" >> $GITHUB_OUTPUT
+
+      - name: Regenerate README and charts
+        run: |
+          python generate_readme.py
+          python generate_charts.py
+
+      - name: Commit if changed
+        id: commit
+        run: |
+          git add README.md assets/ data/
+          if git diff --cached --quiet; then
+            echo "changed=0" >> $GITHUB_OUTPUT
+            echo "No changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ "${{ steps.archive.outputs.moved }}" = "1" ]; then
+            git commit -m "Auto daily stats: archive + README + charts"
+          else
+            git commit -m "Auto daily stats: README + charts"
+          fi
+          echo "changed=1" >> $GITHUB_OUTPUT
+
+      - name: Push with retry
+        if: steps.commit.outputs.changed == '1'
+        run: |
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push; then
+              exit 0
+            fi
+            echo "push rejected (attempt $attempt), rebasing and retrying..."
+            sleep 5
+          done
+          echo "::error::push failed after 3 attempts"
+          exit 1
