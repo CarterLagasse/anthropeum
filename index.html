@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Anthropeum Scorebook</title>
+<title>Anthropeum Scores</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&display=swap" rel="stylesheet">
@@ -84,6 +84,21 @@ h2 { font: 500 21px/1.2 var(--display); margin: 0; text-wrap: balance; }
 button:focus-visible, select:focus-visible, [tabindex]:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .card { background: var(--surface); border: 1px solid var(--hair); border-radius: 8px; padding: 18px 20px; min-width: 0; }
 .card > p.note { margin: 2px 0 12px; color: var(--ink-2); font-size: 14px; max-width: 75ch; }
+.add-form { display: grid; gap: 10px; margin-top: 8px; max-width: 640px; }
+.add-form[hidden] { display: none; }
+.add-form label { font-size: 13px; color: var(--ink-2); display: grid; gap: 4px; }
+.add-form input, .add-form textarea { font: inherit; font-size: 14px; color: var(--ink); background: var(--page); border: 1px solid var(--axis); border-radius: 6px; padding: 8px 10px; width: 100%; }
+.add-form textarea { min-height: 84px; resize: vertical; }
+.add-form textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.add-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chip.primary { background: var(--accent-wash); border-color: var(--accent); font-weight: 600; }
+.chip:disabled { opacity: .55; cursor: default; }
+.chip.quiet { background: none; border-color: transparent; color: var(--ink-2); }
+.add-preview { min-height: 22px; font-size: 14px; color: var(--ink-2); }
+.add-status { margin: 8px 0 0; font-size: 14px; }
+.add-status:empty { display: none; }
+.add-status.bad { color: var(--bad); }
+.add-status.good { color: var(--good); }
 .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .stack { display: grid; gap: 16px; align-content: start; min-width: 0; }
 .summary { display: grid; grid-template-columns: minmax(280px, 1.15fr) minmax(0, 2.6fr); gap: 16px; }
@@ -140,11 +155,33 @@ footer a { color: inherit; }
 <div class="wrap">
   <header>
     <div>
-      <h1>Anthropeum Scorebook</h1>
+      <h1>Anthropeum Scores</h1>
       <p class="lede" id="lede"></p>
     </div>
     <div class="stamp" id="stamp"></div>
   </header>
+
+  <section class="card" id="add-score" hidden>
+    <h2>Add a score</h2>
+    <form class="add-form" id="token-form" hidden>
+      <p class="note" style="margin:0">Create a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">fine-grained token</a> for the anthropeum repo only, with Contents set to read and write. It stays in this browser.</p>
+      <label for="token-input">GitHub token
+        <input id="token-input" type="password" autocomplete="off" spellcheck="false" required>
+      </label>
+      <div class="add-actions"><button class="chip primary" id="token-save" type="submit">Save token</button></div>
+    </form>
+    <form class="add-form" id="score-form" hidden>
+      <label for="score-input">Paste the game's share text
+        <textarea id="score-input" spellcheck="false" autocomplete="off"></textarea>
+      </label>
+      <div class="add-preview" id="score-preview"></div>
+      <div class="add-actions">
+        <button class="chip primary" id="score-save" type="submit" disabled>Add score</button>
+        <button class="chip quiet" id="token-forget" type="button">Remove token from this browser</button>
+      </div>
+    </form>
+    <p class="add-status" id="add-status" role="status"></p>
+  </section>
 
   <div class="controls" role="group" aria-label="Choose which games to show">
     <span class="label">Show</span>
@@ -629,6 +666,146 @@ function drawRanges() {
 
 function drawCharts() { drawScore(); drawPct(); drawField(); drawWall(); drawMix(); }
 function drawAll() { hideTip(); drawSummary(); drawCharts(); drawTables(); }
+
+// ---- adding a score: writes a stat file through the GitHub API, then the workflow updates the page
+const REPO_API = 'https://api.github.com/repos/CarterLagasse/anthropeum';
+const TOKEN_KEY = 'anthropeum-github-token';
+const TILE_BY_EMOJI = { '🟦': 'B', '🟩': 'G', '🟨': 'Y', '🟥': 'R' };
+const TILE_BAND = { B: [9000, 10000], G: [6000, 8999], Y: [3000, 5999], R: [0, 2999] };
+let githubToken = null;
+try { githubToken = localStorage.getItem(TOKEN_KEY); } catch (e) {}
+
+function parseShareText(text) {
+  // Same rules as parse_game in build_dashboard.py. Returns a game, or { error }.
+  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  if (lines.length < 3) return { error: 'Paste all 3 lines of the share text.' };
+  const date = lines[0].match(/·\s*([A-Z][a-z]{2}) (\d{1,2}) (\d{4})/);
+  const result = lines[2].match(/^([\d,]+)\s*·\s*top (\d+)%/);
+  const emoji = [...lines[1]].filter(c => TILE_BY_EMOJI[c]);
+  if (!date) return { error: 'Could not read the date on line 1.' };
+  if (emoji.length !== 10) return { error: 'Line 2 needs 10 tiles.' };
+  if (!result) return { error: 'Line 3 needs a score and a "top %" finish.' };
+  const month = MONTHS.indexOf(date[1]), day = +date[2], year = +date[3];
+  const when = new Date(Date.UTC(year, month, day));
+  if (month < 0 || when.getUTCDate() !== day) return { error: 'The date on line 1 is not a real date.' };
+  const tiles = emoji.map(c => TILE_BY_EMOJI[c]).join(''), score = +result[1].replace(/,/g, ''), pct = +result[2];
+  const low = [...tiles].reduce((n, t) => n + TILE_BAND[t][0], 0), high = [...tiles].reduce((n, t) => n + TILE_BAND[t][1], 0);
+  if (score < low || score > high) return { error: 'Score ' + fmt(score) + ' does not match its tiles (' + fmt(low) + ' to ' + fmt(high) + ').' };
+  if (pct > 100) return { error: 'The finish must be 100% or less.' };
+  const isoDate = when.toISOString().slice(0, 10);
+  if (GAMES.some(g => g.date === isoDate)) return { error: label(isoDate) + ', ' + year + ' already has a score.' };
+  const name = (month + 1) + '_' + day;
+  return {
+    date: isoDate, tiles, score, pct, name,
+    folder: 'data/' + (month + 1) + '_' + String(year).slice(-2),
+    content: lines.slice(0, 3).join('\n') + '\n'
+  };
+}
+
+function setAddStatus(text, kind) {
+  $('add-status').textContent = text;
+  $('add-status').className = 'add-status' + (kind ? ' ' + kind : '');
+}
+
+const github = (path, options) => fetch(REPO_API + path, {
+  cache: 'no-store',
+  ...options,
+  headers: { Accept: 'application/vnd.github+json', Authorization: 'Bearer ' + githubToken, ...(options && options.headers) }
+});
+
+function explainGithubFailure(status) {
+  if (status === 401) return 'GitHub rejected the token. It may have expired, so remove it and add a new one.';
+  if (status === 403 || status === 404) return 'This token can\'t write to the repo. It needs Contents set to read and write for anthropeum.';
+  if (status === 409 || status === 422) return 'GitHub already has a file for this date, so nothing was changed.';
+  return 'GitHub returned an error (' + status + '), so nothing was saved. Try again in a moment.';
+}
+
+function showAddScore() {
+  const wanted = location.hash === '#add' || !!githubToken;
+  $('add-score').hidden = !wanted;
+  $('token-form').hidden = !!githubToken;
+  $('score-form').hidden = !githubToken;
+}
+
+function updatePreview() {
+  const text = $('score-input').value;
+  const game = text.trim() ? parseShareText(text) : null;
+  $('score-save').disabled = !game || !!game.error;
+  if (!game) { $('score-preview').textContent = ''; return; }
+  $('score-preview').innerHTML = game.error ? '<span class="down">' + esc(game.error) + '</span>'
+    : esc(longLabel(game.date)) + ' · ' + tileRow(game.tiles) + ' · ' + fmt(game.score) + ' · top ' + game.pct + '%';
+}
+
+$('token-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const candidate = $('token-input').value.trim();
+  if (!candidate) return;
+  $('token-save').disabled = true;
+  setAddStatus('Checking the token...');
+  githubToken = candidate;
+  try {
+    const res = await github('');
+    const info = res.ok ? await res.json() : null;
+    if (!res.ok || !info.permissions || !info.permissions.push) {
+      githubToken = null;
+      setAddStatus(res.ok ? explainGithubFailure(403) : explainGithubFailure(res.status), 'bad');
+      return;
+    }
+    try { localStorage.setItem(TOKEN_KEY, candidate); } catch (err) {
+      setAddStatus('This browser won\'t save the token, so you\'ll need to enter it again next visit.');
+    }
+    $('token-input').value = '';
+    if (!$('add-status').textContent.startsWith('This browser')) setAddStatus('');
+    showAddScore();
+  } catch (err) {
+    githubToken = null;
+    setAddStatus('Could not reach GitHub. Check your connection and try again.', 'bad');
+  } finally {
+    $('token-save').disabled = false;
+  }
+});
+
+$('score-input').addEventListener('input', () => { setAddStatus(''); updatePreview(); });
+
+$('score-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const game = parseShareText($('score-input').value);
+  if (game.error) return updatePreview();
+  $('score-save').disabled = true;
+  setAddStatus('Saving...');
+  try {
+    // Check both places a stat file can be, so a score is never overwritten.
+    for (const path of ['/contents/' + game.name, '/contents/' + game.folder + '/' + game.name]) {
+      const found = await github(path + '?ref=main');
+      if (found.ok) { setAddStatus(explainGithubFailure(422), 'bad'); return; }
+      if (found.status !== 404) { setAddStatus(explainGithubFailure(found.status), 'bad'); return; }
+    }
+    const bytes = new TextEncoder().encode(game.content);
+    const saved = await github('/contents/' + game.name, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: game.name, branch: 'main', content: btoa(String.fromCharCode(...bytes)) })
+    });
+    if (!saved.ok) { setAddStatus(explainGithubFailure(saved.status), 'bad'); return; }
+    $('score-input').value = '';
+    updatePreview();
+    setAddStatus('Saved ' + label(game.date) + '. The dashboard should update within a couple of minutes.', 'good');
+  } catch (err) {
+    setAddStatus('Could not reach GitHub, so check whether the score saved before trying again.', 'bad');
+  } finally {
+    if ($('score-input').value.trim()) updatePreview();
+  }
+});
+
+$('token-forget').addEventListener('click', () => {
+  githubToken = null;
+  try { localStorage.removeItem(TOKEN_KEY); } catch (err) {}
+  setAddStatus('Token removed from this browser. To revoke it completely, delete it in your GitHub settings.');
+  showAddScore();
+});
+
+addEventListener('hashchange', showAddScore);
+showAddScore();
 
 $('foot').innerHTML = 'Update with <code>python build_dashboard.py</code> · <a href="https://anthropeum.com">Play Anthropeum</a>';
 
