@@ -623,7 +623,7 @@ function drawSummary() {
 }
 
 function drawTables() {
-  const groups = monthKeys.map(k => ({ k, g: GAMES.filter(x => x.date.startsWith(k)) }));
+  const groups = monthKeys.map(k => ({ k, g: GAMES.filter(x => x.date.startsWith(k)) })).reverse();
   $('t-months').innerHTML = '<thead><tr><th>Month</th><th class="n">Games</th><th class="n">Average</th><th class="n">Best</th><th class="n">Worst</th><th class="n">Avg finish</th></tr></thead><tbody>' +
     groups.map(({ k, g }) => '<tr><td>' + MONTHS[+k.slice(5) - 1] + ' ' + k.slice(0, 4) + '</td><td class="n">' + g.length + '</td><td class="n">' + fmt(mean(g.map(x => x.score))) + '</td><td class="n">' + fmt(Math.max(...g.map(x => x.score))) + '</td><td class="n">' + fmt(Math.min(...g.map(x => x.score))) + '</td><td class="n">Top ' + Math.round(mean(g.map(x => x.pct))) + '%</td></tr>').join('') + '</tbody>';
   const top = [...GAMES].sort((a, b) => b.score - a.score).slice(0, 5);
@@ -658,7 +658,7 @@ function drawLog() {
 }
 
 function drawRanges() {
-  const quick = RANGES.filter(r => !monthKeys.includes(r.id)), months = RANGES.filter(r => monthKeys.includes(r.id));
+  const quick = RANGES.filter(r => !monthKeys.includes(r.id)), months = RANGES.filter(r => monthKeys.includes(r.id)).reverse();
   const inMonth = months.includes(range);
   $('ranges').innerHTML = quick.map(r => '<button class="chip" type="button" data-r="' + r.id + '" aria-pressed="' + (r === range) + '">' + r.text + '</button>').join('') +
     '<select class="chip' + (inMonth ? ' on' : '') + '" id="month" aria-label="Choose a month"><option value="">Month</option>' +
