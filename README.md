@@ -1,6 +1,6 @@
 ## This repo tracks my [`Anthropeum`](https://anthropeum.com) scores
 
-### Avg score: **65,726** · Best score: **83,429** · Best percentile: **top 4%**
+### Avg score: **65,684** · Best score: **83,429** · Best percentile: **top 4%**
 
 ## Personal bests
 
@@ -18,7 +18,7 @@
 
 ![Score trend](assets/charts/score_trend.svg)
 
-*Best: 83,429 on Oct 18 (top 5%) · Worst: 39,248 on Aug 30 · Average: 65,726 · Range: 44,181.*
+*Best: 83,429 on Oct 18 (top 5%) · Worst: 39,248 on Aug 30 · Average: 65,684 · Range: 44,181.*
 
 ![Average percentile over time](assets/charts/percentile_cumulative.svg)
 
@@ -30,7 +30,7 @@
 
 ![Recent form](assets/charts/recent_bars.svg)
 
-*All-time average: 65,726 · Median: 66,024.*
+*All-time average: 65,684 · Median: 66,024.*
 
 ---
 
@@ -40,7 +40,7 @@
 |:------|:-----:|----------:|------|-------|---------------:|
 | Aug 2026 | 17 | 59,680 | 75,763 (`8_31`) | 39,248 (`8_30`) | top 62% |
 | Sep 2026 | 30 | 66,050 | 78,080 (`9_13`) | 55,950 (`9_19`) | top 50% |
-| Oct 2026 | 28 | 69,050 | 83,429 (`10_18`) | 52,961 (`10_9`) | top 44% |
+| Oct 2026 | 29 | 68,824 | 83,429 (`10_18`) | 52,961 (`10_9`) | top 44% |
 
 ---
 
@@ -53,7 +53,7 @@
 ## Game log
 
 <details>
-<summary>All 75 games</summary>
+<summary>All 76 games</summary>
 
 | Date | Tiles | Score | Percentile |
 |:-----|:------|------:|:----------:|
@@ -132,5 +132,6 @@
 | Oct 26 | 🟩🟨🟥🟥🟩🟩🟦🟦🟩🟩 | 63,731 | top 46% |
 | Oct 27 | 🟦🟩🟩🟨🟥🟨🟨🟨🟩🟥 | 56,290 | top 76% |
 | Oct 28 | 🟦🟦🟦🟩🟩🟩🟩🟩🟦🟩 | 83,244 | top 4% |
+| Oct 29 | 🟩🟩🟥🟩🟩🟥🟨🟩🟨🟩 | 62,509 | top 66% |
 
 </details>
