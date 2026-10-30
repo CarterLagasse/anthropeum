@@ -168,6 +168,16 @@ footer a { color: inherit; }
     <div class="stamp" id="stamp"></div>
   </header>
 
+  <div class="controls" role="group" aria-label="Choose which games to show">
+    <span class="label">Show</span>
+    <span id="ranges" style="display:contents"></span>
+  </div>
+
+  <section class="summary">
+    <div class="card latest" id="latest"></div>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
   <section class="card" id="add-score">
     <div class="add-head">
       <h2>Add a score</h2>
@@ -181,16 +191,6 @@ footer a { color: inherit; }
       <div class="add-preview" id="score-preview"></div>
     </form>
     <p class="add-status" id="add-status" role="status"></p>
-  </section>
-
-  <div class="controls" role="group" aria-label="Choose which games to show">
-    <span class="label">Show</span>
-    <span id="ranges" style="display:contents"></span>
-  </div>
-
-  <section class="summary">
-    <div class="card latest" id="latest"></div>
-    <div class="kpis" id="kpis"></div>
   </section>
 
   <section class="card">
