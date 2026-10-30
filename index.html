@@ -26,7 +26,6 @@
   --tile-g: #2f8f5b;
   --tile-y: #c08a1e;
   --tile-r: #a33a3a;
-  --tile-text: #ffffff;
   --display: "Newsreader", Georgia, serif;
   --body: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
@@ -83,7 +82,6 @@ h2 { font: 500 21px/1.2 var(--display); margin: 0; text-wrap: balance; }
 .chip:hover { border-color: var(--axis); }
 .chip[aria-pressed="true"], select.chip.on { background: var(--accent-wash); border-color: var(--accent); font-weight: 600; }
 button:focus-visible, select:focus-visible, [tabindex]:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.toggle { margin-left: auto; font-size: 13px; color: var(--ink-2); display: flex; gap: 6px; align-items: center; cursor: pointer; }
 .card { background: var(--surface); border: 1px solid var(--hair); border-radius: 8px; padding: 18px 20px; min-width: 0; }
 .card > p.note { margin: 2px 0 12px; color: var(--ink-2); font-size: 14px; max-width: 75ch; }
 .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
@@ -94,8 +92,8 @@ button:focus-visible, select:focus-visible, [tabindex]:focus-visible, input:focu
 .latest .sub { color: var(--ink-2); font-size: 14px; }
 .strip { display: flex; gap: 3px; margin: 10px 0 8px; }
 .strip .t { flex: 1 1 0; max-width: 28px; aspect-ratio: 1; }
-.t { border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: var(--tile-text); line-height: 1; }
-.t.B { background: var(--tile-b); } .t.G { background: var(--tile-g); } .t.Y { background: var(--tile-y); color: #0b0b0b; } .t.R { background: var(--tile-r); }
+.t { border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; }
+.t.B { background: var(--tile-b); } .t.G { background: var(--tile-g); } .t.Y { background: var(--tile-y); } .t.R { background: var(--tile-r); }
 .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 .kpi .value { font-size: 28px; font-weight: 650; line-height: 1.2; margin-top: 2px; }
 .kpi .sub { font-size: 13px; color: var(--ink-2); margin-top: 2px; }
@@ -104,7 +102,6 @@ button:focus-visible, select:focus-visible, [tabindex]:focus-visible, input:focu
 .legend span.item { display: inline-flex; align-items: center; gap: 6px; }
 .swatch-line { width: 18px; height: 2px; background: var(--ink); display: inline-block; }
 .swatch-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); display: inline-block; }
-.swatch-x { color: var(--bad); font-weight: 700; font-size: 12px; }
 .chart { width: 100%; }
 .chart svg { display: block; width: 100%; height: auto; overflow: visible; touch-action: pan-y; }
 svg text { font: 12px var(--body); fill: var(--muted); font-variant-numeric: tabular-nums; }
@@ -115,7 +112,7 @@ th, td { padding: 7px 10px; border-bottom: 1px solid var(--hair); text-align: le
 th { color: var(--ink-2); font-weight: 600; font-size: 13px; background: var(--surface); }
 td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
 .tilerow { display: inline-flex; gap: 2px; vertical-align: middle; }
-.tilerow .t { width: 15px; height: 15px; border-radius: 2px; font-size: 9px; }
+.tilerow .t { width: 15px; height: 15px; border-radius: 2px; }
 .log { max-height: 540px; overflow: auto; }
 .log th { position: sticky; top: 0; z-index: 1; padding: 0; }
 .log th button { all: unset; display: block; box-sizing: border-box; width: 100%; padding: 7px 10px; cursor: pointer; }
@@ -136,7 +133,6 @@ footer a { color: inherit; }
   .wrap { padding: 20px 16px 40px; }
   h1 { font-size: 30px; }
   .kpi .value { font-size: 24px; }
-  .toggle { margin-left: 0; }
 }
 </style>
 </head>
@@ -153,7 +149,6 @@ footer a { color: inherit; }
   <div class="controls" role="group" aria-label="Choose which games to show">
     <span class="label">Show</span>
     <span id="ranges" style="display:contents"></span>
-    <label class="toggle"><input type="checkbox" id="letters"> Letters on tiles</label>
   </div>
 
   <section class="summary">
@@ -163,7 +158,7 @@ footer a { color: inherit; }
 
   <section class="card">
     <h2>Score</h2>
-    <div class="legend"><span class="item"><i class="swatch-dot"></i>One game</span><span class="item"><i class="swatch-line"></i>7-game average</span><span class="item"><span class="swatch-x">×</span>Missed day</span></div>
+    <div class="legend"><span class="item"><i class="swatch-dot"></i>One game</span><span class="item"><i class="swatch-line"></i>7-game average</span></div>
     <div class="chart" id="c-score" tabindex="0" role="img" aria-label="Score per game with a 7-game average. Every value is in the game log table."></div>
   </section>
 
@@ -236,9 +231,7 @@ const label = d => MONTHS[+d.slice(5, 7) - 1] + ' ' + +d.slice(8, 10);
 const longLabel = d => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(toTime(d)).getUTCDay()] + ', ' + label(d) + ', ' + d.slice(0, 4);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-let showLetters = false;
-try { showLetters = localStorage.getItem('anthropeum-letters') === '1'; } catch (e) {}
-const tileRow = t => '<span class="tilerow" aria-label="' + t + '">' + [...t].map(c => '<span class="t ' + c + '">' + (showLetters ? c : '') + '</span>').join('') + '</span>';
+const tileRow = t => '<span class="tilerow" aria-label="' + t + '">' + [...t].map(c => '<span class="t ' + c + '">' + '</span>').join('') + '</span>';
 
 // ---- derived data, always from every game so filters never change a game's history
 GAMES.forEach((g, i) => {
@@ -371,9 +364,6 @@ function timeChart(el, opts) {
   const base = opts.flip ? Y(yHi) : Y(yLo);
   s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + base + '" y2="' + base + '" stroke="var(--axis)"/>';
   dateTicks(t0, t1, W).forEach(t => { s += '<text x="' + X(t) + '" y="' + (H - 7) + '" text-anchor="middle">' + shortDate(t) + '</text>'; });
-  if (opts.showMissed) missed.filter(t => t >= t0 && t <= t1).forEach(t => {
-    s += '<text x="' + X(t) + '" y="' + (base - 5) + '" text-anchor="middle" style="fill:var(--bad);font-weight:700">×</text>';
-  });
   view.forEach(g => { s += '<circle cx="' + X(g.time) + '" cy="' + Y(g[opts.key]) + '" r="3" fill="var(--muted)" fill-opacity=".6"/>'; });
   const line = view.filter(g => g[opts.avg] !== null);
   if (line.length > 1) s += '<path d="M' + line.map(g => X(g.time).toFixed(1) + ',' + Y(g[opts.avg]).toFixed(1)).join('L') + '" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
@@ -399,7 +389,7 @@ function timeChart(el, opts) {
 
 function drawScore() {
   timeChart($('c-score'), {
-    height: 300, left: 44, key: 'score', avg: 'avgScore', showMissed: true,
+    height: 300, left: 44, key: 'score', avg: 'avgScore',
     domain: v => {
       const t = niceTicks(Math.min(...v.map(g => g.score)), Math.max(...v.map(g => g.score)), 6);
       return [t[0], t[t.length - 1], t];
@@ -411,7 +401,7 @@ function drawScore() {
 }
 function drawPct() {
   timeChart($('c-pct'), {
-    height: 280, left: 62, key: 'pct', avg: 'avgPct', flip: true, showMissed: false,
+    height: 280, left: 62, key: 'pct', avg: 'avgPct', flip: true,
     domain: () => [0, 100, [0, 25, 50, 75, 100]],
     tick: v => 'top ' + v + '%', short: v => 'top ' + Math.round(v) + '%',
     best: v => v.reduce((a, b) => (b.pct < a.pct ? b : a)),
@@ -477,7 +467,6 @@ function drawWall() {
     if (!g) continue;
     [...g.tiles].forEach((c, r) => {
       s += '<g data-d="' + d + '"><rect x="' + x + '" y="' + (top + r * step) + '" width="' + cell + '" height="' + cell + '" rx="2" fill="var(--tile-' + c.toLowerCase() + ')"/>';
-      if (showLetters && cell >= 11) s += '<text x="' + (x + cell / 2) + '" y="' + (top + r * step + cell / 2 + 3.5) + '" text-anchor="middle" style="fill:' + (c === 'Y' ? '#0b0b0b' : 'var(--tile-text)') + ';font-size:' + Math.min(10, cell - 3) + 'px;font-weight:700">' + c + '</text>';
       s += '</g>';
     });
   }
@@ -489,7 +478,7 @@ function drawWall() {
     showTip(gameTip(byDay.get(+n.dataset.d)), e.clientX, e.clientY);
   });
   svg.addEventListener('pointerleave', hideTip);
-  const legend = ORDER.map(c => '<span class="item"><span class="t ' + c + '" style="width:14px;height:14px">' + (showLetters ? c : '') + '</span>' + TILE_INFO[c].name + ' ' + TILE_INFO[c].range + '</span>').join('');
+  const legend = ORDER.map(c => '<span class="item"><span class="t ' + c + '" style="width:14px;height:14px">' + '</span>' + TILE_INFO[c].name + ' ' + TILE_INFO[c].range + '</span>').join('');
   $('tile-legend').innerHTML = legend;
   $('mix-legend').innerHTML = legend;
 }
@@ -543,7 +532,7 @@ function drawSummary() {
   const rank = [...GAMES].sort((a, b) => b.score - a.score).indexOf(last) + 1;
   const diff = last.score - mean(GAMES.map(g => g.score));
   $('latest').innerHTML = '<div class="eyebrow">Latest game · ' + esc(longLabel(last.date)) + '</div><div class="big">' + fmt(last.score) + '</div>' +
-    '<div class="strip">' + [...last.tiles].map(c => '<span class="t ' + c + '">' + (showLetters ? c : '') + '</span>').join('') + '</div>' +
+    '<div class="strip">' + [...last.tiles].map(c => '<span class="t ' + c + '">' + '</span>').join('') + '</div>' +
     '<div class="sub">Top ' + last.pct + '% · #' + rank + ' of ' + GAMES.length + ' · ' + fmt(Math.abs(diff)) + (diff >= 0 ? ' above' : ' below') + ' average</div>';
 
   const scores = view.map(g => g.score), pcts = view.map(g => g.pct);
@@ -574,7 +563,7 @@ function drawSummary() {
   const l14 = GAMES.slice(-14), p14 = GAMES.slice(-28, -14);
   if (p14.length === 14) {
     const a = mean(l14.map(g => g.score)), b = mean(p14.map(g => g.score));
-    $('lede').textContent = 'Last 14 games: ' + fmt(a) + ' average, ' + (a >= b ? 'up ' : 'down ') + fmt(Math.abs(a - b)) + '. Finishing top ' + Math.round(mean(l14.map(g => g.pct))) + '%, was top ' + Math.round(mean(p14.map(g => g.pct))) + '%.';
+    $('lede').textContent = 'Over your last 14 games, you averaged ' + fmt(a) + ' points and finished in the top ' + Math.round(mean(l14.map(g => g.pct))) + '%. In the 14 games before that, you averaged ' + fmt(b) + ' and finished in the top ' + Math.round(mean(p14.map(g => g.pct))) + '%.';
   } else {
     $('lede').textContent = GAMES.length + ' games so far.';
   }
@@ -641,12 +630,6 @@ function drawRanges() {
 function drawCharts() { drawScore(); drawPct(); drawField(); drawWall(); drawMix(); }
 function drawAll() { hideTip(); drawSummary(); drawCharts(); drawTables(); }
 
-$('letters').checked = showLetters;
-$('letters').addEventListener('change', e => {
-  showLetters = e.target.checked;
-  try { localStorage.setItem('anthropeum-letters', showLetters ? '1' : '0'); } catch (err) {}
-  drawAll();
-});
 $('foot').innerHTML = 'Update with <code>python build_dashboard.py</code> · <a href="https://anthropeum.com">Play Anthropeum</a>';
 
 drawRanges();
