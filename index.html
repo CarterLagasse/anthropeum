@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anthropeum Scorebook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a museum scorebook. Summary first, then the trend, then the tiles, then every game. */
+:root {
+  color-scheme: light;
+  --page: #f1f2ef;
+  --surface: #fbfbf9;
+  --ink: #1d2124;
+  --ink-2: #51575a;
+  --muted: #72787a;
+  --hair: #dfe1dc;
+  --axis: #bfc3bd;
+  --accent: #5a4689;
+  --accent-wash: #ebe7f3;
+  --good: #1b6b35;
+  --bad: #a23232;
+  --tile-b: #2f74c0;
+  --tile-g: #2f8f5b;
+  --tile-y: #c08a1e;
+  --tile-r: #a33a3a;
+  --tile-text: #ffffff;
+  --display: "Newsreader", Georgia, serif;
+  --body: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #101214;
+    --surface: #181b1e;
+    --ink: #eff0ec;
+    --ink-2: #c1c4bd;
+    --muted: #92979a;
+    --hair: #2b2f33;
+    --axis: #40464a;
+    --accent: #b3a1e6;
+    --accent-wash: #2b2740;
+    --good: #55c27a;
+    --bad: #ec8080;
+    --tile-b: #4a90dc;
+    --tile-g: #3aa76d;
+    --tile-y: #c08a1e;
+    --tile-r: #e0607f;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #101214;
+  --surface: #181b1e;
+  --ink: #eff0ec;
+  --ink-2: #c1c4bd;
+  --muted: #92979a;
+  --hair: #2b2f33;
+  --axis: #40464a;
+  --accent: #b3a1e6;
+  --accent-wash: #2b2740;
+  --good: #55c27a;
+  --bad: #ec8080;
+  --tile-b: #4a90dc;
+  --tile-g: #3aa76d;
+  --tile-y: #c08a1e;
+  --tile-r: #e0607f;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 15px/1.5 var(--body); }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 28px 24px 56px; display: grid; gap: 16px; }
+header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 8px 24px; }
+h1 { font: 500 36px/1.1 var(--display); margin: 0; letter-spacing: -.01em; }
+h2 { font: 500 21px/1.2 var(--display); margin: 0; text-wrap: balance; }
+.lede { margin: 6px 0 0; color: var(--ink-2); max-width: 65ch; }
+.stamp { color: var(--muted); font-size: 13px; }
+.controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; position: sticky; top: 0; z-index: 3; background: var(--page); padding: 8px 0; }
+.controls .label { font-size: 13px; color: var(--muted); margin-right: 4px; }
+.chip { font: inherit; font-size: 13px; color: var(--ink); background: var(--surface); border: 1px solid var(--hair); border-radius: 6px; padding: 5px 11px; min-height: 32px; cursor: pointer; }
+.chip:hover { border-color: var(--axis); }
+.chip[aria-pressed="true"], select.chip.on { background: var(--accent-wash); border-color: var(--accent); font-weight: 600; }
+button:focus-visible, select:focus-visible, [tabindex]:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.toggle { margin-left: auto; font-size: 13px; color: var(--ink-2); display: flex; gap: 6px; align-items: center; cursor: pointer; }
+.card { background: var(--surface); border: 1px solid var(--hair); border-radius: 8px; padding: 18px 20px; min-width: 0; }
+.card > p.note { margin: 2px 0 12px; color: var(--ink-2); font-size: 14px; max-width: 75ch; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.stack { display: grid; gap: 16px; align-content: start; min-width: 0; }
+.summary { display: grid; grid-template-columns: minmax(280px, 1.15fr) minmax(0, 2.6fr); gap: 16px; }
+.latest .eyebrow, .kpi .eyebrow { font-size: 13px; color: var(--muted); }
+.latest .big { font-size: 38px; font-weight: 650; line-height: 1.15; margin-top: 2px; }
+.latest .sub { color: var(--ink-2); font-size: 14px; }
+.strip { display: flex; gap: 3px; margin: 10px 0 8px; }
+.strip .t { flex: 1 1 0; max-width: 28px; aspect-ratio: 1; }
+.t { border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: var(--tile-text); line-height: 1; }
+.t.B { background: var(--tile-b); } .t.G { background: var(--tile-g); } .t.Y { background: var(--tile-y); color: #0b0b0b; } .t.R { background: var(--tile-r); }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.kpi .value { font-size: 28px; font-weight: 650; line-height: 1.2; margin-top: 2px; }
+.kpi .sub { font-size: 13px; color: var(--ink-2); margin-top: 2px; }
+.up { color: var(--good); font-weight: 600; } .down { color: var(--bad); font-weight: 600; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 8px; }
+.legend span.item { display: inline-flex; align-items: center; gap: 6px; }
+.swatch-line { width: 18px; height: 2px; background: var(--ink); display: inline-block; }
+.swatch-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); display: inline-block; }
+.swatch-x { color: var(--bad); font-weight: 700; font-size: 12px; }
+.chart { width: 100%; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; touch-action: pan-y; }
+svg text { font: 12px var(--body); fill: var(--muted); font-variant-numeric: tabular-nums; }
+svg text.strong { fill: var(--ink); font-weight: 600; }
+.scroll-x { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { padding: 7px 10px; border-bottom: 1px solid var(--hair); text-align: left; white-space: nowrap; }
+th { color: var(--ink-2); font-weight: 600; font-size: 13px; background: var(--surface); }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+.tilerow { display: inline-flex; gap: 2px; vertical-align: middle; }
+.tilerow .t { width: 15px; height: 15px; border-radius: 2px; font-size: 9px; }
+.log { max-height: 540px; overflow: auto; }
+.log th { position: sticky; top: 0; z-index: 1; padding: 0; }
+.log th button { all: unset; display: block; box-sizing: border-box; width: 100%; padding: 7px 10px; cursor: pointer; }
+.log th button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.log th button:hover { color: var(--ink); text-decoration: underline; }
+.log tr:hover td { background: var(--accent-wash); }
+.pill { font-size: 12px; border-radius: 4px; padding: 1px 6px; background: var(--accent-wash); color: var(--ink); margin-left: 6px; }
+#tip { position: fixed; pointer-events: none; z-index: 9; background: var(--ink); color: var(--surface); font-size: 13px; line-height: 1.4; padding: 8px 10px; border-radius: 6px; max-width: 260px; display: none; }
+#tip .tilerow { margin: 3px 0; }
+#tip .t { outline: 1px solid rgba(128,128,128,.45); }
+footer { color: var(--muted); font-size: 13px; max-width: 90ch; }
+footer a { color: inherit; }
+@media (max-width: 900px) {
+  .summary, .grid-2 { grid-template-columns: minmax(0, 1fr); }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 420px) {
+  .wrap { padding: 20px 16px 40px; }
+  h1 { font-size: 30px; }
+  .kpi .value { font-size: 24px; }
+  .toggle { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Anthropeum Scorebook</h1>
+      <p class="lede" id="lede"></p>
+    </div>
+    <div class="stamp" id="stamp"></div>
+  </header>
+
+  <div class="controls" role="group" aria-label="Choose which games to show">
+    <span class="label">Show</span>
+    <span id="ranges" style="display:contents"></span>
+    <label class="toggle"><input type="checkbox" id="letters"> Letters on tiles</label>
+  </div>
+
+  <section class="summary">
+    <div class="card latest" id="latest"></div>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <section class="card">
+    <h2>Score</h2>
+    <div class="legend"><span class="item"><i class="swatch-dot"></i>One game</span><span class="item"><i class="swatch-line"></i>7-game average</span><span class="item"><span class="swatch-x">×</span>Missed day</span></div>
+    <div class="chart" id="c-score" tabindex="0" role="img" aria-label="Score per game with a 7-game average. Every value is in the game log table."></div>
+  </section>
+
+  <section class="grid-2">
+    <div class="card">
+      <h2>Percentile</h2>
+      <p class="note">Higher is better</p>
+      <div class="legend"><span class="item"><i class="swatch-dot"></i>One game</span><span class="item"><i class="swatch-line"></i>7-game average</span></div>
+      <div class="chart" id="c-pct" tabindex="0" role="img" aria-label="Daily percentile with a 7-game average. Every value is in the game log table."></div>
+    </div>
+    <div class="card">
+      <h2>How hard was the day?</h2>
+      <p class="note">Same score, different finish. Above the line, others found the day harder.</p>
+      <div class="chart" id="c-field" tabindex="0" role="img" aria-label="Score against percentile for each game. Every value is in the game log table."></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Every scorecard</h2>
+    <p class="note">One column per day</p>
+    <div class="legend" id="tile-legend"></div>
+    <div class="scroll-x"><div class="chart" id="c-wall" style="min-width:680px"></div></div>
+  </section>
+
+  <section class="grid-2">
+    <div class="card">
+      <h2>Tile breakdown</h2>
+      <div class="legend" id="mix-legend"></div>
+      <div class="chart" id="c-mix" tabindex="0" role="img" aria-label="Average number of tiles per game of each colour, by week."></div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h2>Month by month</h2>
+        <div class="scroll-x" style="margin-top:8px"><table id="t-months"></table></div>
+      </div>
+      <div class="card">
+        <h2>Personal bests</h2>
+        <div class="scroll-x" style="margin-top:8px"><table id="t-bests"></table></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 id="log-title">Game log</h2>
+    <p class="note">Select a heading to sort. Day difficulty: + harder, − easier.</p>
+    <div class="log" tabindex="0" role="region" aria-label="Game log"><table id="t-log"></table></div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+<div id="tip" role="status"></div>
+
+<script>
+const GAMES = [{"date":"2026-08-13","tiles":"YYGGYGYBYG","score":64497,"pct":63},{"date":"2026-08-14","tiles":"YYBBGYGBGY","score":66309,"pct":45},{"date":"2026-08-15","tiles":"GGYYGYRRYG","score":48569,"pct":87},{"date":"2026-08-16","tiles":"GYYGGGGYGB","score":75078,"pct":28},{"date":"2026-08-17","tiles":"YRYYBYGYYB","score":56316,"pct":82},{"date":"2026-08-18","tiles":"YYYYGBYRYY","score":50037,"pct":81},{"date":"2026-08-20","tiles":"GYGGGRYBGG","score":64181,"pct":73},{"date":"2026-08-21","tiles":"YGGYYBYGYY","score":59541,"pct":74},{"date":"2026-08-22","tiles":"RRYGYYBGGG","score":57891,"pct":50},{"date":"2026-08-23","tiles":"BGYYYYGGBY","score":67070,"pct":62},{"date":"2026-08-24","tiles":"GYYGGGYYYY","score":54082,"pct":66},{"date":"2026-08-25","tiles":"YGGGRYYYRY","score":49359,"pct":75},{"date":"2026-08-26","tiles":"GGYBBGGYYY","score":69883,"pct":37},{"date":"2026-08-27","tiles":"YGRYRGYYGR","score":46314,"pct":75},{"date":"2026-08-29","tiles":"GRBGYGYGBG","score":70427,"pct":41},{"date":"2026-08-30","tiles":"RGRRYYBRYR","score":39248,"pct":92},{"date":"2026-08-31","tiles":"BBBGGYBGYY","score":75763,"pct":19},{"date":"2026-09-01","tiles":"GYYGBYYYGB","score":66013,"pct":42},{"date":"2026-09-02","tiles":"GYRRBGYGGY","score":57221,"pct":71},{"date":"2026-09-03","tiles":"YYBRGBGGGG","score":69801,"pct":53},{"date":"2026-09-04","tiles":"BBYGYYBGYG","score":74700,"pct":47},{"date":"2026-09-05","tiles":"BBGGGBGRYG","score":75404,"pct":24},{"date":"2026-09-06","tiles":"YBGGYYGGYR","score":60210,"pct":68},{"date":"2026-09-07","tiles":"GGGYGYBBGR","score":66528,"pct":39},{"date":"2026-09-08","tiles":"BYYYYRGYBB","score":61073,"pct":63},{"date":"2026-09-09","tiles":"GRGYGBYYGB","score":64901,"pct":63},{"date":"2026-09-10","tiles":"GRYGGGYBBY","score":66608,"pct":45},{"date":"2026-09-11","tiles":"GRYGGBBYBY","score":68150,"pct":25},{"date":"2026-09-12","tiles":"GGYYGYBGGR","score":66405,"pct":49},{"date":"2026-09-13","tiles":"BBRGBBGGGB","score":78080,"pct":18},{"date":"2026-09-14","tiles":"GBYYGYYBRB","score":66024,"pct":61},{"date":"2026-09-15","tiles":"GGGYYYBYYY","score":61856,"pct":65},{"date":"2026-09-16","tiles":"GBYBGBYRYG","score":63514,"pct":58},{"date":"2026-09-17","tiles":"RGGGYYBYYB","score":63646,"pct":53},{"date":"2026-09-18","tiles":"YGYGYGGYGG","score":60865,"pct":81},{"date":"2026-09-19","tiles":"RYRBYGYGYG","score":55950,"pct":72},{"date":"2026-09-20","tiles":"GGYGGBGYGY","score":72557,"pct":32},{"date":"2026-09-21","tiles":"GBGBYGGYYY","score":70570,"pct":47},{"date":"2026-09-22","tiles":"GBRYBGGGYG","score":70754,"pct":43},{"date":"2026-09-23","tiles":"GYYRYGGBGB","score":63964,"pct":51},{"date":"2026-09-24","tiles":"GRGGYGBGYR","score":64040,"pct":36},{"date":"2026-09-25","tiles":"YYYGYYRGBG","score":55964,"pct":61},{"date":"2026-09-26","tiles":"BGGGGYYGRY","score":63084,"pct":27},{"date":"2026-09-27","tiles":"GBYGYRBBBY","score":70821,"pct":47},{"date":"2026-09-28","tiles":"YBYYYYGGYY","score":56855,"pct":80},{"date":"2026-09-29","tiles":"YBGGYBYBBY","score":72133,"pct":44},{"date":"2026-09-30","tiles":"YBYBYGGBYB","score":73804,"pct":38},{"date":"2026-10-01","tiles":"YGYYGYGGYB","score":66805,"pct":39},{"date":"2026-10-02","tiles":"GBBGYGGGYY","score":71524,"pct":30},{"date":"2026-10-03","tiles":"GGGYGYGYYB","score":67521,"pct":51},{"date":"2026-10-04","tiles":"GGBGBYYRGY","score":63579,"pct":55},{"date":"2026-10-05","tiles":"BYRGGRRGBG","score":59068,"pct":83},{"date":"2026-10-06","tiles":"GBGRBGYGGY","score":69744,"pct":34},{"date":"2026-10-07","tiles":"YGGGYGBGYR","score":63537,"pct":60},{"date":"2026-10-08","tiles":"GBGGBYYGGG","score":75732,"pct":39},{"date":"2026-10-09","tiles":"YBGYRRRGYG","score":52961,"pct":86},{"date":"2026-10-10","tiles":"BYRGYYRGYG","score":54075,"pct":84},{"date":"2026-10-11","tiles":"GYGRYGYGBG","score":61399,"pct":55},{"date":"2026-10-12","tiles":"GGYYGYGGYB","score":66202,"pct":53},{"date":"2026-10-13","tiles":"RYBGBYGGYG","score":62680,"pct":55},{"date":"2026-10-14","tiles":"GBGGYYBGGB","score":77522,"pct":18},{"date":"2026-10-15","tiles":"YGBYYGGYGY","score":61393,"pct":69},{"date":"2026-10-16","tiles":"YYYBBBGBBB","score":82268,"pct":19},{"date":"2026-10-17","tiles":"BBYGBYRRYG","score":63639,"pct":60},{"date":"2026-10-18","tiles":"GBBGBBBYGY","score":83429,"pct":5},{"date":"2026-10-19","tiles":"GBGGGGGGGG","score":76205,"pct":18},{"date":"2026-10-20","tiles":"YGYBYBBYYB","score":71104,"pct":28},{"date":"2026-10-21","tiles":"BBBGBGGGRG","score":76391,"pct":23},{"date":"2026-10-22","tiles":"BGBYBGGGGG","score":78092,"pct":27},{"date":"2026-10-23","tiles":"BGYYGBGBGG","score":78296,"pct":22},{"date":"2026-10-24","tiles":"BYGGBGYBYY","score":71178,"pct":40},{"date":"2026-10-25","tiles":"GYYBBYYGBB","score":75779,"pct":40},{"date":"2026-10-26","tiles":"GYRRGGBBGG","score":63731,"pct":46},{"date":"2026-10-27","tiles":"BGGYRYYYGR","score":56290,"pct":76},{"date":"2026-10-28","tiles":"BBBGGGGGBG","score":83244,"pct":4},{"date":"2026-10-29","tiles":"GGRGGRYGYG","score":62509,"pct":66}];
+const TILE_INFO = {
+  B: { name: 'Blue', range: '9,000+' },
+  G: { name: 'Green', range: '6,000+' },
+  Y: { name: 'Yellow', range: '3,000+' },
+  R: { name: 'Red', range: 'Under 3,000' }
+};
+const ORDER = ['B', 'G', 'Y', 'R'];
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const DAY = 86400000;
+const $ = id => document.getElementById(id);
+const fmt = v => Math.round(v).toLocaleString('en-US');
+const mean = a => a.reduce((s, v) => s + v, 0) / a.length;
+const median = a => { const s = [...a].sort((x, y) => x - y), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+const toTime = d => Date.UTC(+d.slice(0, 4), +d.slice(5, 7) - 1, +d.slice(8, 10));
+const label = d => MONTHS[+d.slice(5, 7) - 1] + ' ' + +d.slice(8, 10);
+const longLabel = d => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(toTime(d)).getUTCDay()] + ', ' + label(d) + ', ' + d.slice(0, 4);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+let showLetters = false;
+try { showLetters = localStorage.getItem('anthropeum-letters') === '1'; } catch (e) {}
+const tileRow = t => '<span class="tilerow" aria-label="' + t + '">' + [...t].map(c => '<span class="t ' + c + '">' + (showLetters ? c : '') + '</span>').join('') + '</span>';
+
+// ---- derived data, always from every game so filters never change a game's history
+GAMES.forEach((g, i) => {
+  g.time = toTime(g.date);
+  g.count = c => [...g.tiles].filter(x => x === c).length;
+  const win = GAMES.slice(Math.max(0, i - 6), i + 1);
+  g.avgScore = win.length === 7 ? mean(win.map(x => x.score)) : null;
+  g.avgPct = win.length === 7 ? mean(win.map(x => x.pct)) : null;
+});
+const fit = (() => {
+  const xs = GAMES.map(g => g.score), ys = GAMES.map(g => g.pct), mx = mean(xs), my = mean(ys);
+  let num = 0, den = 0;
+  xs.forEach((x, i) => { num += (x - mx) * (ys[i] - my); den += (x - mx) ** 2; });
+  const m = den ? num / den : 0, b = my - m * mx;
+  return { at: x => m * x + b };
+})();
+GAMES.forEach(g => { g.vsTypical = fit.at(g.score) - g.pct; });
+
+const missed = [];
+for (let i = 1; i < GAMES.length; i++)
+  for (let t = GAMES[i - 1].time + DAY; t < GAMES[i].time; t += DAY) missed.push(t);
+const streak = (() => {
+  let cur = 1, best = 1;
+  for (let i = 1; i < GAMES.length; i++) {
+    cur = GAMES[i].time - GAMES[i - 1].time === DAY ? cur + 1 : 1;
+    best = Math.max(best, cur);
+  }
+  return { cur, best };
+})();
+
+// ---- filter state
+const monthKeys = [...new Set(GAMES.map(g => g.date.slice(0, 7)))];
+const RANGES = [
+  { id: 'all', text: 'All games', pick: () => GAMES },
+  { id: 'last30', text: 'Last 30', pick: () => GAMES.slice(-30) },
+  { id: 'last14', text: 'Last 14', pick: () => GAMES.slice(-14) },
+  ...monthKeys.map(k => ({ id: k, text: MONTHS[+k.slice(5) - 1] + ' ' + k.slice(0, 4), pick: () => GAMES.filter(g => g.date.startsWith(k)) }))
+];
+let range = RANGES[0];
+let view = GAMES;
+let logSort = { key: 'date', dir: -1 };
+
+// ---- tooltip and hover layer
+const tip = $('tip');
+function showTip(html, x, y) {
+  tip.innerHTML = html;
+  tip.style.display = 'block';
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let left = x + 14, top = y - h - 12;
+  if (left + w > innerWidth - 8) left = x - w - 14;
+  if (left < 8) left = 8;
+  if (top < 8) top = y + 16;
+  tip.style.left = left + 'px';
+  tip.style.top = top + 'px';
+}
+const hideTip = () => { tip.style.display = 'none'; };
+const gameTip = g => '<strong>' + esc(longLabel(g.date)) + '</strong><br>' + tileRow(g.tiles) + '<br>' + fmt(g.score) + ' · top ' + g.pct + '%' +
+  (g.avgScore !== null ? '<br>7-game average: ' + fmt(g.avgScore) : '');
+
+function attachHover(el, marks, onChange) {
+  // marks: [{x, y, game}] in SVG units. Pointer finds the nearest; arrow keys step through.
+  const svg = el.querySelector('svg');
+  const marker = svg.querySelector('.hover');
+  const vb = svg.viewBox.baseVal;
+  let idx = -1;
+  function pick(i, cx, cy) {
+    idx = i;
+    const m = marks[i];
+    if (onChange) onChange(m, marker);
+    const r = svg.getBoundingClientRect();
+    const px = cx === undefined ? r.left + m.x / vb.width * r.width : cx;
+    const py = cy === undefined ? r.top + m.y / vb.height * r.height : cy;
+    showTip(gameTip(m.game), px, py);
+  }
+  svg.addEventListener('pointermove', e => {
+    const r = svg.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width * vb.width, py = (e.clientY - r.top) / r.height * vb.height;
+    let best = 0, bd = Infinity;
+    marks.forEach((m, i) => {
+      const d = el.dataset.hover === 'xy' ? (m.x - px) ** 2 + (m.y - py) ** 2 : Math.abs(m.x - px);
+      if (d < bd) { bd = d; best = i; }
+    });
+    pick(best, e.clientX, e.clientY);
+  });
+  svg.addEventListener('pointerleave', () => { if (marker) marker.setAttribute('visibility', 'hidden'); hideTip(); });
+  el.onkeydown = e => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    const start = idx < 0 ? marks.length : idx;
+    pick(Math.min(marks.length - 1, Math.max(0, start + (e.key === 'ArrowRight' ? 1 : -1))));
+  };
+  el.onblur = () => { if (marker) marker.setAttribute('visibility', 'hidden'); hideTip(); };
+}
+
+function niceTicks(lo, hi, count) {
+  const raw = (hi - lo) / Math.max(count - 1, 1), mag = 10 ** Math.floor(Math.log10(raw || 1));
+  const step = [1, 2, 2.5, 5, 10].map(s => s * mag).find(s => s >= raw) || mag * 10;
+  const a = Math.floor(lo / step) * step, b = Math.ceil(hi / step) * step, out = [];
+  for (let v = a; v <= b + step / 2; v += step) out.push(v);
+  return out;
+}
+
+function dateTicks(t0, t1, width) {
+  // Start of each month, or weekly starts on short ranges.
+  const span = (t1 - t0) / DAY, out = [];
+  if (span > 45) {
+    const d = new Date(t0); d.setUTCDate(1);
+    while (d.getTime() <= t1) { if (d.getTime() >= t0) out.push(d.getTime()); d.setUTCMonth(d.getUTCMonth() + 1); }
+    if (out.length < 2) out.unshift(t0);
+  } else {
+    const step = (width < 420 ? 14 : 7) * DAY;
+    for (let t = t0; t <= t1; t += step) out.push(t);
+  }
+  return out;
+}
+const shortDate = t => { const d = new Date(t); return MONTHS[d.getUTCMonth()] + ' ' + d.getUTCDate(); };
+
+// ---- time series: score and percentile share one drawing routine
+function timeChart(el, opts) {
+  const W = Math.max(el.clientWidth, 300), H = opts.height, L = opts.left, R = 54, T = 14, B = 26;
+  const t0 = view[0].time, t1 = Math.max(view[view.length - 1].time, t0 + DAY);
+  const X = t => L + (t - t0) / (t1 - t0) * (W - L - R);
+  const [yLo, yHi, ticks] = opts.domain(view);
+  const Y = v => opts.flip ? T + (v - yLo) / (yHi - yLo) * (H - T - B) : H - B - (v - yLo) / (yHi - yLo) * (H - T - B);
+  let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true">';
+  ticks.forEach(v => {
+    s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="var(--hair)"/>';
+    s += '<text x="' + (L - 8) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + opts.tick(v) + '</text>';
+  });
+  const base = opts.flip ? Y(yHi) : Y(yLo);
+  s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + base + '" y2="' + base + '" stroke="var(--axis)"/>';
+  dateTicks(t0, t1, W).forEach(t => { s += '<text x="' + X(t) + '" y="' + (H - 7) + '" text-anchor="middle">' + shortDate(t) + '</text>'; });
+  if (opts.showMissed) missed.filter(t => t >= t0 && t <= t1).forEach(t => {
+    s += '<text x="' + X(t) + '" y="' + (base - 5) + '" text-anchor="middle" style="fill:var(--bad);font-weight:700">×</text>';
+  });
+  view.forEach(g => { s += '<circle cx="' + X(g.time) + '" cy="' + Y(g[opts.key]) + '" r="3" fill="var(--muted)" fill-opacity=".6"/>'; });
+  const line = view.filter(g => g[opts.avg] !== null);
+  if (line.length > 1) s += '<path d="M' + line.map(g => X(g.time).toFixed(1) + ',' + Y(g[opts.avg]).toFixed(1)).join('L') + '" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+  if (line.length) {
+    const e = line[line.length - 1];
+    s += '<circle cx="' + X(e.time) + '" cy="' + Y(e[opts.avg]) + '" r="4" fill="var(--ink)" stroke="var(--surface)" stroke-width="2"/>';
+    s += '<text class="strong" x="' + (X(e.time) + 8) + '" y="' + (Y(e[opts.avg]) + 4) + '">' + opts.short(e[opts.avg]) + '</text>';
+  }
+  const best = opts.best(view);
+  const bx = X(best.time), by = Y(best[opts.key]);
+  s += '<circle cx="' + bx + '" cy="' + by + '" r="4.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>';
+  const anchor = bx > W - R - 70 ? 'end' : bx < L + 70 ? 'start' : 'middle';
+  s += '<text class="strong" x="' + bx + '" y="' + Math.max(by - 10, 11) + '" text-anchor="' + anchor + '">' + opts.bestLabel(best) + '</text>';
+  s += '<g class="hover" visibility="hidden"><line y1="' + T + '" y2="' + (H - B) + '" stroke="var(--axis)"/><circle r="5" fill="var(--ink)" stroke="var(--surface)" stroke-width="2"/></g></svg>';
+  el.innerHTML = s;
+  attachHover(el, view.map(g => ({ x: X(g.time), y: Y(g[opts.key]), game: g })), (m, mk) => {
+    mk.setAttribute('visibility', 'visible');
+    const l = mk.querySelector('line'), c = mk.querySelector('circle');
+    l.setAttribute('x1', m.x); l.setAttribute('x2', m.x);
+    c.setAttribute('cx', m.x); c.setAttribute('cy', m.y);
+  });
+}
+
+function drawScore() {
+  timeChart($('c-score'), {
+    height: 300, left: 44, key: 'score', avg: 'avgScore', showMissed: true,
+    domain: v => {
+      const t = niceTicks(Math.min(...v.map(g => g.score)), Math.max(...v.map(g => g.score)), 6);
+      return [t[0], t[t.length - 1], t];
+    },
+    tick: v => v / 1000 + 'k', short: v => (v / 1000).toFixed(1) + 'k',
+    best: v => v.reduce((a, b) => (b.score > a.score ? b : a)),
+    bestLabel: g => fmt(g.score) + ' on ' + label(g.date)
+  });
+}
+function drawPct() {
+  timeChart($('c-pct'), {
+    height: 280, left: 62, key: 'pct', avg: 'avgPct', flip: true, showMissed: false,
+    domain: () => [0, 100, [0, 25, 50, 75, 100]],
+    tick: v => 'top ' + v + '%', short: v => 'top ' + Math.round(v) + '%',
+    best: v => v.reduce((a, b) => (b.pct < a.pct ? b : a)),
+    bestLabel: g => 'top ' + g.pct + '% on ' + label(g.date)
+  });
+}
+
+function drawField() {
+  const el = $('c-field');
+  const W = Math.max(el.clientWidth, 300), H = 280, L = 62, R = 14, T = 14, B = 34;
+  const xs = GAMES.map(g => g.score), ticks = niceTicks(Math.min(...xs), Math.max(...xs), 6);
+  const lo = ticks[0], hi = ticks[ticks.length - 1];
+  const X = v => L + (v - lo) / (hi - lo) * (W - L - R);
+  const Y = v => T + v / 100 * (H - T - B);
+  let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true">';
+  [0, 25, 50, 75, 100].forEach(v => {
+    s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="var(--hair)"/>';
+    s += '<text x="' + (L - 8) + '" y="' + (Y(v) + 4) + '" text-anchor="end">top ' + v + '%</text>';
+  });
+  ticks.forEach(v => { s += '<text x="' + X(v) + '" y="' + (H - 16) + '" text-anchor="middle">' + v / 1000 + 'k</text>'; });
+  s += '<text x="' + ((L + W - R) / 2) + '" y="' + (H - 1) + '" text-anchor="middle">Score</text>';
+  const clamp = v => Math.min(100, Math.max(0, v));
+  s += '<line x1="' + X(lo) + '" y1="' + Y(clamp(fit.at(lo))) + '" x2="' + X(hi) + '" y2="' + Y(clamp(fit.at(hi))) + '" stroke="var(--ink)" stroke-width="2"/>';
+  const inView = new Set(view);
+  GAMES.filter(g => !inView.has(g)).forEach(g => { s += '<circle cx="' + X(g.score) + '" cy="' + Y(g.pct) + '" r="3" fill="var(--muted)" fill-opacity=".3"/>'; });
+  view.forEach(g => { s += '<circle cx="' + X(g.score) + '" cy="' + Y(g.pct) + '" r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="1"/>'; });
+  const sorted = [...view].sort((a, b) => a.vsTypical - b.vsTypical);
+  const harsh = sorted[0], kind = sorted[sorted.length - 1];
+  [[kind, -9], [harsh, 16]].forEach(([g, dy]) => {
+    const px = X(g.score), a = px > W - R - 70 ? 'end' : px < L + 70 ? 'start' : 'middle';
+    s += '<text class="strong" x="' + px + '" y="' + (Y(g.pct) + dy) + '" text-anchor="' + a + '">' + label(g.date) + '</text>';
+  });
+  s += '<text class="strong" x="' + (L + 8) + '" y="' + (T + 14) + '">Harder day</text>';
+  s += '<text class="strong" x="' + (W - R - 8) + '" y="' + (Y(100) - 8) + '" text-anchor="end">Easier day</text>';
+  s += '<g class="hover" visibility="hidden"><circle r="6" fill="none" stroke="var(--ink)" stroke-width="2"/></g></svg>';
+  el.innerHTML = s;
+  el.dataset.hover = 'xy';
+  attachHover(el, view.map(g => ({ x: X(g.score), y: Y(g.pct), game: g })), (m, mk) => {
+    mk.setAttribute('visibility', 'visible');
+    const c = mk.querySelector('circle');
+    c.setAttribute('cx', m.x); c.setAttribute('cy', m.y);
+  });
+}
+
+function drawWall() {
+  const el = $('c-wall');
+  const W = Math.max(el.clientWidth, 300);
+  const t0 = view[0].time, days = Math.round((view[view.length - 1].time - t0) / DAY) + 1;
+  const L = 22, gap = 2, top = 20;
+  const cell = Math.min(26, Math.max(6, (W - L) / days - gap)), step = cell + gap;
+  const H = top + 10 * step;
+  const byDay = new Map(view.map(g => [Math.round((g.time - t0) / DAY), g]));
+  let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true" style="max-width:' + (L + days * step) + 'px">';
+  for (let r = 0; r < 10; r++) if (r === 0 || r === 4 || r === 9) s += '<text x="' + (L - 6) + '" y="' + (top + r * step + cell / 2 + 4) + '" text-anchor="end">' + (r + 1) + '</text>';
+  let lastLabelX = -99;
+  for (let d = 0; d < days; d++) {
+    const t = new Date(t0 + d * DAY), x = L + d * step;
+    if ((d === 0 || t.getUTCDate() === 1) && x - lastLabelX > 44) {
+      s += '<text x="' + x + '" y="12">' + MONTHS[t.getUTCMonth()] + (d === 0 && t.getUTCDate() !== 1 ? ' ' + t.getUTCDate() : '') + '</text>';
+      lastLabelX = x;
+    }
+    const g = byDay.get(d);
+    if (!g) continue;
+    [...g.tiles].forEach((c, r) => {
+      s += '<g data-d="' + d + '"><rect x="' + x + '" y="' + (top + r * step) + '" width="' + cell + '" height="' + cell + '" rx="2" fill="var(--tile-' + c.toLowerCase() + ')"/>';
+      if (showLetters && cell >= 11) s += '<text x="' + (x + cell / 2) + '" y="' + (top + r * step + cell / 2 + 3.5) + '" text-anchor="middle" style="fill:' + (c === 'Y' ? '#0b0b0b' : 'var(--tile-text)') + ';font-size:' + Math.min(10, cell - 3) + 'px;font-weight:700">' + c + '</text>';
+      s += '</g>';
+    });
+  }
+  el.innerHTML = s + '</svg>';
+  const svg = el.querySelector('svg');
+  svg.addEventListener('pointermove', e => {
+    const n = e.target.closest ? e.target.closest('[data-d]') : null;
+    if (!n) return hideTip();
+    showTip(gameTip(byDay.get(+n.dataset.d)), e.clientX, e.clientY);
+  });
+  svg.addEventListener('pointerleave', hideTip);
+  const legend = ORDER.map(c => '<span class="item"><span class="t ' + c + '" style="width:14px;height:14px">' + (showLetters ? c : '') + '</span>' + TILE_INFO[c].name + ' ' + TILE_INFO[c].range + '</span>').join('');
+  $('tile-legend').innerHTML = legend;
+  $('mix-legend').innerHTML = legend;
+}
+
+function drawMix() {
+  const el = $('c-mix');
+  const bins = [];
+  view.forEach(g => {
+    const dow = (new Date(g.time).getUTCDay() + 6) % 7, start = g.time - dow * DAY;
+    let b = bins[bins.length - 1];
+    if (!b || b.start !== start) { b = { start, games: [] }; bins.push(b); }
+    b.games.push(g);
+  });
+  bins.forEach(b => { b.avg = ORDER.map(c => mean(b.games.map(g => g.count(c)))); });
+  const W = Math.max(el.clientWidth, 300), H = 400, L = 26, R = 8, T = 10, B = 26;
+  const Y = v => H - B - v / 10 * (H - T - B);
+  const slot = (W - L - R) / bins.length, bw = Math.min(30, Math.max(8, slot - 6));
+  let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true">';
+  [0, 5, 10].forEach(v => {
+    s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="var(' + (v ? '--hair' : '--axis') + ')"/>';
+    s += '<text x="' + (L - 6) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + v + '</text>';
+  });
+  const every = Math.ceil(52 / slot);
+  bins.forEach((b, i) => {
+    const x = L + i * slot + (slot - bw) / 2;
+    let acc = 0;
+    b.avg.forEach((v, k) => {
+      if (v > 0) {
+        const y1 = Y(acc + v), y0 = Y(acc), h = Math.max(y0 - y1 - 2, 1);
+        s += '<rect x="' + x + '" y="' + y1 + '" width="' + bw + '" height="' + h + '" rx="2" fill="var(--tile-' + ORDER[k].toLowerCase() + ')"/>';
+      }
+      acc += v;
+    });
+    s += '<rect class="hit" data-i="' + i + '" x="' + (L + i * slot) + '" y="' + T + '" width="' + slot + '" height="' + (H - T - B) + '" fill="transparent"/>';
+    if (i % every === 0) s += '<text x="' + (x + bw / 2) + '" y="' + (H - 7) + '" text-anchor="middle">' + shortDate(b.start) + '</text>';
+  });
+  el.innerHTML = s + '</svg>';
+  const svg = el.querySelector('svg');
+  svg.addEventListener('pointermove', e => {
+    const n = e.target.closest ? e.target.closest('.hit') : null;
+    if (!n) return hideTip();
+    const b = bins[+n.dataset.i];
+    showTip('<strong>Week of ' + shortDate(b.start) + '</strong> · ' + b.games.length + (b.games.length === 1 ? ' game' : ' games') + '<br>' +
+      ORDER.map((c, k) => TILE_INFO[c].name + ': ' + b.avg[k].toFixed(1) + ' per game').join('<br>'), e.clientX, e.clientY);
+  });
+  svg.addEventListener('pointerleave', hideTip);
+}
+
+function drawSummary() {
+  const last = GAMES[GAMES.length - 1];
+  const rank = [...GAMES].sort((a, b) => b.score - a.score).indexOf(last) + 1;
+  const diff = last.score - mean(GAMES.map(g => g.score));
+  $('latest').innerHTML = '<div class="eyebrow">Latest game · ' + esc(longLabel(last.date)) + '</div><div class="big">' + fmt(last.score) + '</div>' +
+    '<div class="strip">' + [...last.tiles].map(c => '<span class="t ' + c + '">' + (showLetters ? c : '') + '</span>').join('') + '</div>' +
+    '<div class="sub">Top ' + last.pct + '% · #' + rank + ' of ' + GAMES.length + ' · ' + fmt(Math.abs(diff)) + (diff >= 0 ? ' above' : ' below') + ' average</div>';
+
+  const scores = view.map(g => g.score), pcts = view.map(g => g.pct);
+  const startIdx = GAMES.indexOf(view[0]);
+  const prev = startIdx >= view.length ? GAMES.slice(startIdx - view.length, startIdx) : null;
+  const best = view.reduce((a, b) => (b.score > a.score ? b : a));
+  const top25 = pcts.filter(p => p <= 25).length;
+  const redFree = view.filter(g => !g.tiles.includes('R')).length;
+  let scoreSub = 'Median ' + fmt(median(scores));
+  let pctSub = 'Median top ' + Math.round(median(pcts)) + '%';
+  if (prev && range.id !== 'all') {
+    const d = mean(scores) - mean(prev.map(g => g.score)), dp = mean(prev.map(g => g.pct)) - mean(pcts);
+    scoreSub = '<span class="' + (d >= 0 ? 'up' : 'down') + '">' + (d >= 0 ? '▲ ' : '▼ ') + fmt(Math.abs(d)) + '</span> vs previous ' + view.length;
+    pctSub = '<span class="' + (dp >= 0 ? 'up' : 'down') + '">' + (dp >= 0 ? '▲ ' : '▼ ') + Math.abs(Math.round(dp)) + ' pts</span> vs previous ' + view.length;
+  }
+  const items = [
+    ['Average score', fmt(mean(scores)), scoreSub],
+    ['Average finish', 'Top ' + Math.round(mean(pcts)) + '%', pctSub],
+    ['Best score', fmt(best.score), label(best.date) + ' · top ' + best.pct + '%'],
+    ['Best finish', 'Top ' + Math.min(...pcts) + '%', top25 + ' games in top 25%'],
+    ['Games with no red', redFree + ' of ' + view.length, Math.round(redFree / view.length * 100) + '%'],
+    ['Blues per game', mean(view.map(g => g.count('B'))).toFixed(1), 'Rounds of 9,000+'],
+    ['Play streak', streak.cur + (streak.cur === 1 ? ' day' : ' days'), streak.cur === streak.best ? 'Your longest' : 'Longest: ' + streak.best + ' days'],
+    ['Missed days', String(missed.length), missed.length ? missed.slice(-2).map(shortDate).join(', ') : 'None']
+  ];
+  $('kpis').innerHTML = items.map(k => '<div class="card kpi"><div class="eyebrow">' + k[0] + '</div><div class="value">' + k[1] + '</div><div class="sub">' + k[2] + '</div></div>').join('');
+
+  const l14 = GAMES.slice(-14), p14 = GAMES.slice(-28, -14);
+  if (p14.length === 14) {
+    const a = mean(l14.map(g => g.score)), b = mean(p14.map(g => g.score));
+    $('lede').textContent = 'Last 14 games: ' + fmt(a) + ' average, ' + (a >= b ? 'up ' : 'down ') + fmt(Math.abs(a - b)) + '. Finishing top ' + Math.round(mean(l14.map(g => g.pct))) + '%, was top ' + Math.round(mean(p14.map(g => g.pct))) + '%.';
+  } else {
+    $('lede').textContent = GAMES.length + ' games so far.';
+  }
+  $('stamp').textContent = GAMES.length + ' games · ' + label(GAMES[0].date) + ' to ' + label(last.date) + ', ' + last.date.slice(0, 4);
+}
+
+function drawTables() {
+  const groups = monthKeys.map(k => ({ k, g: GAMES.filter(x => x.date.startsWith(k)) }));
+  $('t-months').innerHTML = '<thead><tr><th>Month</th><th class="n">Games</th><th class="n">Average</th><th class="n">Best</th><th class="n">Worst</th><th class="n">Avg finish</th></tr></thead><tbody>' +
+    groups.map(({ k, g }) => '<tr><td>' + MONTHS[+k.slice(5) - 1] + ' ' + k.slice(0, 4) + '</td><td class="n">' + g.length + '</td><td class="n">' + fmt(mean(g.map(x => x.score))) + '</td><td class="n">' + fmt(Math.max(...g.map(x => x.score))) + '</td><td class="n">' + fmt(Math.min(...g.map(x => x.score))) + '</td><td class="n">Top ' + Math.round(mean(g.map(x => x.pct))) + '%</td></tr>').join('') + '</tbody>';
+  const top = [...GAMES].sort((a, b) => b.score - a.score).slice(0, 5);
+  $('t-bests').innerHTML = '<thead><tr><th class="n">#</th><th>Date</th><th>Tiles</th><th class="n">Score</th><th class="n">Finish</th></tr></thead><tbody>' +
+    top.map((g, i) => '<tr><td class="n">' + (i + 1) + '</td><td>' + label(g.date) + '</td><td>' + tileRow(g.tiles) + '</td><td class="n">' + fmt(g.score) + '</td><td class="n">Top ' + g.pct + '%</td></tr>').join('') + '</tbody>';
+  drawLog();
+}
+
+function drawLog() {
+  const cols = [
+    ['date', 'Date', ''], ['tiles', 'Tiles', ''], ['score', 'Score', 'n'], ['pct', 'Finish', 'n'], ['vsTypical', 'Day difficulty', 'n']
+  ];
+  const rows = [...view].sort((a, b) => {
+    const k = logSort.key, x = k === 'tiles' ? a.count('B') * 3 + a.count('G') * 2 + a.count('Y') : a[k], y = k === 'tiles' ? b.count('B') * 3 + b.count('G') * 2 + b.count('Y') : b[k];
+    return (x < y ? -1 : x > y ? 1 : 0) * logSort.dir;
+  });
+  const bestScore = Math.max(...GAMES.map(g => g.score));
+  const sortName = logSort.dir > 0 ? 'ascending' : 'descending';
+  $('log-title').textContent = 'Game log · ' + view.length + (view.length === 1 ? ' game' : ' games');
+  $('t-log').innerHTML = '<thead><tr>' + cols.map(c => '<th class="' + c[2] + '"' + (logSort.key === c[0] ? ' aria-sort="' + sortName + '"' : '') + '><button data-k="' + c[0] + '">' + c[1] + (logSort.key === c[0] ? (logSort.dir > 0 ? ' ▲' : ' ▼') : '') + '</button></th>').join('') + '</tr></thead><tbody>' +
+    rows.map(g => {
+      const v = Math.round(g.vsTypical);
+      return '<tr><td>' + esc(longLabel(g.date)) + (g.score === bestScore ? '<span class="pill">Best</span>' : '') + '</td><td>' + tileRow(g.tiles) + '</td><td class="n">' + fmt(g.score) + '</td><td class="n">Top ' + g.pct + '%</td><td class="n">' + (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v) + '</td></tr>';
+    }).join('') + '</tbody>';
+  $('t-log').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.k;
+    logSort = logSort.key === k ? { key: k, dir: -logSort.dir } : { key: k, dir: k === 'pct' ? 1 : -1 };
+    drawLog();
+    const again = $('t-log').querySelector('button[data-k="' + k + '"]');
+    if (again) again.focus();
+  }));
+}
+
+function drawRanges() {
+  const quick = RANGES.filter(r => !monthKeys.includes(r.id)), months = RANGES.filter(r => monthKeys.includes(r.id));
+  const inMonth = months.includes(range);
+  $('ranges').innerHTML = quick.map(r => '<button class="chip" type="button" data-r="' + r.id + '" aria-pressed="' + (r === range) + '">' + r.text + '</button>').join('') +
+    '<select class="chip' + (inMonth ? ' on' : '') + '" id="month" aria-label="Choose a month"><option value="">Month</option>' +
+    months.map(r => '<option value="' + r.id + '"' + (r === range ? ' selected' : '') + '>' + r.text + '</option>').join('') + '</select>';
+  const choose = id => {
+    range = RANGES.find(r => r.id === id);
+    view = range.pick();
+    drawRanges();
+    drawAll();
+  };
+  $('ranges').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    choose(b.dataset.r);
+    $('ranges').querySelector('button[data-r="' + b.dataset.r + '"]').focus();
+  }));
+  $('month').addEventListener('change', e => {
+    choose(e.target.value || 'all');
+    $('month').focus();
+  });
+}
+
+function drawCharts() { drawScore(); drawPct(); drawField(); drawWall(); drawMix(); }
+function drawAll() { hideTip(); drawSummary(); drawCharts(); drawTables(); }
+
+$('letters').checked = showLetters;
+$('letters').addEventListener('change', e => {
+  showLetters = e.target.checked;
+  try { localStorage.setItem('anthropeum-letters', showLetters ? '1' : '0'); } catch (err) {}
+  drawAll();
+});
+$('foot').innerHTML = 'Update with <code>python build_dashboard.py</code> · <a href="https://anthropeum.com">Play Anthropeum</a>';
+
+drawRanges();
+drawAll();
+let resizeTimer;
+let lastWidth = innerWidth;
+addEventListener('resize', () => {
+  if (innerWidth === lastWidth) return;
+  lastWidth = innerWidth;
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(drawCharts, 120);
+});
+</script>
+</body>
+</html>
