@@ -74,7 +74,7 @@ body { margin: 0; background: var(--page); color: var(--ink); font: 15px/1.5 var
 header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 8px 24px; }
 h1 { font: 500 36px/1.1 var(--display); margin: 0; letter-spacing: -.01em; }
 h2 { font: 500 21px/1.2 var(--display); margin: 0; text-wrap: balance; }
-.lede { margin: 6px 0 0; color: var(--ink-2); max-width: 65ch; }
+.lede { margin: 6px 0 0; color: var(--ink-2); }
 .stamp { color: var(--muted); font-size: 13px; }
 .controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; position: sticky; top: 0; z-index: 3; background: var(--page); padding: 8px 0; }
 .controls .label { font-size: 13px; color: var(--muted); margin-right: 4px; }
@@ -88,13 +88,20 @@ button:focus-visible, select:focus-visible, [tabindex]:focus-visible, input:focu
 .add-form[hidden] { display: none; }
 .add-form label { font-size: 13px; color: var(--ink-2); display: grid; gap: 4px; }
 .add-form input, .add-form textarea { font: inherit; font-size: 14px; color: var(--ink); background: var(--page); border: 1px solid var(--axis); border-radius: 6px; padding: 8px 10px; width: 100%; }
-.add-form textarea { min-height: 84px; resize: vertical; }
+#add-score { padding: 12px 16px; }
+.add-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
+.add-head h2 { font-size: 17px; }
+.add-row { display: flex; gap: 10px; align-items: flex-end; }
+.add-row textarea { flex: 1 1 auto; min-width: 0; height: 66px; font-size: 13px; line-height: 1.3; padding: 6px 8px; resize: vertical; }
+.add-row button { flex: none; }
 .add-form textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .add-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .chip.primary { background: var(--accent-wash); border-color: var(--accent); font-weight: 600; }
 .chip:disabled { opacity: .55; cursor: default; }
 .chip.quiet { background: none; border-color: transparent; color: var(--ink-2); }
-.add-preview { min-height: 22px; font-size: 14px; color: var(--ink-2); }
+.add-preview { font-size: 14px; color: var(--ink-2); }
+.add-preview:empty { display: none; }
+.add-note { font-size: 13px; color: var(--muted); }
 .add-status { margin: 8px 0 0; font-size: 14px; }
 .add-status:empty { display: none; }
 .add-status.bad { color: var(--bad); }
@@ -161,24 +168,17 @@ footer a { color: inherit; }
     <div class="stamp" id="stamp"></div>
   </header>
 
-  <section class="card" id="add-score" hidden>
-    <h2>Add a score</h2>
-    <form class="add-form" id="token-form" hidden>
-      <p class="note" style="margin:0">Create a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">fine-grained token</a> for the anthropeum repo only, with Contents set to read and write. It stays in this browser.</p>
-      <label for="token-input">GitHub token
-        <input id="token-input" type="password" autocomplete="off" spellcheck="false" required>
-      </label>
-      <div class="add-actions"><button class="chip primary" id="token-save" type="submit">Save token</button></div>
-    </form>
-    <form class="add-form" id="score-form" hidden>
-      <label for="score-input">Paste the game's share text
-        <textarea id="score-input" spellcheck="false" autocomplete="off"></textarea>
-      </label>
-      <div class="add-preview" id="score-preview"></div>
-      <div class="add-actions">
+  <section class="card" id="add-score">
+    <div class="add-head">
+      <h2>Add a score</h2>
+      <span class="add-note">Only the owner can add scores</span>
+    </div>
+    <form class="add-form" id="score-form">
+      <div class="add-row">
+        <textarea id="score-input" rows="3" aria-label="Share text from the game" spellcheck="false" autocomplete="off"></textarea>
         <button class="chip primary" id="score-save" type="submit" disabled>Add score</button>
-        <button class="chip quiet" id="token-forget" type="button">Remove token from this browser</button>
       </div>
+      <div class="add-preview" id="score-preview"></div>
     </form>
     <p class="add-status" id="add-status" role="status"></p>
   </section>
@@ -208,7 +208,7 @@ footer a { color: inherit; }
     </div>
     <div class="card">
       <h2>How hard was the day?</h2>
-      <p class="note">Same score, different finish. Above the line, others found the day harder.</p>
+      <p class="note">Above the line is harder than average, below is easier.</p>
       <div class="chart" id="c-field" tabindex="0" role="img" aria-label="Score against percentile for each game. Every value is in the game log table."></div>
     </div>
   </section>
@@ -242,6 +242,21 @@ footer a { color: inherit; }
     <h2 id="log-title">Game log</h2>
     <p class="note">Select a heading to sort. Day difficulty: + harder, − easier.</p>
     <div class="log" tabindex="0" role="region" aria-label="Game log"><table id="t-log"></table></div>
+  </section>
+
+  <section class="card" id="token-card">
+    <h2>GitHub token</h2>
+    <form class="add-form" id="token-form" hidden>
+      <label for="token-input"><span>Create a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">token</a> to add scores.</span>
+        <input id="token-input" type="password" autocomplete="off" spellcheck="false" required>
+      </label>
+      <div class="add-actions"><button class="chip primary" id="token-save" type="submit">Save token</button></div>
+    </form>
+    <div class="add-form" id="token-saved" hidden>
+      <p class="note" style="margin:0">A token is saved in this browser.</p>
+      <div class="add-actions"><button class="chip" id="token-forget" type="button">Remove token from this browser</button></div>
+    </div>
+    <p class="add-status" id="token-status" role="status"></p>
   </section>
 
   <footer id="foot"></footer>
@@ -600,7 +615,7 @@ function drawSummary() {
   const l14 = GAMES.slice(-14), p14 = GAMES.slice(-28, -14);
   if (p14.length === 14) {
     const a = mean(l14.map(g => g.score)), b = mean(p14.map(g => g.score));
-    $('lede').textContent = 'Over your last 14 games, you averaged ' + fmt(a) + ' points and finished in the top ' + Math.round(mean(l14.map(g => g.pct))) + '%. In the 14 games before that, you averaged ' + fmt(b) + ' and finished in the top ' + Math.round(mean(p14.map(g => g.pct))) + '%.';
+    $('lede').textContent = 'Over the last 14 games, average score: ' + fmt(a) + ', average percentile: ' + Math.round(mean(l14.map(g => g.pct))) + '%, score ' + (a >= b ? 'up ' : 'down ') + fmt(Math.abs(a - b)) + ' from the previous 14 games.';
   } else {
     $('lede').textContent = GAMES.length + ' games so far.';
   }
@@ -702,10 +717,12 @@ function parseShareText(text) {
   };
 }
 
-function setAddStatus(text, kind) {
-  $('add-status').textContent = text;
-  $('add-status').className = 'add-status' + (kind ? ' ' + kind : '');
+function setStatus(id, text, kind) {
+  $(id).textContent = text;
+  $(id).className = 'add-status' + (kind ? ' ' + kind : '');
 }
+const setAddStatus = (text, kind) => setStatus('add-status', text, kind);
+const setTokenStatus = (text, kind) => setStatus('token-status', text, kind);
 
 const github = (path, options) => fetch(REPO_API + path, {
   cache: 'no-store',
@@ -720,17 +737,16 @@ function explainGithubFailure(status) {
   return 'GitHub returned an error (' + status + '), so nothing was saved. Try again in a moment.';
 }
 
-function showAddScore() {
-  const wanted = location.hash === '#add' || !!githubToken;
-  $('add-score').hidden = !wanted;
+function showTokenState() {
   $('token-form').hidden = !!githubToken;
-  $('score-form').hidden = !githubToken;
+  $('token-saved').hidden = !githubToken;
+  updatePreview();
 }
 
 function updatePreview() {
   const text = $('score-input').value;
   const game = text.trim() ? parseShareText(text) : null;
-  $('score-save').disabled = !game || !!game.error;
+  $('score-save').disabled = !githubToken || !game || !!game.error;
   if (!game) { $('score-preview').textContent = ''; return; }
   $('score-preview').innerHTML = game.error ? '<span class="down">' + esc(game.error) + '</span>'
     : esc(longLabel(game.date)) + ' · ' + tileRow(game.tiles) + ' · ' + fmt(game.score) + ' · top ' + game.pct + '%';
@@ -741,25 +757,24 @@ $('token-form').addEventListener('submit', async e => {
   const candidate = $('token-input').value.trim();
   if (!candidate) return;
   $('token-save').disabled = true;
-  setAddStatus('Checking the token...');
+  setTokenStatus('Checking the token...');
   githubToken = candidate;
   try {
     const res = await github('');
     const info = res.ok ? await res.json() : null;
     if (!res.ok || !info.permissions || !info.permissions.push) {
       githubToken = null;
-      setAddStatus(res.ok ? explainGithubFailure(403) : explainGithubFailure(res.status), 'bad');
+      setTokenStatus(res.ok ? explainGithubFailure(403) : explainGithubFailure(res.status), 'bad');
       return;
     }
-    try { localStorage.setItem(TOKEN_KEY, candidate); } catch (err) {
-      setAddStatus('This browser won\'t save the token, so you\'ll need to enter it again next visit.');
-    }
+    let remembered = true;
+    try { localStorage.setItem(TOKEN_KEY, candidate); } catch (err) { remembered = false; }
     $('token-input').value = '';
-    if (!$('add-status').textContent.startsWith('This browser')) setAddStatus('');
-    showAddScore();
+    setTokenStatus(remembered ? '' : 'This browser won\'t save the token, so you\'ll need to enter it again next visit.');
+    showTokenState();
   } catch (err) {
     githubToken = null;
-    setAddStatus('Could not reach GitHub. Check your connection and try again.', 'bad');
+    setTokenStatus('Could not reach GitHub. Check your connection and try again.', 'bad');
   } finally {
     $('token-save').disabled = false;
   }
@@ -770,7 +785,7 @@ $('score-input').addEventListener('input', () => { setAddStatus(''); updatePrevi
 $('score-form').addEventListener('submit', async e => {
   e.preventDefault();
   const game = parseShareText($('score-input').value);
-  if (game.error) return updatePreview();
+  if (game.error || !githubToken) return updatePreview();
   $('score-save').disabled = true;
   setAddStatus('Saving...');
   try {
@@ -800,12 +815,11 @@ $('score-form').addEventListener('submit', async e => {
 $('token-forget').addEventListener('click', () => {
   githubToken = null;
   try { localStorage.removeItem(TOKEN_KEY); } catch (err) {}
-  setAddStatus('Token removed from this browser. To revoke it completely, delete it in your GitHub settings.');
-  showAddScore();
+  setTokenStatus('Token removed from this browser. To revoke it completely, delete it in your GitHub settings.');
+  showTokenState();
 });
 
-addEventListener('hashchange', showAddScore);
-showAddScore();
+showTokenState();
 
 $('foot').innerHTML = 'Update with <code>python build_dashboard.py</code> · <a href="https://anthropeum.com">Play Anthropeum</a>';
 
